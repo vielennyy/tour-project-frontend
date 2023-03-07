@@ -1,9 +1,9 @@
-import { Pagination } from '@mui/material'
 import { ItemsGrid } from "../../components/ItemsGrid"
-import { SearchInput } from '../../components/SearchInput'
+import { SearchInput } from '../../atom/SearchInput'
 import { Footer } from '../../components/Footer'
-import { BasicSelect } from '../../components/BasicSelect'
+import { BasicSelect } from '../../atom/BasicSelect'
 import Box from '@mui/material/Box';
+import { PagesPagination } from '../../atom/PagesPagination'
 
 export const ToursPage = () => {
     return(
@@ -13,22 +13,8 @@ export const ToursPage = () => {
                 <BasicSelect/>
             </Box>
             <ItemsGrid/>
-            <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                typography: 'body1',
-                margin: '50px auto',
-            }}
-        >    
-            <Pagination count={10}/>
-            </Box>
-            {/* <h1>Hello</h1> */}
+            <PagesPagination count={10}/>
             <Footer/>
-            {/* <h1>Hello</h1> */}
-
         </>
     )
 }
