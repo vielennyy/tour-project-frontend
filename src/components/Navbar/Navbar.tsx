@@ -12,14 +12,14 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
-import CloseIcon from '@mui/icons-material/Close';
 
 export const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event) => {
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -33,8 +33,6 @@ export const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-          {/*MOBILE*/}
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -44,8 +42,7 @@ export const NavBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {anchorElNav ? <CloseIcon/> : <MenuIcon />}
-              {/*<MenuIcon />*/}
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -62,10 +59,10 @@ export const NavBar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'flex', md: 'none' },
+                display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <Link to={'/'}>
                   <Button
                     onClick={handleCloseNavMenu}
@@ -74,8 +71,6 @@ export const NavBar = () => {
                     Home Page
                   </Button>
                 </Link>
-              </MenuItem>
-              <MenuItem>
                 <Link to={'/tours'}>
                   <Button
                     onClick={handleCloseNavMenu}
@@ -84,8 +79,6 @@ export const NavBar = () => {
                     Tours
                   </Button>
                 </Link>
-              </MenuItem>
-              <MenuItem>
                 <Link to={'/foods'}>
                   <Button
                     onClick={handleCloseNavMenu}
@@ -94,8 +87,6 @@ export const NavBar = () => {
                     Foods
                   </Button>
                 </Link>
-              </MenuItem>
-              <MenuItem>
                 <Link to={'/accommodations'}>
                   <Button
                     onClick={handleCloseNavMenu}
@@ -106,32 +97,26 @@ export const NavBar = () => {
                 </Link>
               </MenuItem>
             </Menu>
-            <Box>
-              <Link to={'/'}>
-                <Button
-                  sx={{ my: 2, color: 'white', display: 'flex'}}
-                >
-                  <AirportShuttleIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    sx={{
-                      mr: 1,
-                      display: { xs: 'flex', md: 'none' },
-                      fontFamily: 'monospace',
-                      fontWeight: 700,
-                      letterSpacing: '.3rem',
-                      color: 'inherit',
-                      fontSize: '14px'
-                    }}
-                  >
-                    Tour Project
-                  </Typography>
-                </Button>
-              </Link>
-            </Box>
           </Box>
-
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link to={'/'}>
               <Button
@@ -172,7 +157,7 @@ export const NavBar = () => {
               <Button
                 sx={{ my: 2, color: 'white', display: 'flex'}}
               >
-                <AirportShuttleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                 <Typography
                   variant="h6"
                   noWrap
@@ -188,7 +173,7 @@ export const NavBar = () => {
                     textDecoration: 'none',
                   }}
                 >
-                  Tour Project
+                  LOGO
                 </Typography>
               </Button>
             </Link>
@@ -199,7 +184,7 @@ export const NavBar = () => {
               <IconButton sx={{ p: 0 }}>
                 <Link to={'/user'}>
                   <Button
-                    sx={{ my: 2, color: 'white', display: 'flex', alignItems: 'center'}}
+                    sx={{ my: 2, color: 'white', display: 'block'}}
                   >
                     <AccountCircleIcon />
                   </Button>
