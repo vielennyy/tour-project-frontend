@@ -7,12 +7,14 @@ import {Orders} from "./Orders";
 export const UserPageContent = () => {
   return(
     <Box sx={{
-      display: 'flex',
-      flexDirection: {xs: 'column', md: 'row'},
-      justifyContent: 'space-around',
+      width: {xs: '100%', md: '1024px'},
+      m: '0 auto'
     }}>
-      <UserCard/>
-      <Orders/>
+      <Box>
+      </Box>
+      <Box>
+        <UserCard/>
+      </Box>
     </Box>
   )
 }

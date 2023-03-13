@@ -1,8 +1,6 @@
 import Box from "@mui/material/Box";
 
-import {NavBar} from "../../components/NavBar";
 import {HomePageContent} from "../../components/HomePageContent";
-
 
 export const HomePage = () => {
   return(
@@ -11,11 +9,10 @@ export const HomePage = () => {
       m: '0 auto'
     }}>
       <Box>
-        <NavBar/>
       </Box>
       <Box>
         <HomePageContent/>
       </Box>
     </Box>
   )
-}
+  }
