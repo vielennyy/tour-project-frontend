@@ -15,9 +15,11 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import { LoginPopup } from "../LoginPopup";
+
 export const NavBar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -30,7 +32,9 @@ export const NavBar = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container sx={{
+        width: 1024
+      }}>
         <Toolbar disableGutters>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -111,12 +115,37 @@ export const NavBar = () => {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              color: 'inherit'
             }}
           >
             LOGO
           </Typography>
+
+          <Box>
+            <Link to={'/'}>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'flex'}}
+              >
+                <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'flex' },
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    color: 'inherit'
+                  }}
+                >
+                  LOGO
+                </Typography>
+              </Button>
+            </Link>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link to={'/'}>
               <Button
@@ -152,33 +181,6 @@ export const NavBar = () => {
             </Link>
           </Box>
 
-          <Box>
-            <Link to={'/'}>
-              <Button
-                sx={{ my: 2, color: 'white', display: 'flex'}}
-              >
-                <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                  }}
-                >
-                  LOGO
-                </Typography>
-              </Button>
-            </Link>
-          </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton sx={{ p: 0 }}>
@@ -192,6 +194,7 @@ export const NavBar = () => {
               </IconButton>
             </Tooltip>
           </Box>
+          <LoginPopup/>
         </Toolbar>
       </Container>
     </AppBar>

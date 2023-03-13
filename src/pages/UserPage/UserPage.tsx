@@ -9,11 +9,7 @@ export const UserPage = () => {
       width: {xs: '100%', md: '1024px'},
       m: '0 auto'
     }}>
-      <Box>
-      </Box>
-      <Box>
-        <UserPageContent/>
-      </Box>
+      <UserPageContent/>
     </Box>
   )
 }
