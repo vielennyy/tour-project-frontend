@@ -1,21 +1,23 @@
-
-import { Box,
-  TextField,
-  Typography } from '@mui/material';
 import * as React from "react";
 
-export const RegistrationBusinessPopup = ():JSX.Element => {
+import { Box,
+  TextField} from '@mui/material';
+
+export const RegistrationTouristPopup = ():JSX.Element => {
   return(
     <Box sx={{
-      maxWidth: 450
+      padding: 0
     }}>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between'
+      }}>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Назва компанії"
+          label="Ім'я"
           type="text"
-          fullWidth
           variant="standard"
           sx={{marginBottom: 2}}
         />
@@ -23,17 +25,18 @@ export const RegistrationBusinessPopup = ():JSX.Element => {
           autoFocus
           margin="dense"
           id="name"
-          label="Ім'я представника"
+          label="Прізвище"
           type="text"
-          fullWidth
           variant="standard"
           sx={{marginBottom: 2}}
         />
+      </Box>
+      <Box>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Електронна пошта"
+          label="Електронна почта"
           type="email"
           fullWidth
           variant="standard"
@@ -43,22 +46,13 @@ export const RegistrationBusinessPopup = ():JSX.Element => {
           autoFocus
           margin="dense"
           id="name"
-          label="Телефон"
-          type="number"
-          fullWidth
-          variant="standard"
-          sx={{marginBottom: 2}}
-        />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Створіть пароль"
+          label="Пароль"
           type="password"
           fullWidth
           variant="standard"
           sx={{marginBottom: 2}}
         />
+      </Box>
     </Box>
   )
 }
