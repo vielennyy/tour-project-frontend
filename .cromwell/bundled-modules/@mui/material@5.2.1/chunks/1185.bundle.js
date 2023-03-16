@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_cromwell_root=self.webpackChunk_cromwell_root||[]).push([[1185],{1185:function(r,t,e){e.r(t);var n=e(88597);t.default=n.Z},88597:function(r,t,e){e.d(t,{y:function(){return u}});var n=e(28737);function u(r){return(0,n.generateUtilityClass)("MuiCard",r)}var a=(0,n.generateUtilityClasses)("MuiCard",["root"]);t.Z=a}}]);

@@ -1,0 +1,13 @@
+{
+  "orm": {
+    "type": "mariadb",
+    "host": "localhost",
+    "port": 4128,
+    "username": "root",
+    "database": "cromwell",
+    "password": "your-password"
+  },
+  "apiUrl": "http://localhost:4128",
+  "adminUrl": "http://localhost:4064",
+  "frontendUrl": "http://localhost:4128"
+}

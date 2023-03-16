@@ -1,0 +1,9 @@
+import './helpers/Draggable/Draggable.css';
+import './helpers/importDependencies';
+import './styles/global.scss';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
+import '@cromwell/core-frontend/dist/_index.css';
+//# sourceMappingURL=app.d.ts.map

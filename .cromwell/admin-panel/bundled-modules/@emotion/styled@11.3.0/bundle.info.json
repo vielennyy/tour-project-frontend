@@ -1,0 +1,11 @@
+{
+    "bundledDependencies": {
+        "@babel/runtime/helpers/extends": [
+            "default"
+        ]
+    },
+    "libSize": 5631,
+    "importerSize": 4364,
+    "maxChunkSize": 3174,
+    "chunksSumSize": 3174
+}

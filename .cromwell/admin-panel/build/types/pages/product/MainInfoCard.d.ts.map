@@ -1,0 +1,1 @@
+{"version":3,"file":"MainInfoCard.d.ts","sourceRoot":"","sources":["../../../../../../../src/pages/product/MainInfoCard.tsx"],"names":[],"mappings":"AAAA,OAAO,EAKH,QAAQ,EACR,eAAe,EAElB,MAAM,gBAAgB,CAAC;AAcxB,QAAA,MAAM,YAAY;aACL,QAAQ,GAAG,eAAe;wBACf,QAAQ,GAAG,eAAe,KAAK,IAAI;uBACpC,OAAO;kBACZ,OAAO;iBAuPxB,CAAA;AAED,eAAe,YAAY,CAAC"}

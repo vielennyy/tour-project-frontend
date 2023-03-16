@@ -1,0 +1,1 @@
+{"name":"@emotion/cache@^11.5.0","import":"lib","externalDependencies":{"@emotion/sheet@1.1.0":["default"],"stylis@4.0.13":["default"],"@emotion/weak-memoize@0.2.5":["default"],"@emotion/memoize@0.7.5":["default"]}}

@@ -1,0 +1,11 @@
+{
+    "bundledDependencies": {
+        "react/jsx-runtime": [
+            "default"
+        ]
+    },
+    "libSize": 4010,
+    "importerSize": 4617,
+    "maxChunkSize": 1862,
+    "chunksSumSize": 4196
+}

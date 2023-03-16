@@ -1,0 +1,14 @@
+{
+    "bundledDependencies": {
+        "dom-helpers/addClass": [
+            "default"
+        ],
+        "dom-helpers/removeClass": [
+            "default"
+        ]
+    },
+    "libSize": 16002,
+    "importerSize": 5024,
+    "maxChunkSize": 7762,
+    "chunksSumSize": 42045
+}

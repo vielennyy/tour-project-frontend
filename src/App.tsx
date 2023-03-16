@@ -29,7 +29,6 @@ function App():JSX.Element {
 					<Route path="/accommodations" element={<h1>Accommodations</h1>} />
 					<Route path="/foods" element={<h1>Foods</h1>} />
 					<Route path="/partner" element={<PartnerPageContent/>} />
-
 					</Routes>
 			<Footer/>
 		</ThemeProvider>

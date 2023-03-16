@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_cromwell_root=self.webpackChunk_cromwell_root||[]).push([[73816],{73816:function(e,t,n){n.r(t);var r=n(60550);t.default=r.Q},60550:function(e,t,n){n.d(t,{Q:function(){return s}});var r=n(28737);function s(e){return(0,r.generateUtilityClass)("MuiScopedCssBaseline",e)}var o=(0,r.generateUtilityClasses)("MuiScopedCssBaseline",["root"]);t.Z=o}}]);

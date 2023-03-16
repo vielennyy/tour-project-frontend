@@ -1,0 +1,11 @@
+{
+    "bundledDependencies": {
+        "scheduler/tracing": [
+            "default"
+        ]
+    },
+    "libSize": 120509,
+    "importerSize": 6113,
+    "maxChunkSize": 118483,
+    "chunksSumSize": 120367
+}
