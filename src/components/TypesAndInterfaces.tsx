@@ -1,0 +1,11 @@
+export interface PartnerInfoCardProps {
+    isCompany:boolean;
+    firstName:string;
+    lastName:string;
+    phoneNumber:string;
+    email:string;
+    legalEntityName?:string;
+    EDRPOUcode?:number;
+    legalEntityAdress?:string;
+    ZIPcode?:number;
+}
