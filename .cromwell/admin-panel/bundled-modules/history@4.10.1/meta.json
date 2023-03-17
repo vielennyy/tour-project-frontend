@@ -1,1 +1,0 @@
-{"name":"history@^4.9.0","import":"lib","externalDependencies":{"resolve-pathname@3.0.0":["default"],"value-equal@1.0.1":["default"],"tiny-warning@1.0.3":["default"],"tiny-invariant@1.2.0":["default"]}}

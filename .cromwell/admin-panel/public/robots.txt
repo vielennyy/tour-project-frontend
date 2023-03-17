@@ -1,6 +1,0 @@
-User-Agent: *
-Disallow: /plugins/
-Disallow: /themes/
-Disallow: /admin/
-
-Sitemap: http://localhost:4064/default_sitemap.xml

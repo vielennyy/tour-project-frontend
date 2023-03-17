@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_cromwell_root=self.webpackChunk_cromwell_root||[]).push([[82739],{82739:function(e,t,n){n.r(t);var r=n(57178);t.default=r.Z},57178:function(e,t,n){n.d(t,{n:function(){return a}});var r=n(28737);function a(e){return(0,r.generateUtilityClass)("MuiTableContainer",e)}var o=(0,r.generateUtilityClasses)("MuiTableContainer",["root"]);t.Z=o}}]);

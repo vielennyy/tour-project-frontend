@@ -1,1 +1,0 @@
-{"version":3,"file":"CheckList.d.ts","sourceRoot":"","sources":["../../../../../../../src/components/transferList/CheckList.tsx"],"names":[],"mappings":"AACA,OAAO,KAAK,MAAM,OAAO,CAAC;AAK1B,eAAO,MAAM,SAAS;WACX,MAAM,SAAS;WACf,MAAM,EAAE;eACJ,MAAM,aAAa,CAAC;QAAE,KAAK,EAAE,MAAM,CAAA;KAAE,CAAC;aACxC,MAAM,EAAE;wBACG,MAAM,EAAE,KAAK,GAAG;cAC1B,MAAM,SAAS;sBACP,OAAO;iBAwF5B,CAAA"}

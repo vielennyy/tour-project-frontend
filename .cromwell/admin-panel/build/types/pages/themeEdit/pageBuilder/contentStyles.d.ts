@@ -1,2 +1,0 @@
-export declare const contentStyles = "\n* {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n";
-//# sourceMappingURL=contentStyles.d.ts.map

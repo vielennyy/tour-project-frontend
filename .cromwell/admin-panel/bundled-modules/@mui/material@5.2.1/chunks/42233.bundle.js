@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_cromwell_root=self.webpackChunk_cromwell_root||[]).push([[42233],{42233:function(r,t,a){a.r(t);var e=a(59552);t.default=e.Z},59552:function(r,t,a){a.d(t,{m:function(){return u}});var e=a(28737);function u(r){return(0,e.generateUtilityClass)("MuiAvatarGroup",r)}var n=(0,e.generateUtilityClasses)("MuiAvatarGroup",["root","avatar"]);t.Z=n}}]);
