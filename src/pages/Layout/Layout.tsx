@@ -1,7 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box} from '@mui/material';
 import {NavBar} from "../../components/Navbar";
-import {AdminPage} from "../AdminPage";
 
 const theme = createTheme({
   typography: {
@@ -11,7 +10,6 @@ const theme = createTheme({
 
 
 export const Layout = (props:any):JSX.Element => {
-
    return(
      <ThemeProvider theme={theme}>
        <CssBaseline/>

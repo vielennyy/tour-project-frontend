@@ -6,6 +6,7 @@ import {Layout} from "./pages/Layout";
 import AppRoutes from "./AppRoutes";
 
 function App():JSX.Element {
+
   return (
 	<Box>
     <Layout>
@@ -22,9 +23,3 @@ function App():JSX.Element {
 
 export default App;
 
-
-// {AppRoutes.map((route, index) => {
-// 	const { element, ...rest } = route;
-// 	console.log(route.path)
-// 	return <Route key={index} {...rest} element={element} />;
-// })}
