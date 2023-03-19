@@ -1,9 +1,9 @@
 import { HomePage } from "./pages/HomePage";
 import { ToursPage } from './pages/ToursPage';
 import { UserPage } from "./pages/UserPage";
-import { PartnerPageContent } from './components/PartnerPageContent';
 import {AdminPage} from "./pages/AdminPage";
 import {Map} from "./components/Map"
+import { PartnerPage } from "./pages/PartnerPage";
 
 const AppRoutes = [
   {
@@ -28,7 +28,7 @@ const AppRoutes = [
   },
   {
     path: '/partner',
-    element: <PartnerPageContent/>
+    element: <PartnerPage/>
   },
   {
     path: '/admin',
