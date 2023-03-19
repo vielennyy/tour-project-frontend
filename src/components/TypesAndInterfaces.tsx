@@ -9,3 +9,8 @@ export interface PartnerInfoCardProps {
     legalEntityAdress?:string;
     ZIPcode?:number;
 }
+
+export interface PlaceCoordinates {
+    lat:number;
+    lng:number;
+}
