@@ -5,11 +5,14 @@ import {Table,
   TableCell,
   TableContainer,
   TableHead,
+  Box,
   TableRow} from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
+import {AddImageForm} from "./AddImageForm";
 
 function createData(
   id: number,
@@ -30,42 +33,45 @@ const rows = [
 
 export const GalleryTab = ():JSX.Element =>  {
   return (
-    <TableContainer>
-      <Table sx={{ minWidth: 1024 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="right">thumb</TableCell>
-            <TableCell align="right">Заголовок</TableCell>
-            <TableCell align="right">Широта</TableCell>
-            <TableCell align="right">Довгота</TableCell>
-            <TableCell align="right">Теги</TableCell>
-            <TableCell align="right">Створено</TableCell>
-            <TableCell align="right">Змінено</TableCell>
-            <TableCell align="right">Опції</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.id}
-              </TableCell>
-              <TableCell align="right">{row.thumb}</TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.latitude}</TableCell>
-              <TableCell align="right">{row.longitude}</TableCell>
-              <TableCell align="right">{row.tags}</TableCell>
-              <TableCell align="right">{row.createAt}</TableCell>
-              <TableCell align="right">{row.editedAt}</TableCell>
-              <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+    <Box>
+      <AddImageForm/>
+      <TableContainer>
+        <Table sx={{ minWidth: 1024 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Id</TableCell>
+              <TableCell align="right">thumb</TableCell>
+              <TableCell align="right">Заголовок</TableCell>
+              <TableCell align="right">Широта</TableCell>
+              <TableCell align="right">Довгота</TableCell>
+              <TableCell align="right">Теги</TableCell>
+              <TableCell align="right">Створено</TableCell>
+              <TableCell align="right">Змінено</TableCell>
+              <TableCell align="right">Опції</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell align="right">{row.thumb}</TableCell>
+                <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">{row.latitude}</TableCell>
+                <TableCell align="right">{row.longitude}</TableCell>
+                <TableCell align="right">{row.tags}</TableCell>
+                <TableCell align="right">{row.createAt}</TableCell>
+                <TableCell align="right">{row.editedAt}</TableCell>
+                <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
