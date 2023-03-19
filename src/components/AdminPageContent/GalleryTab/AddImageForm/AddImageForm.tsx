@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export const AddAttractionsForm = ():JSX.Element => {
+export const AddImageForm = ():JSX.Element => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -24,22 +24,13 @@ export const AddAttractionsForm = ():JSX.Element => {
         Додати
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Нова атракція</DialogTitle>
+        <DialogTitle>Нове фото</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Заголовок"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Опис"
             type="text"
             fullWidth
             variant="standard"
@@ -64,8 +55,7 @@ export const AddAttractionsForm = ():JSX.Element => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Переглянути</Button>
-          <Button onClick={handleClose}>Опублікувати</Button>
+          <Button onClick={handleClose}>Створити</Button>
           <Button onClick={handleClose}>Відмінити</Button>
         </DialogActions>
       </Dialog>

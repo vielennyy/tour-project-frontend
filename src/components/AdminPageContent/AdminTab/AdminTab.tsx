@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 import {AddAdminForm} from "./AddAdminForm";
+import {DeleteConfirmModal} from "../DeleteConfirmModal";
 
 function createData(
   id: number,
@@ -54,7 +55,7 @@ export const AdminTab = ():JSX.Element =>  {
                 <TableCell align="right">{row.fullname}</TableCell>
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.createAt}</TableCell>
-                <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                <TableCell align="right" sx={{display: 'flex', flexDirection: 'row-reverse'}}><EditIcon/><RemoveRedEyeIcon/><DeleteConfirmModal/></TableCell>
               </TableRow>
             ))}
           </TableBody>
