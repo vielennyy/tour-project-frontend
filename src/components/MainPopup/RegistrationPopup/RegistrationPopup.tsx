@@ -1,85 +1,82 @@
 import React, {useState} from 'react';
 
-import {Box,
+import {
+  Box,
   Typography,
   Button,
   Tab,
-  Tabs} from "@mui/material";
+  Tabs, TextField
+} from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import {RegistrationBusinessPopup} from "./RegistrationBusinessPopup";
-import {RegistrationTouristPopup} from "./RegistrationTouristPopup";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
 export const RegistrationPopup = ():JSX.Element =>  {
+  const [visibility, setVisibility] = useState(false);
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-
   return (
     <Box sx={{
-      padding: 2,
+      padding: '30px',
       paddingBottom: 0
     }}>
       <Typography>Реєстрація</Typography>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Я створюю акаунт туриста" {...a11yProps(0)} />
-            <Tab label="Я створюю бізнес акаунт" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <RegistrationTouristPopup/>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <RegistrationBusinessPopup/>
-        </TabPanel>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '50px'
+      }}>
+        <TextField
+          required={true}
+          label="Ім'я"
+          id="outlined-size-normal"
+          placeholder={"Ім'я"}
+          type="text"
+          sx={{width: '160px'}}/>
+        <TextField
+          required={true}
+          label="Призвіще"
+          id="outlined-size-normal"
+          placeholder={"Призвіще"}
+          type="text"
+          sx={{width: '160px'}}/>
+      </Box>
+      <Box>
+        <TextField
+          hiddenLabel={true}
+          required={true}
+          label="Електронна почта"
+          id="outlined-size-normal"
+          placeholder={'E-mail'}
+          fullWidth
+          type="email"
+          sx={{marginTop: "35px"}}/>
+        <TextField
+          required={true}
+          label="Пароль"
+          id="outlined-size-normal"
+          placeholder={"Пароль"}
+          fullWidth
+          type="password"
+          sx={{marginTop: '35px'}}/>
       </Box>
       <Box sx={{
         display: 'flex',
         alignItems: 'center',
         marginTop: 2
       }}>
-        <Button sx={{
-          background: '#c1bfbf',
+        <Button variant="contained" sx={{
+          background: '#FF3939',
           width: 200,
           height: 40,
-          margin: "0 auto"
+          margin: "0 auto",
+          color: '#ffffff',
+          marginTop: "20px",
+          borderRadius: '10px'
         }}>Реєстрація</Button>
       </Box>
     </Box>

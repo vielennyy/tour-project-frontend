@@ -5,52 +5,57 @@ import { Box,
   Link,
   TextField,
   Button } from '@mui/material';
+import {ResetPopup} from "../ResetPopup";
 
 
 export const LoginPopup = ():JSX.Element =>  {
   return (
     <Box sx={{
-      padding: 2,
+      padding: '30px',
       paddingBottom: 0
     }}>
       <Typography>Вхід</Typography>
       <TextField
-        autoFocus
-        margin="dense"
-        id="name"
+        hiddenLabel={true}
+        required={true}
         label="Електронна почта"
-        type="email"
+        id="outlined-size-normal"
+        placeholder={'E-mail'}
         fullWidth
-        variant="standard"
-        sx={{marginBottom: 2}}
-      />
+        type="email"
+        sx={{marginTop: "50px"}}/>
+      <Box sx={{
+        marginTop: "15px",
+        display: "flex",
+        justifyContent: "flex-end"
+      }}>
+        <Link
+          component="button"
+          variant="body2">
+          <ResetPopup/>
+        </Link>
+      </Box>
       <TextField
-        autoFocus
-        margin="dense"
-        id="name"
+        required={true}
         label="Пароль"
-        type="email"
+        id="outlined-size-normal"
+        placeholder={"Пароль"}
         fullWidth
-        variant="standard"
-        sx={{marginBottom: 2}}
-      />
-      <Link
-        component="button"
-        variant="body2"
-        sx={{display: 'block'}}
-      >
-        Забули пароль?
-      </Link>
+        type="password"
+        sx={{marginTop: '15px'}}/>
       <Box sx={{
         display: 'flex',
         alignItems: 'center',
         marginTop: 2
       }}>
-        <Button  sx={{
-          background: '#c1bfbf',
+        <Button variant="contained" sx={{
+          background: '#FF3939',
           width: 200,
           height: 40,
-          margin: "0 auto"
+          margin: "0 auto",
+          color: '#ffffff',
+          marginTop: "20px",
+          borderRadius: '10px'
         }}>Вхід
         </Button>
       </Box>

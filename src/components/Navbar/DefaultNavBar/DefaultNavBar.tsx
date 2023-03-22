@@ -11,9 +11,13 @@ import {
   Menu,
   Container,
   Button,
-  MenuItem } from '@mui/material';
+  MenuItem,
+  Input  } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { MainPopup} from "../../MainPopup";
+
+import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -28,7 +32,7 @@ export const DefaultNavBar = ():JSX.Element => {
 
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor: '#ffffff'}}>
       <Container sx={{
         width: 1024
       }}>
@@ -116,61 +120,66 @@ export const DefaultNavBar = ():JSX.Element => {
               color: 'inherit'
             }}
           >
-            LOGO
+            {logo}
           </Typography>
 
           <Box sx={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: 1
           }}>
             <Link to={'/'}>
-              <Button
-                sx={{ my: 2, color: 'white', display: 'flex'}}
-              >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit'
-                  }}
-                >
-                  LOGO
-                </Typography>
+              <Button>
+                <img src={logo}/>
               </Button>
             </Link>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link to={'/tours'}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Куди поїхати?
-              </Button>
+            <Link to={'/accommodations'}>
+              <Typography sx={{margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+                Де жити?
+              </Typography>
             </Link>
             <Link to={'/foods'}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Що поїсти?
-              </Button>
+              <Typography sx={{margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+                Де поїсти?
+              </Typography>
             </Link>
-            <Link to={'/accommodations'}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Де поспати?
-              </Button>
+            <Link to={'/tours'}>
+              <Typography sx={{ margin: '0 20px', color: '#000000', fontSize: 18, fontWeight: 400}}>
+                Тури
+              </Typography>
             </Link>
+            <Link to={'/tours'}>
+              <Typography sx={{ margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+                Атракції
+              </Typography>
+            </Link>
+            <Link to={'/map'}>
+              <Typography sx={{ margin: '0 20px', color: '#000000', fontSize: 18, fontWeight: 400}}>
+                Мапа
+              </Typography>
+            </Link>
+            <Box sx={{
+              width: '170px',
+              height: '30px',
+              position: 'relative'
+            }}>
+              <Input sx={{
+                backgroundColor: '#EEEEEE',
+                padding: '0 5px 0 30px',
+                width: '100%',
+                height: '100%'
+              }}
+                placeholder={'Куди їдемо?'}
+              />
+              <SearchIcon sx={{
+                position: 'absolute',
+                top: '4px',
+                left: '5px',
+                color: '#888888'
+              }}/>
+            </Box>
           </Box>
           <MainPopup/>
         </Toolbar>
