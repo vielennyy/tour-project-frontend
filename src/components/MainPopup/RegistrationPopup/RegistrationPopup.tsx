@@ -24,7 +24,7 @@ export const RegistrationPopup = ():JSX.Element =>  {
       padding: '30px',
       paddingBottom: 0
     }}>
-      <Typography>Реєстрація</Typography>
+      <Typography sx={{fontSize: 16, fontWeight: 500}}>Реєстрація</Typography>
       <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',

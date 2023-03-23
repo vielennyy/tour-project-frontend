@@ -1,72 +1,21 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { ButtonLink } from '../Item/ButtonLink';
+import React, {useEffect, useState} from 'react';
 
-const AlignItemsList = () => {
+import {Container} from '@mui/material';
+
+import { DefaultFooter } from "./DefaultFooter";
+
+export const Footer = ():JSX.Element => {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+
+  }, [path])
+
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    </List>
+    <Container sx={{
+      width: 1024
+    }}>
+      {path === '/admin' ? null : <DefaultFooter/>}
+    </Container>
   );
-}
-
-export const Footer = () => {
-    return(
-<>
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                typography: 'body1',
-                margin: '0 auto',
-            }}
-        >        
-        <AlignItemsList/>
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                typography: 'body1',
-
-            }}
-        >        
-            <ButtonLink label={'Tours'}/>
-            <ButtonLink label={'Foods'}/>
-            <ButtonLink label={'Accommodations'}/>
-        </Box>    
-        </Box>
-        
-    </>
-    )
-    
 }

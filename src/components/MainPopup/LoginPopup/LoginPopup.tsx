@@ -14,7 +14,7 @@ export const LoginPopup = ():JSX.Element =>  {
       padding: '30px',
       paddingBottom: 0
     }}>
-      <Typography>Вхід</Typography>
+      <Typography sx={{fontSize: 16, fontWeight: 500}}>Вхід</Typography>
       <TextField
         hiddenLabel={true}
         required={true}
