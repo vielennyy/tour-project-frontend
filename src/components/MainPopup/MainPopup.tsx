@@ -3,7 +3,8 @@ import React, {useState} from "react";
 import { Box,
   Dialog,
   DialogContent,
-  Button } from '@mui/material';
+  Button,
+  Typography} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import {RegistrationPopup} from "./RegistrationPopup";
@@ -34,26 +35,32 @@ export const MainPopup = ():JSX.Element =>  {
 
 
   return (
-    <Box >
+    <Box>
       <Button onClick={handleClickOpen} sx={{
-        color: '#ffffff'
+        color: '#000000',
+        fontSize: 18,
+        fontWeight: 400,
+        textTransform: 'none',
+        border: '1px solid #FF3939',
+        padding: '0 20px'
       }}>
         Вхід
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <Box sx={{
-          position: 'relative'
+          position: 'relative',
+          width: 400,
         }}>
           <Button onClick={handleClose} sx={{
             position: 'absolute',
-            top: 10,
-            right: 10,
+            top: 25,
+            right: 16,
             minWidth: 20,
             color: "inherit"
           }}>
             <CloseIcon/>
           </Button>
-          <DialogContent sx={{padding: 1}}>
+          <DialogContent sx={{padding: 0}}>
             {loginPopup ?
               <LoginPopup/> :
               <RegistrationPopup/>
@@ -63,17 +70,34 @@ export const MainPopup = ():JSX.Element =>  {
           <Box sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            padding: 2,
+            paddingBottom: 1
           }}>
             {loginPopup ?
-              <Button sx={{fontSize: 10}} onClick={handleRegisterOpen}>
+              <Button sx={{fontSize: 10, color: "#000000"}} onClick={handleRegisterOpen}>
                 Не має акаунту? Реєстрація
               </Button> :
-              <Button  sx={{fontSize: 10}} onClick={handleLoginOpen}>
+              <Button  sx={{fontSize: 10, color: "#000000"}} onClick={handleLoginOpen}>
                 Вже маєш акаунт? Вхід
               </Button>
             }
           </Box>
+          {loginPopup ?
+            null :
+            <Box sx={{
+              margin: '0 auto',
+              width: 300,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 2,
+              paddingTop: 0,
+              textAlign: 'center'
+            }}>
+              <Typography sx={{fontSize: '8px'}}>Натискаючи кнопку «Реєстрація», я погоджуюсть з Умовами сайту, враховуючи Умови оплати, і Політикою конфіденційності.</Typography>
+            </Box>
+          }
         </Box>
       </Dialog>
     </Box>

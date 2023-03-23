@@ -1,0 +1,52 @@
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Black.ttf") format("truetype");
+    font-weight: 900;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Light.ttf") format("truetype");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Semibold.ttf") format("truetype");
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Medium.ttf") format("truetype");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Gilroy";
+    src: local("Gilroy"),
+    url("./assets/font/Gilroy-Thin.ttf") format("truetype");
+    font-weight: 100;
+}
+
+*{
+    font-family: "Gilroy";
+    text-decoration: none;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    border-radius: 15px !important;
+    max-width: 400px !important;
+}

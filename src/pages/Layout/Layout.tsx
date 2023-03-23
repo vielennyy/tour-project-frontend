@@ -3,8 +3,13 @@ import { CssBaseline, Box} from '@mui/material';
 import {NavBar} from "../../components/Navbar";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#FF3939'
+    },
+  },
   typography: {
-    fontFamily: 'Inter, normal',
+    fontFamily: 'Gilroy, normal',
   },
 });
 
