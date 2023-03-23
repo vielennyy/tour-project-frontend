@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { LocationMarker } from './LocationMarker';
-
+import { defaultTheme } from './Theme';
 const API_KEY:string = process.env.REACT_APP_API_KEY as string;
 
 // 49.44428388879221, 32.05884117728714 - Черкаси
@@ -42,20 +42,20 @@ const containerStyle = {
   
   const defaultOptions = {
     // panControl: true,
-    zoomControl: false,
-    // mapTypeControl: false,
+    zoomControl: true,
+    mapTypeControl: false,
     // scaleControl: false,
-    // streetViewControl: false,
+    streetViewControl: false,
     // rotateControl: false,
     // clickableIcons: false,
     // keyboardShortcuts: false,
     // scrollwheel: false,
     // disableDoubleClickZoom: false,
-    // fullscreenControl: false,
+    fullscreenControl: false,
     // language: 'uk',
     minZoom: 8,
     maxZoom: 18,
-
+    styles: defaultTheme,
   }
 
 export const Map = () => {
@@ -80,7 +80,7 @@ export const Map = () => {
         setMap(null)
       }, [])
     return (isLoaded ? (
-        
+        <>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={cherkassy}
@@ -97,6 +97,8 @@ export const Map = () => {
           { /* Child components, such as markers, info windows, etc. */ }
           <></>
         </GoogleMap>
+        </>
+        
     ) : <></>
     )
 }

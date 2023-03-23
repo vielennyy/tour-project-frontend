@@ -30,7 +30,7 @@ export const DefaultNavBar = ():JSX.Element => {
   return (
     <AppBar position="static">
       <Container sx={{
-        width: 1024
+        width: 1400
       }}>
         <Toolbar disableGutters>
 
