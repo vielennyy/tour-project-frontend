@@ -91,11 +91,10 @@ export const MainPopup = ():JSX.Element =>  {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: 2,
-              paddingTop: 0,
+              paddingBottom: 2,
               textAlign: 'center'
             }}>
-              <Typography sx={{fontSize: '8px'}}>Натискаючи кнопку «Реєстрація», я погоджуюсть з Умовами сайту, враховуючи Умови оплати, і Політикою конфіденційності.</Typography>
+              <Typography sx={{fontSize: '10px', fontWeight: 500}}>Натискаючи кнопку «Реєстрація», я погоджуюсть з Умовами сайту, враховуючи Умови оплати, і Політикою конфіденційності.</Typography>
             </Box>
           }
         </Box>

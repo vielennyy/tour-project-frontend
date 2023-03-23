@@ -11,6 +11,7 @@ export const NavBar = () => {
   useEffect(() => {
 
   }, [path])
+
   return (
     <Box>
       {path === '/admin' ? <AdminNavBar/> : <DefaultNavBar/>}
