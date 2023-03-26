@@ -9,7 +9,7 @@ export const HomePage = () => {
       width: {xs: '100%', md: '1024px'},
       m: '0 auto'
     }}>
-      <HomePageContent/>
+      <h1>Home page</h1>
     </Box>
   )
   }

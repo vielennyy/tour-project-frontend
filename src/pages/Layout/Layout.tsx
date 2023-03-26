@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box} from '@mui/material';
 import {NavBar} from "../../components/Navbar";
+import {Footer} from "../../components/Footer";
 
 const theme = createTheme({
   palette: {
@@ -23,6 +24,7 @@ export const Layout = (props:any):JSX.Element => {
          <Box>
            {props.children}
          </Box>
+         <Footer/>
        </Box>
      </ThemeProvider>
    )
