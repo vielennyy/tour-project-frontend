@@ -3,6 +3,6 @@ import Rating from '@mui/material/Rating';
 
 export const HalfRating = () => {
   return (
-      <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+      <Rating sx={{color: '#FF3939'}} name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
   );
 }

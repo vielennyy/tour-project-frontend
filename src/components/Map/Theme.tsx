@@ -58,7 +58,7 @@ export const defaultTheme = [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#c6f4ae"
+                "color": "#C6F4AE"
             }
         ]
     },

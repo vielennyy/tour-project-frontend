@@ -1,7 +1,11 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { LocationMarker } from './LocationMarker';
+import { AttractionMarker } from './LocationMarker/AttractionMarker';
 import { defaultTheme } from './Theme';
+import { Box } from '@mui/material'
+import { MapItemCard,  PlaceCoordinates} from '../TypesAndInterfaces';
+import { useState, useEffect } from 'react';
+
 const API_KEY:string = process.env.REACT_APP_API_KEY as string;
 
 // 49.44428388879221, 32.05884117728714 - Черкаси
@@ -11,8 +15,8 @@ const API_KEY:string = process.env.REACT_APP_API_KEY as string;
 
 
 const containerStyle = {
-    width: '980px',
-    height: '400px'
+    width: '100vw',
+    height: '86vh'
   };
   
   const center = {
@@ -23,21 +27,6 @@ const containerStyle = {
   const cherkassy = {
     lat: 49.44428388879221,
     lng: 32.05884117728714,
-  }
-
-  const roseValley = {
-    lat: 49.450667076940356,
-    lng: 32.06501776303598,
-  }
-
-  const sosnivskiy = {
-    lat: 49.464469193130824,
-    lng: 32.02882401610382,
-  }
-
-  const zoo = {
-    lat: 49.41699817985301,
-    lng: 32.02273163007198,
   }
   
   const defaultOptions = {
@@ -54,12 +43,12 @@ const containerStyle = {
     fullscreenControl: false,
     // language: 'uk',
     minZoom: 8,
-    maxZoom: 18,
+    maxZoom: 15,
     styles: defaultTheme,
   }
 
 export const Map = () => {
-    console.log(API_KEY)
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: API_KEY,
@@ -79,25 +68,54 @@ export const Map = () => {
       const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
         setMap(null)
       }, [])
+
+      const [attractions, setAttractions] = useState<MapItemCard[]>([]);
+      
+      useEffect(() => {
+        fetch('http://164.92.135.103/api/v1/attractions')
+          .then(response => response.json())
+          .then(json => setAttractions(json));
+      }, []);
+
+      console.log(attractions)
+
+      const [accommodations, setAccommodations] = useState<MapItemCard[]>([]);
+
+      useEffect(() => {
+        fetch('http://164.92.135.103/api/v1/accommodations')
+          .then(response => response.json())
+          .then(json => setAccommodations(json));
+      }, []);
+
+      console.log(accommodations)
+
+      
+      const attractionsCoordinatesList: PlaceCoordinates[] = [];
+      
+      attractions.forEach((attraction) => {
+        const lat = +attraction.coordinates[0].latitude;
+        const lng = +attraction.coordinates[0].longitude;
+        attractionsCoordinatesList.push({ lat, lng });
+      });
+
+
     return (isLoaded ? (
-        <>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={cherkassy}
-          zoom={10}
-          
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={defaultOptions}
-        >
-            <LocationMarker position={cherkassy}/>
-            <LocationMarker position={roseValley}/>
-            <LocationMarker position={sosnivskiy}/>
-            <LocationMarker position={zoo}/>
-          { /* Child components, such as markers, info windows, etc. */ }
-          <></>
-        </GoogleMap>
-        </>
+        <Box>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={cherkassy}
+            zoom={10}
+            
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={defaultOptions}
+          >
+            {attractionsCoordinatesList.map(attraction => <AttractionMarker position={attraction}/>)}
+              
+            { /* Child components, such as markers, info windows, etc. */ }
+            <></>
+          </GoogleMap>
+        </Box>
         
     ) : <></>
     )

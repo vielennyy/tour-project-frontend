@@ -14,3 +14,19 @@ export interface PlaceCoordinates {
     lat:number;
     lng:number;
 }
+
+export interface MapItemCard {
+    coordinates: {
+        id: number;
+        latitude: string;
+        longitude: string;
+        coordinatable_type: string;
+        coordinatable_id: number;
+      }[];
+      created_at: string;
+      description: string;
+      id: number;
+      title: string;
+      updated_at: string;
+  }
+  
