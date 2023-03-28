@@ -7,19 +7,19 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import locationIcon from "./Location icon.svg"
-import { MapItemCard } from "../../../TypesAndInterfaces"
+import { Attraction } from "../../../TypesAndInterfaces"
 import { HalfRating } from 'src/atom/HalfRating';
 import { useState } from 'react';
 
 
-export const PlaceItem = (props: MapItemCard) => {
+export const PlaceItem = (props: Attraction) => {
     const [showMore, setShowMore] = useState<boolean>(false)
 
     const handleItemClick = () => {
         setShowMore(!showMore)
     }
 
-    const type = props.coordinates[0].coordinatable_type
+    const type = props.geolocations[0].geolocationable_type
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
         <ListItem onClick={handleItemClick} sx={{cursor: 'pointer'}} alignItems="flex-start">
@@ -37,7 +37,7 @@ export const PlaceItem = (props: MapItemCard) => {
                     variant="body2"
                     color="text.primary"
                 >
-                    {props.coordinates[0].coordinatable_type}
+                    {props.geolocations[0].geolocationable_type}
                 </Typography>
                 <img src={locationIcon}/>
                 {"Черкаси"}

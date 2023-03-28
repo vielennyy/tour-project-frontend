@@ -3,7 +3,7 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { AttractionMarker } from './LocationMarker/AttractionMarker';
 import { defaultTheme } from './Theme';
 import { Box } from '@mui/material'
-import { MapItemCard,  PlaceCoordinates} from '../TypesAndInterfaces';
+import { Attraction,  MapWindowSize,  PlaceCoordinates} from '../TypesAndInterfaces';
 import { useState, useEffect } from 'react';
 
 const API_KEY:string = process.env.REACT_APP_API_KEY as string;
@@ -14,10 +14,7 @@ const API_KEY:string = process.env.REACT_APP_API_KEY as string;
 // 49.41699817985301, 32.02273163007198 - Черкаський зоопарк
 
 
-const containerStyle = {
-    width: '100vw',
-    height: '86vh'
-  };
+
   
   const center = {
     lat: -3.745,
@@ -47,7 +44,11 @@ const containerStyle = {
     styles: defaultTheme,
   }
 
-export const Map = () => {
+  interface myComponentProps{
+    props: MapWindowSize
+}
+
+export const Map = ({props}:myComponentProps) => {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -69,7 +70,7 @@ export const Map = () => {
         setMap(null)
       }, [])
 
-      const [attractions, setAttractions] = useState<MapItemCard[]>([]);
+      const [attractions, setAttractions] = useState<Attraction[]>([]);
       
       useEffect(() => {
         fetch('http://164.92.135.103/api/v1/attractions')
@@ -79,32 +80,32 @@ export const Map = () => {
 
       console.log(attractions)
 
-      const [accommodations, setAccommodations] = useState<MapItemCard[]>([]);
+      // const [accommodations, setAccommodations] = useState<MapItemCard[]>([]);
 
-      useEffect(() => {
-        fetch('http://164.92.135.103/api/v1/accommodations')
-          .then(response => response.json())
-          .then(json => setAccommodations(json));
-      }, []);
+      // useEffect(() => {
+      //   fetch('http://164.92.135.103/api/v1/accommodations')
+      //     .then(response => response.json())
+      //     .then(json => setAccommodations(json));
+      // }, []);
 
-      console.log(accommodations)
+      // console.log(accommodations)
 
       
       const attractionsCoordinatesList: PlaceCoordinates[] = [];
       
       attractions.forEach((attraction) => {
-        const lat = +attraction.coordinates[0].latitude;
-        const lng = +attraction.coordinates[0].longitude;
+        const lat = +attraction.geolocations[0].latitude;
+        const lng = +attraction.geolocations[0].longitude;
         attractionsCoordinatesList.push({ lat, lng });
       });
 
 
     return (isLoaded ? (
-        <Box>
+        <Box sx={{overflow: 'hidden'}}>
           <GoogleMap
-            mapContainerStyle={containerStyle}
+            mapContainerStyle={props}
             center={cherkassy}
-            zoom={10}
+            zoom={props.zoom}
             
             onLoad={onLoad}
             onUnmount={onUnmount}

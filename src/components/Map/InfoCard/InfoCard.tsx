@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { PlaceItem } from './PlaceItem';
 import { useState, useEffect } from 'react';
-import { MapItemCard } from "../../TypesAndInterfaces"
+import { Attraction } from "../../TypesAndInterfaces"
 
 
 interface TabPanelProps {
@@ -43,7 +43,7 @@ function a11yProps(index: number) {
 
 export const InfoCard = () => {
   const [value, setValue] = React.useState(0);
-  const [atractionsData, setAtractionsData] = useState<MapItemCard[]>([]);
+  const [atractionsData, setAtractionsData] = useState<Attraction[]>([]);
 
   useEffect(() => {
     fetch('http://164.92.135.103/api/v1/attractions')
