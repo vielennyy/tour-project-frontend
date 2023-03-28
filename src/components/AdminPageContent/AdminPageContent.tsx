@@ -11,6 +11,7 @@ import {AttractionsTab} from "./AttractionsTab";
 import {GalleryTab} from "./GalleryTab";
 import {OffersTabs} from "./OffersTab";
 import {CommentsTab} from "./CommentsTab";
+import {UserToken} from "../TypesAndInterfaces";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,6 +44,10 @@ function a11yProps(index: number) {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
+}
+
+interface myComponentProps{
+  props: UserToken
 }
 
 export const AdminPageContent = ():JSX.Element => {

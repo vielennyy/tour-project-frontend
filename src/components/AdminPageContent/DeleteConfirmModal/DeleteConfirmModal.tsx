@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Box} from '@mui/material';
 
 export const DeleteConfirmModal = ():JSX.Element => {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +20,7 @@ export const DeleteConfirmModal = ():JSX.Element => {
   };
 
   return (
-    <div>
+    <Box>
       <DeleteIcon onClick={handleClickOpen}/>
       <Dialog
         open={open}
@@ -37,6 +38,6 @@ export const DeleteConfirmModal = ():JSX.Element => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }

@@ -41,4 +41,8 @@ export interface Attraction {
     height: string,
     zoom: number,
   }
-  
+
+
+export interface UserToken {
+    token?: string;
+}
