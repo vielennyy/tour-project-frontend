@@ -7,9 +7,6 @@ import {
 } from '@mui/material/';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-import { AdminPopup} from "../../MainPopup/AdminPopup";
-
-
 export const AdminNavBar = ():JSX.Element => {
   const navigate = useNavigate();
 
@@ -24,7 +21,6 @@ export const AdminNavBar = ():JSX.Element => {
       <Button onClick={() => navigate(-1)}>
         <ArrowBackIosIcon/>
       </Button>
-      <AdminPopup/>
     </Box>
   );
 }

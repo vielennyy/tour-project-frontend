@@ -11,6 +11,7 @@ import {AttractionsTab} from "./AttractionsTab";
 import {GalleryTab} from "./GalleryTab";
 import {OffersTabs} from "./OffersTab";
 import {CommentsTab} from "./CommentsTab";
+import {UserToken} from "../TypesAndInterfaces";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,7 +46,11 @@ function a11yProps(index: number) {
   };
 }
 
-export const AdminPageContent = ():JSX.Element => {
+interface myComponentProps{
+  props: UserToken
+}
+
+export const AdminPageContent = ({props}:myComponentProps | undefined):JSX.Element => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

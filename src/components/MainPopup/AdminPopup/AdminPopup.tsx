@@ -22,13 +22,14 @@ export const AdminPopup = ():JSX.Element =>  {
   return (
     <Box >
       <Button onClick={handleClickOpen} sx={{
-        color: '#ffffff'
+        color: '#FF3939'
       }}>
         Вхід
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <Box sx={{
-          position: 'relative'
+          position: 'relative',
+          width: 400
         }}>
           <Button onClick={handleClose} sx={{
             position: 'absolute',

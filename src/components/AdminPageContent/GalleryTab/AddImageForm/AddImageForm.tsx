@@ -6,6 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {Box} from '@mui/material';
+
 
 export const AddImageForm = ():JSX.Element => {
   const [open, setOpen] = React.useState(false);
@@ -17,9 +19,8 @@ export const AddImageForm = ():JSX.Element => {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
-    <div>
+    <Box>
       <Button variant="outlined" onClick={handleClickOpen}>
         Додати
       </Button>
@@ -59,6 +60,6 @@ export const AddImageForm = ():JSX.Element => {
           <Button onClick={handleClose}>Відмінити</Button>
         </DialogActions>
       </Dialog>
-    </div>
-  );
+    </Box>
+  )
 }

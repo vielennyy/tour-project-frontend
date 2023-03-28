@@ -14,3 +14,7 @@ export interface PlaceCoordinates {
     lat:number;
     lng:number;
 }
+
+export interface UserToken {
+    token?: string;
+}
