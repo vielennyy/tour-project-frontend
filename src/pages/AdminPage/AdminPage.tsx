@@ -67,7 +67,7 @@ export const AdminPage = ():JSX.Element => {
   return (
     <Box>
       {isAuthorize ?
-        <AdminPageContent props={token}/> :
+        <AdminPageContent/> :
         <Box sx={{
           width: 500,
           padding: 3,

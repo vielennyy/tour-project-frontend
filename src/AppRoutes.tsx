@@ -2,7 +2,7 @@ import { HomePage } from "./pages/HomePage";
 import { ToursPage } from './pages/ToursPage';
 import { UserPage } from "./pages/UserPage";
 import {AdminPage} from "./pages/AdminPage";
-import {Map} from "./components/Map"
+import {MapPage} from "./pages/MapPage"
 import { PartnerPage } from "./pages/PartnerPage";
 
 const AppRoutes = [
@@ -36,7 +36,7 @@ const AppRoutes = [
   },
   {
     path: '/map',
-    element: <Map/>
+    element: <MapPage/>
   }
 ];
 
