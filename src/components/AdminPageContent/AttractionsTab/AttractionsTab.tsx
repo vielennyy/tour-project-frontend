@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
+import moment from 'moment';
+import 'moment/locale/uk';
 
 import {Table,
   TableBody,
@@ -11,67 +13,73 @@ import {Table,
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import {AddAttractionsForm} from "./AddAttractionsForm";
+import {UserToken} from "../../TypesAndInterfaces";
 
-function createData(
-  id: number,
-  name: string,
-  description: string,
-  latitude: string,
-  longitude: string,
-  tags: string,
-  createAt: string,
-  editedAt: string
-) {
-  return { id, name, description, latitude, longitude, tags, createAt, editedAt};
-}
+export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
+  const [attractions, setAttractions] = useState<[]>([]);
+  const [loading, isLoading] = useState(false);
+  moment.locale('uk');
 
-const rows = [
-  createData(1, 'Мошни', 'Тур в мошнах', '23123123', '231231231', 'гори', '18.03.2023', '18.03.2023')
-];
+  const fetchingAttractions = async () => {
+    isLoading(true)
+    const fetching = await fetch('http://164.92.135.103/api/v1/attractions',
+        {
+          method: "GET",
+          headers: { Authorization: 'Bearer ' +  token }
+        });
+    const json = await fetching.json();
+    isLoading(false);
+    return setAttractions(json);
+  }
 
-export const AttractionsTab = ():JSX.Element =>  {
+  useEffect(() => {
+    fetchingAttractions()
+  }, [])
+
   return (
     <Box>
       <AddAttractionsForm/>
-      <TableContainer>
-        <Table sx={{ minWidth: 1024 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell align="right">Заголовок</TableCell>
-              <TableCell align="right">Опис</TableCell>
-              <TableCell align="right">Широта</TableCell>
-              <TableCell align="right">Довгота</TableCell>
-              <TableCell align="right">Теги</TableCell>
-              <TableCell align="right">Створено</TableCell>
-              <TableCell align="right">Змінено</TableCell>
-              <TableCell align="right">Опції</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell align="right">{row.name}</TableCell>
-                <TableCell align="right">{row.description}</TableCell>
-                <TableCell align="right">{row.latitude}</TableCell>
-                <TableCell align="right">{row.longitude}</TableCell>
-                <TableCell align="right">{row.tags}</TableCell>
-                <TableCell align="right">{row.createAt}</TableCell>
-                <TableCell align="right">{row.editedAt}</TableCell>
-                <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+      {loading ?
+        <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
+        <TableContainer>
+          <Table sx={{ minWidth: 1024 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Id</TableCell>
+                <TableCell align="right">Заголовок</TableCell>
+                <TableCell align="right">Опис</TableCell>
+                <TableCell align="right">Широта</TableCell>
+                <TableCell align="right">Довгота</TableCell>
+                <TableCell align="right">Створено</TableCell>
+                <TableCell align="right">Змінено</TableCell>
+                <TableCell align="right">Опції</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {attractions.map(({id, title, description,geolocations, created_at, updated_at}) => (
+                  <TableRow
+                      key={id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {id}
+                    </TableCell>
+                    <TableCell align="right">{title}</TableCell>
+                    <TableCell align="right">{description}</TableCell>
+                    <TableCell align="right">{geolocations[0]["latitude"]}</TableCell>
+                    <TableCell align="right">{geolocations[0]["longitude"]}</TableCell>
+                    <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
+                    <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
+                    <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                  </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      }
     </Box>
 
   );
