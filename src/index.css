@@ -45,3 +45,10 @@
     font-family: "Gilroy";
     text-decoration: none;
 }
+
+.swiper-button-next, .swiper-button-prev {
+    color: #EF5151;
+}
+::-webkit-scrollbar {
+    display: none;
+}

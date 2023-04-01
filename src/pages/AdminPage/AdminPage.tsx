@@ -13,7 +13,7 @@ interface Values {
 
 export const AdminPage = ():JSX.Element => {
   const [values, setValues] = useState({});
-  const [token, setToket] = useState();
+  const [token, setToken] = useState(undefined);
   const [isAuthorize, setIsAuthorize] = useState(false);
 
   const fetchingUsers = async () => {
@@ -29,14 +29,13 @@ export const AdminPage = ():JSX.Element => {
       setIsAuthorize(true);
     }
     const token = await response.json();
-    setToket(token.token)
+    setToken(token.token)
   }
 
   useEffect(() => {
     fetchingUsers();
   }, [values])
 
-  console.log(token)
   const validationSchema = yup.object({
     email: yup
       // @ts-ignore
@@ -44,6 +43,7 @@ export const AdminPage = ():JSX.Element => {
       .email('Enter a valid email')
       .required('Email is required'),
     password: yup
+
       // @ts-ignore
       .string("Enter your password")
       .min(8, 'Password should be of minimum 8 characters length')
@@ -63,11 +63,10 @@ export const AdminPage = ():JSX.Element => {
     }
   });
 
-  // @ts-ignore
   return (
     <Box>
       {isAuthorize ?
-        <AdminPageContent/> :
+        <AdminPageContent token={token}/> :
         <Box sx={{
           width: 500,
           padding: 3,
@@ -106,42 +105,3 @@ export const AdminPage = ():JSX.Element => {
     </Box>
   )
 }
-
-// <Box sx={{
-//   display: 'flex',
-//   flexDirection: 'column'
-// }}>
-//   <Typography>Signup
-//     admin@test.com Admin123!
-//   </Typography>
-//   <Box>
-//     <Formik
-//       initialValues={{
-//         email: '',
-//         password: ''
-//       }}
-//       onSubmit={(
-//         values: Values,
-//         { setSubmitting }: FormikHelpers<Values>
-//       ) => {
-//         setTimeout(() => {
-//           setValues(values);
-//         }, 500)
-//       }}
-//     >
-//       <Form>
-//         <label htmlFor="email">Email</label>
-//         <Field
-//           id="email"
-//           name="email"
-//           placeholder="john@acme.com"
-//           type="email"
-//         />
-//         <label htmlFor="password">Password</label>
-//         <Field id="password" name="password" placeholder="password" />
-//
-//         <button type="submit">Submit</button>
-//       </Form>
-//     </Formik>
-//   </Box>
-// </Box>

@@ -37,12 +37,14 @@ export const MainPopup = ():JSX.Element =>  {
   return (
     <Box>
       <Button onClick={handleClickOpen} sx={{
-        color: '#000000',
+        color: '#FFFFFF',
         fontSize: 18,
         fontWeight: 400,
         textTransform: 'none',
-        border: '1px solid #FF3939',
-        padding: '0 20px'
+        padding: '0 20px',
+        background: 'rgba(255, 255, 255, 0.15)',
+        height: 45,
+        width: 140
       }}>
         Вхід
       </Button>

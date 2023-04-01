@@ -6,7 +6,7 @@ import {Footer} from "../../components/Footer";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF3939'
+      main: '#EF5151'
     },
   },
   typography: {
