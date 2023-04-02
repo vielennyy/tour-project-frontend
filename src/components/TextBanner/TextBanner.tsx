@@ -9,17 +9,12 @@ export const TextBanner = ():JSX.Element => {
     }}>
       <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', marginTop: '80px'}}>
         <Typography sx={{
-          fontSize: 46,
-          fontWeight: 700,
-          color: '#000000',
           textAlign: 'center'
-        }}>Плануй подорож разом з нами</Typography>
+        }} variant="h2">Плануй подорож разом з нами</Typography>
         <Typography sx={{
-          fontSize: 22,
-          fontWeight: 400,
-          color: '#000000',
-          textAlign: 'center'
-        }}>Ми надаємо бузліч можливостей для планування мандрівки:</Typography>
+          textAlign: 'center',
+          marginTop: 3
+        }} variant="body1">Ми надаємо бузліч можливостей для планування мандрівки:</Typography>
         <Box sx={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
@@ -48,17 +43,12 @@ export const TextBanner = ():JSX.Element => {
               </defs>
             </svg>
             <Typography sx={{
-              fontSize: 28,
-              fontWeight: 600,
-              color: '#000000',
               textAlign: 'center'
-            }}>Шукай житло</Typography>
+            }} variant="h3">Шукай житло</Typography>
             <Typography sx={{
-              fontSize: 18,
-              fontWeight: 400,
-              color: '#000000',
-              textAlign: 'center'
-            }}>На нашому порталі можна знайти комфортні варіанти житла на будь-який бюджет</Typography>
+              textAlign: 'center',
+              marginTop: 2
+            }} variant="body2">На нашому порталі можна знайти комфортні варіанти житла на будь-який бюджет</Typography>
           </Box>
           <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <svg width="118" height="117" viewBox="0 0 118 117" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,17 +75,12 @@ export const TextBanner = ():JSX.Element => {
               </defs>
             </svg>
             <Typography sx={{
-              fontSize: 28,
-              fontWeight: 600,
-              color: '#000000',
               textAlign: 'center'
-            }}>Плануй вечерю</Typography>
+            }} variant="h3">Плануй вечерю</Typography>
             <Typography sx={{
-              fontSize: 18,
-              fontWeight: 400,
-              color: '#000000',
-              textAlign: 'center'
-            }}>Ресторани, кафе та інші місця, де ти можеш скуштувати кулінарні шедеври від кращіх шефів</Typography>
+              textAlign: 'center',
+              marginTop: 2
+            }} variant="body2">Ресторани, кафе та інші місця, де ти можеш скуштувати кулінарні шедеври від кращіх шефів</Typography>
           </Box>
           <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <svg width="118" height="117" viewBox="0 0 118 117" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,32 +102,22 @@ export const TextBanner = ():JSX.Element => {
               </defs>
             </svg>
             <Typography sx={{
-              fontSize: 28,
-              fontWeight: 600,
-              color: '#000000',
               textAlign: 'center'
-            }}>Бронюй тури</Typography>
+            }} variant="h3">Бронюй тури</Typography>
             <Typography sx={{
-              fontSize: 18,
-              fontWeight: 400,
-              color: '#000000',
-              textAlign: 'center'
-            }}>Безліч напрямків по всій області. Знайди місце, яке ти захочеш відвідати наступним</Typography>
+              textAlign: 'center',
+              marginTop: 2
+            }} variant="body2">Безліч напрямків по всій області. Знайди місце, яке ти захочеш відвідати наступним</Typography>
           </Box>
           <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <img src={bagIcon}/>
             <Typography sx={{
-              fontSize: 28,
-              fontWeight: 600,
-              color: '#000000',
               textAlign: 'center'
-            }}>Подорожуй</Typography>
+            }} variant="h3">Подорожуй</Typography>
             <Typography sx={{
-              fontSize: 18,
-              fontWeight: 400,
-              color: '#000000',
-              textAlign: 'center'
-            }}>Відкривай нові горизонти та досліджуй різнобарв'я і красу нашої країни із нами!</Typography>
+              textAlign: 'center',
+              marginTop: 2
+            }} variant="body2">Відкривай нові горизонти та досліджуй різнобарв'я і красу нашої країни із нами!</Typography>
           </Box>
         </Box>
       </Box>

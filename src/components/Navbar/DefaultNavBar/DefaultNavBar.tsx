@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,7 +21,17 @@ import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [path, setPath] = useState(window.location.pathname);
+  const [textColor, setTextColor] = useState('#000000');
 
+  useEffect(() => {
+    if(path === '/') {
+      setTextColor(textColor => '#FFFFFF');
+    } else {
+      setTextColor(textColor => '#000000');
+    }
+    console.log('render')
+  }, [path])
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -136,7 +146,7 @@ export const DefaultNavBar = ():JSX.Element => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
             <Link to={'/accommodations'}>
-              <Typography sx={{margin: '0 20px',color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{margin: '0 20px', color: `${textColor}`, fontSize: 18, fontWeight: 400}}>
                 Де жити?
               </Typography>
             </Link>
