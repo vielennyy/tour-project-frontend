@@ -46,7 +46,3 @@ export interface Attraction {
 export interface UserToken {
     token: string | undefined;
 }
-
-export interface UserRole {
-    role: string;
-}

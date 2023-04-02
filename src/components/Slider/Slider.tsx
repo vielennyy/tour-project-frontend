@@ -27,18 +27,14 @@ export const Slider = ():JSX.Element => {
         alignItems: 'center'
       }}>
         <Typography sx={{
-          fontSize: 46,
-          fontWeight: 700,
-          color: '#000000',
-          textAlign: 'center'
-        }}>Цікаві місця Черкащини</Typography>
+        }} variant="h2">Цікаві місця Черкащини</Typography>
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
           marginTop: 2
         }}>
           <Link to={'/accommodations'}>
-            <Typography sx={{color: '#000000', fontSize: 18, fontWeight: 400}}>
+            <Typography variant="body2">
               Переглянути все
             </Typography>
           </Link>
@@ -50,18 +46,18 @@ export const Slider = ():JSX.Element => {
       }}>
         <Swiper
           modules={[Navigation, A11y, Autoplay ]}
-          spaceBetween={35}
+          spaceBetween={10}
           slidesPerView={4}
           navigation
-          autoplay={{delay: 4000}}
+          // autoplay={{delay: 4000}}
           loop={true}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          style={{padding: '0 30px'}}
+          // style={{padding: '0 50px'}}
         >
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card} style={{width: '100%'}} alt={card}/>
@@ -69,7 +65,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card1} style={{width: '100%'}} alt={card}/>
@@ -77,7 +73,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card2} style={{width: '100%'}} alt={card}/>
@@ -85,7 +81,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card3} style={{width: '100%'}} alt={card}/>
@@ -93,7 +89,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card} style={{width: '100%'}} alt={card}/>
@@ -101,7 +97,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card1} style={{width: '100%'}} alt={card}/>
@@ -109,7 +105,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card2} style={{width: '100%'}} alt={card}/>
@@ -117,7 +113,7 @@ export const Slider = ():JSX.Element => {
           </SwiperSlide>
           <SwiperSlide>
             <Box sx={{
-              width: 250,
+              width: 280,
               borderRadius: '10px',
             }}>
               <img src={card3} style={{width: '100%'}} alt={card}/>

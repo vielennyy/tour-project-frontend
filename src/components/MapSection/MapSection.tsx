@@ -16,16 +16,11 @@ export const MapSection = ():JSX.Element => {
       gap: '20px'
     }}>
       <Box>
+        <Typography variant="h2">Плануй подорож із нами</Typography>
         <Typography sx={{
-          fontSize: 46,
-          fontWeight: 700,
-          color: '#000000'
-        }}>Плануй подорож із нами</Typography>
-        <Typography sx={{
-          fontSize: 18,
-          fontWeight: 400,
-          marginTop: 3
-        }}>Використовуйте нашу інтерактивну мапу, щоб знайти найцікавіши місця нашої області для вашої подорожі.
+          marginTop: 3,
+          maxWidth: 470
+        }} variant="body2">Використовуйте нашу інтерактивну мапу, щоб знайти найцікавіши місця нашої області для вашої подорожі.
           Прокладіть маршрут і отримайте можливость побачити всі найцікавіші місця Черкащини на власні очі!
         </Typography>
         <Button sx={{

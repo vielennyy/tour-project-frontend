@@ -17,24 +17,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import {UserToken} from "../../../TypesAndInterfaces";
 
-function createData(
-  id: number,
-  partner: string,
-  type: string,
-  title: string,
-  latitude: string,
-  longitude: string,
-  status: string,
-  createAt: string,
-  editedAt: string
-) {
-  return { id, partner, type, title, latitude, longitude, status, createAt, editedAt};
-}
-
-const rows = [
-  createData(1, 'PartnerFirst', 'Hostel', 'Україна', '231231231', '231231231', 'Очікує', '18.03.2023', '18.03.2023')
-];
-
 export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
   const [accommodations, setAccommodations] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
@@ -56,7 +38,6 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
     fetchingAccommodations()
   }, [])
 
-  console.log(accommodations)
   return (
     <Box>
       {loading ?

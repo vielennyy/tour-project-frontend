@@ -8,7 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Box} from '@mui/material';
 
-export const AddAdminForm = ():JSX.Element => {
+import {UserToken} from "../../../TypesAndInterfaces";
+
+export const AddAdminForm = ({token}:UserToken):JSX.Element => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -18,6 +20,22 @@ export const AddAdminForm = ():JSX.Element => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const onAdminAdded = async () => {
+    const fetching = await fetch('http://164.92.135.103/api/v1/admins/create_admin',
+      {
+        method: "POST",
+        headers: {
+          Authorization: 'Bearer ' +  token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: "admin3",
+          email: "admin3@test.com",
+          password: "Admin1123!"
+        })
+      });
+  }
 
   return (
     <Box>
@@ -65,7 +83,7 @@ export const AddAdminForm = ():JSX.Element => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Створити</Button>
+          <Button onClick={onAdminAdded}>Створити</Button>
           <Button onClick={handleClose}>Відмінити</Button>
         </DialogActions>
       </Dialog>
