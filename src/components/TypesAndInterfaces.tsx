@@ -40,6 +40,7 @@ export interface MapWindowSize {
     width: string,
     height: string,
     zoom: number,
+<<<<<<< HEAD
 }
 
 export interface Accommodation {
@@ -69,3 +70,11 @@ export interface RoomBookingProps {
     note: string,
 }
   
+=======
+  }
+
+
+export interface UserToken {
+    token: string | undefined;
+}
+>>>>>>> 75804db7174cdd467d99498cc8f00ce4eef24805

@@ -8,9 +8,10 @@ import {AdminTab} from "./AdminTab";
 import {PartnerTab} from "./PartnerTab";
 import {UserTab} from "./UserTab";
 import {AttractionsTab} from "./AttractionsTab";
-import {GalleryTab} from "./GalleryTab";
 import {OffersTabs} from "./OffersTab";
 import {CommentsTab} from "./CommentsTab";
+
+import {UserToken} from "../TypesAndInterfaces";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,9 +46,8 @@ function a11yProps(index: number) {
   };
 }
 
-export const AdminPageContent = ():JSX.Element => {
+export const AdminPageContent = ({token}:UserToken):JSX.Element => {
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -60,30 +60,26 @@ export const AdminPageContent = ():JSX.Element => {
           <Tab label="Бізнес користувачі" {...a11yProps(1)} />
           <Tab label="Користувачі" {...a11yProps(2)} />
           <Tab label="Атракції" {...a11yProps(3)} />
-          <Tab label="Фотогалерея" {...a11yProps(4)} />
-          <Tab label="Пропозиції" {...a11yProps(5)} />
-          <Tab label="Коментарі" {...a11yProps(6)} />
+          <Tab label="Пропозиції" {...a11yProps(4)} />
+          <Tab label="Коментарі" {...a11yProps(5)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <AdminTab/>
+        <AdminTab token={token}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PartnerTab/>
+        <PartnerTab token={token}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserTab/>
+        <UserTab token={token}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <AttractionsTab/>
+        <AttractionsTab token={token}/>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <GalleryTab/>
+        <OffersTabs token={token}/>
       </TabPanel>
       <TabPanel value={value} index={5}>
-        <OffersTabs/>
-      </TabPanel>
-      <TabPanel value={value} index={6}>
         <CommentsTab/>
       </TabPanel>
     </Box>

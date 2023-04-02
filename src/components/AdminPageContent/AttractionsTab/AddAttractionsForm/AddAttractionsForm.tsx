@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {Box} from '@mui/material';
 
 export const AddAttractionsForm = ():JSX.Element => {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +20,7 @@ export const AddAttractionsForm = ():JSX.Element => {
   };
 
   return (
-    <div>
+    <Box>
       <Button variant="outlined" onClick={handleClickOpen}>
         Додати
       </Button>
@@ -69,6 +70,6 @@ export const AddAttractionsForm = ():JSX.Element => {
           <Button onClick={handleClose}>Відмінити</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }

@@ -1,15 +1,17 @@
 import Box from "@mui/material/Box";
 
-import {HomePageContent} from "../../components/HomePageContent";
+import {Banner} from "../../components/Banner";
+import {TextBanner} from "../../components/TextBanner";
+import {Slider} from "../../components/Slider";
+import {MapSection} from "../../components/MapSection";
 
 export const HomePage = () => {
   return(
-
-    <Box sx={{
-      width: {xs: '100%', md: '1024px'},
-      m: '0 auto'
-    }}>
-      <h1>Home page</h1>
+    <Box>
+      <Banner/>
+      <TextBanner/>
+      <Slider/>
+      <MapSection/>
     </Box>
   )
   }

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,7 +21,17 @@ import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [path, setPath] = useState(window.location.pathname);
+  const [textColor, setTextColor] = useState('#000000');
 
+  useEffect(() => {
+    if(path === '/') {
+      setTextColor(textColor => '#FFFFFF');
+    } else {
+      setTextColor(textColor => '#000000');
+    }
+    console.log('render')
+  }, [path])
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -32,9 +42,9 @@ export const DefaultNavBar = ():JSX.Element => {
 
 
   return (
-    <AppBar position="static" sx={{backgroundColor: '#ffffff'}}>
+    <AppBar position="static" sx={{background: 'transparent', position: 'relative', zIndex: 2, boxShadow: 'none'}}>
       <Container sx={{
-        width: 1400
+        width: 1440
       }}>
         <Toolbar disableGutters>
 
@@ -126,7 +136,7 @@ export const DefaultNavBar = ():JSX.Element => {
           <Box sx={{
             display: 'flex',
             alignItems: 'center',
-            padding: 1
+            padding: 1,
           }}>
             <Link to={'/'}>
               <Button>
@@ -134,52 +144,52 @@ export const DefaultNavBar = ():JSX.Element => {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
             <Link to={'/accommodations'}>
-              <Typography sx={{margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{margin: '0 20px', color: `${textColor}`, fontSize: 18, fontWeight: 400}}>
                 Де жити?
               </Typography>
             </Link>
             <Link to={'/foods'}>
-              <Typography sx={{margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{margin: '0 20px',color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
                 Де поїсти?
               </Typography>
             </Link>
             <Link to={'/tours'}>
-              <Typography sx={{ margin: '0 20px', color: '#000000', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
                 Тури
               </Typography>
             </Link>
             <Link to={'/tours'}>
-              <Typography sx={{ margin: '0 20px',color: '#000000', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px',color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
                 Атракції
               </Typography>
             </Link>
             <Link to={'/map'}>
-              <Typography sx={{ margin: '0 20px', color: '#000000', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
                 Мапа
               </Typography>
             </Link>
-            <Box sx={{
-              width: '170px',
-              height: '30px',
-              position: 'relative'
-            }}>
-              <Input sx={{
-                backgroundColor: '#EEEEEE',
-                padding: '0 5px 0 30px',
-                width: '100%',
-                height: '100%'
-              }}
-                placeholder={'Куди їдемо?'}
-              />
-              <SearchIcon sx={{
-                position: 'absolute',
-                top: '4px',
-                left: '5px',
-                color: '#888888'
-              }}/>
-            </Box>
+            {/*<Box sx={{*/}
+            {/*  width: '170px',*/}
+            {/*  height: '30px',*/}
+            {/*  position: 'relative'*/}
+            {/*}}>*/}
+            {/*  <Input sx={{*/}
+            {/*    backgroundColor: '#EEEEEE',*/}
+            {/*    padding: '0 5px 0 30px',*/}
+            {/*    width: '100%',*/}
+            {/*    height: '100%'*/}
+            {/*  }}*/}
+            {/*    placeholder={'Куди їдемо?'}*/}
+            {/*  />*/}
+            {/*  <SearchIcon sx={{*/}
+            {/*    position: 'absolute',*/}
+            {/*    top: '4px',*/}
+            {/*    left: '5px',*/}
+            {/*    color: '#888888'*/}
+            {/*  }}/>*/}
+            {/*</Box>*/}
           </Box>
           <MainPopup/>
         </Toolbar>

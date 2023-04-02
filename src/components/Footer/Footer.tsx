@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {Container} from '@mui/material';
+import {Container, Box, Typography} from '@mui/material';
 
 import { DefaultFooter } from "./DefaultFooter";
 
@@ -12,10 +12,28 @@ export const Footer = ():JSX.Element => {
   }, [path])
 
   return (
-    <Container sx={{
-      width: 1024
-    }}>
-      {path === '/admin' ? null : <DefaultFooter/>}
-    </Container>
-  );
+    <Box>
+      {path === '/admin' ?
+        <Typography sx={{
+          color: '#989A9E',
+          fontSize: 14,
+          fontWeight: 400,
+          marginTop: 2,
+          position: 'fixed',
+          bottom: '20px',
+          left: '20px'}}>
+          © Всі права захищені
+        </Typography> :
+        <Box sx={{
+          width: '100vw',
+          height: 300,
+          background: '#383D44',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <DefaultFooter/>
+        </Box>}
+    </Box>
+  )
 }

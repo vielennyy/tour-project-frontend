@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import { AccommodationsTab } from "./AccommodationsTab";
 import { FoodsTab } from "./FoodsTab";
 import { ToursTab } from "./ToursTab";
+import {UserToken} from "../../TypesAndInterfaces";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +42,7 @@ function a11yProps(index: number) {
   };
 }
 
-export const OffersTabs = ():JSX.Element => {
+export const OffersTabs = ({token}:UserToken):JSX.Element => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -58,13 +59,13 @@ export const OffersTabs = ():JSX.Element => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <AccommodationsTab/>
+        <AccommodationsTab token={token}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <FoodsTab/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ToursTab/>
+        <ToursTab token={token}/>
       </TabPanel>
     </Box>
   );
