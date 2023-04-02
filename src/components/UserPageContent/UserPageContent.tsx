@@ -21,9 +21,9 @@ export const UserPageContent = () => {
                 <CustomSeparator/>
                 <Box sx={{display: 'flex'}}>
                     <Sidebar/>
-                    <Box margin={'0 auto'}>
+                    {/* <Box margin={'0 auto'}>
                         <InfoCard user={user}/>
-                    </Box>
+                    </Box> */}
                 </Box>
             </Box>
         </>

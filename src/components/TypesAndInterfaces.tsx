@@ -36,9 +36,36 @@ export interface Attraction {
     updated_at: string;
   }
 
-  export interface MapWindowSize {
+export interface MapWindowSize {
     width: string,
     height: string,
     zoom: number,
-  }
+}
+
+export interface Accommodation {
+    id: number;
+    name: string;
+    kind: string;
+    address_owner: string;
+    email: string;
+    person: string;
+    phone: string;
+    reg_code: string;
+    description: string;
+    status: string;
+    created_at: Date;
+    updated_at: Date;
+    user_id: number;
+}
+
+export interface RoomBookingProps {
+    id: number,
+    userId: number,
+    roomId: number,
+    numberOfPeople: number,
+    checkIn: Date,
+    checkOut: Date,
+    confirmation: boolean,
+    note: string,
+}
   
