@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
+import moment from 'moment';
+import 'moment/locale/uk';
 
 import {Table,
   TableBody,
@@ -10,6 +12,11 @@ import {Table,
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import CircularProgress from "@mui/material/CircularProgress";
+
+
+import {UserToken} from "../../../TypesAndInterfaces";
+
 
 function createData(
   id: number,
@@ -29,7 +36,27 @@ const rows = [
   createData(1, 'PartnerThird', 'Мошни', 'Мандрівка Мошнами', 300, '30.03.2023 10:00', 'Очікує', '18.03.2023', '18.03.2023')
 ];
 
-export const ToursTab = ():JSX.Element =>  {
+export const ToursTab = ({token}:UserToken):JSX.Element =>  {
+  const [tours, setTours] = useState<[]>([]);
+  const [loading, isLoading] = useState(false);
+  moment.locale('uk');
+
+  const fetchingTours = async () => {
+    isLoading(true)
+    const fetching = await fetch('http://164.92.135.103/api/v1/tours',
+      {
+        method: "GET",
+        headers: { Authorization: 'Bearer ' +  token }
+      });
+    const json = await fetching.json();
+    isLoading(false);
+    return setTours(json.data);
+  }
+
+  useEffect(() => {
+    fetchingTours()
+  }, [])
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 1024 }} aria-label="simple table">

@@ -65,7 +65,7 @@ export const OffersTabs = ({token}:UserToken):JSX.Element => {
         <FoodsTab/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <ToursTab/>
+        <ToursTab token={token}/>
       </TabPanel>
     </Box>
   );

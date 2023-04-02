@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from "@mui/material/CircularProgress";
 
-import {UserToken, UserRole} from "../../TypesAndInterfaces";
+import {UserToken} from "../../TypesAndInterfaces";
 
 export const PartnerTab = ({token}:UserToken):JSX.Element =>  {
   const [partners, setPartners] = useState<[]>([]);
@@ -21,14 +21,14 @@ export const PartnerTab = ({token}:UserToken):JSX.Element =>  {
   moment.locale('uk');
   const fetchingUsers = async () => {
     isLoading(true)
-    const fetching = await fetch('http://164.92.135.103/api/v1/users',
+    const fetching = await fetch('http://164.92.135.103/api/v1/users/?role=partner',
         {
           method: "GET",
           headers: { Authorization: 'Bearer ' +  token }
         });
     const json = await fetching.json();
     isLoading(false);
-    return setPartners(json.filter(({role}:UserRole) => role === 'partner'));
+    return setPartners(json);
   }
 
   useEffect(() => {

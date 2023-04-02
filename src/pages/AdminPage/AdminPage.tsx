@@ -36,6 +36,8 @@ export const AdminPage = ():JSX.Element => {
     fetchingUsers();
   }, [values])
 
+  console.log(values)
+
   const validationSchema = yup.object({
     email: yup
       // @ts-ignore
