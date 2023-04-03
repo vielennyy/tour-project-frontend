@@ -46,3 +46,8 @@ export interface Attraction {
 export interface UserToken {
     token: string | undefined;
 }
+
+export interface LoginTypes {
+  email: string;
+  password: string;
+}
