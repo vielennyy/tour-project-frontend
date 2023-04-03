@@ -5,18 +5,14 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import {AdminPageContent} from "../../components/AdminPageContent";
-
-interface Values {
-  email: string;
-  password: string;
-}
+import {LoginTypes} from "../../components/TypesAndInterfaces";
 
 export const AdminPage = ():JSX.Element => {
   const [values, setValues] = useState({});
   const [token, setToken] = useState(undefined);
   const [isAuthorize, setIsAuthorize] = useState(false);
 
-  const fetchingUsers = async () => {
+  const login = async () => {
     const response = await fetch(`http://164.92.135.103/api/v1/auth/login`,
       {
         method: "POST",
@@ -33,10 +29,8 @@ export const AdminPage = ():JSX.Element => {
   }
 
   useEffect(() => {
-    fetchingUsers();
+    login();
   }, [values])
-
-  console.log(values)
 
   const validationSchema = yup.object({
     email: yup
@@ -58,7 +52,7 @@ export const AdminPage = ():JSX.Element => {
       password: 'Admin123!',
     },
     validationSchema: validationSchema,
-    onSubmit: (values: Values) => {
+    onSubmit: (values: LoginTypes) => {
       setTimeout(() => {
           setValues(values);
         }, 500)

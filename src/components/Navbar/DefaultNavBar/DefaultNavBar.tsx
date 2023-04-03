@@ -1,5 +1,6 @@
-import React,{useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Link } from 'react-router-dom';
+import {UserContext} from "../../../UserContext";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -14,6 +15,7 @@ import {
   MenuItem,
   Input  } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { MainPopup} from "../../MainPopup";
 
@@ -21,17 +23,8 @@ import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [path, setPath] = useState(window.location.pathname);
-  const [textColor, setTextColor] = useState('#000000');
+  const {isAuthorize, setIsAuthorize} = useContext(UserContext);
 
-  useEffect(() => {
-    if(path === '/') {
-      setTextColor(textColor => '#FFFFFF');
-    } else {
-      setTextColor(textColor => '#000000');
-    }
-    console.log('render')
-  }, [path])
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -146,7 +139,7 @@ export const DefaultNavBar = ():JSX.Element => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
             <Link to={'/accommodations'}>
-              <Typography sx={{margin: '0 20px', color: `${textColor}`, fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{margin: '0 20px', color: `#FFFFFF`, fontSize: 18, fontWeight: 400}}>
                 Де жити?
               </Typography>
             </Link>
@@ -191,7 +184,19 @@ export const DefaultNavBar = ():JSX.Element => {
             {/*  }}/>*/}
             {/*</Box>*/}
           </Box>
+          {isAuthorize ?
+          <Box sx={{
+            width: 150,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end'
+          }}>
+            <Link to={'/user'}>
+              <AccountCircleIcon sx={{color: '#ffffff', marginTop: 1}}/>
+            </Link>
+          </Box> :
           <MainPopup/>
+          }
         </Toolbar>
       </Container>
     </AppBar>
