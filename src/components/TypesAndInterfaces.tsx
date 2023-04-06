@@ -25,25 +25,25 @@ export interface PlaceCoordinates {
 }
 
 export interface Attraction {
+id: number;
+title: string;
+description: string;
+image_url: string | null;
+geolocations: {
     id: number;
-    title: string;
-    description: string;
-    geolocations: {
-      id: number;
-      latitude: string;
-      longitude: string;
-      street: string;
-      suite: string | null;
-      locality: string;
-      zip_code: string | null;
-      geolocationable_id: number;
-      geolocationable_type: string;
-      created_at: string;
-      updated_at: string;
-    }[];
+    geolocationable_id: number;
+    geolocationable_type: string;
+    latitude: string;
+    longitude: string;
+    street: string;
+    suite: string | null;
+    locality: string;
+    zip_code: string | null;
     created_at: string;
     updated_at: string;
-  }
+}[];
+updated_at: string;
+}
 
 export interface MapWindowSize {
     width: string,

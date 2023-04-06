@@ -81,33 +81,44 @@ export const Map = ({props}:myComponentProps) => {
       const [attractions, setAttractions] = useState<Attraction[]>([]);
       
       useEffect(() => {
-        fetch('http://164.92.135.103/api/v1/attractions')
+        fetch('https://cktour.club/api/v1/attractions')
           .then(response => response.json())
           .then(json => setAttractions(json));
       }, []);
-
-      console.log(attractions)
-
-      const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
-
-      useEffect(() => {
-        fetch('http://164.92.135.103/api/v1/accommodations')
-          .then(response => response.json())
-          .then(json => setAccommodations(json.data));
-      }, []);
-
-      console.log(accommodations)
-
       
       const attractionsCoordinatesList: PlaceCoordinates[] = [];
-      
+
       attractions.forEach((attraction) => {
-        const lat = +attraction.geolocations[0].latitude;
-        const lng = +attraction.geolocations[0].longitude;
-        attractionsCoordinatesList.push({ lat, lng });
+        const geolocations = attraction.geolocations;
+        if (geolocations && geolocations.length > 0) {
+          const latitude = geolocations[0].latitude;
+          const longitude = geolocations[0].longitude;
+          if (latitude && longitude) {
+            attractionsCoordinatesList.push({ lat: +latitude, lng: +longitude });
+          }
+        }
       });
 
+      // const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
 
+      // useEffect(() => {
+      //   fetch('https://cktour.club/api/v1/accommodations')
+      //     .then(response => response.json())
+      //     .then(json => setAccommodations(json.data));
+      // }, []);
+
+      // console.log(accommodations)
+
+    const [caterings, setCaterings] = useState([])
+
+    useEffect(() => {
+      fetch('https://cktour.club/api/v1/accommodations')
+        .then(response => response.json())
+        .then(json => setCaterings(json.data));
+    }, []);
+
+    console.log(caterings)
+    
     return (isLoaded ? (
         <Box sx={{overflow: 'hidden'}}>
           <GoogleMap
