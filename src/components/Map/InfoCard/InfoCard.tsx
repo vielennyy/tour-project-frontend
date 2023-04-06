@@ -43,15 +43,13 @@ function a11yProps(index: number) {
 
 export const InfoCard = () => {
   const [value, setValue] = React.useState(0);
-  const [atractionsData, setAtractionsData] = useState<Attraction[]>([]);
+  const [attractionsData, setAttractionsData] = useState<Attraction[]>([]);
 
   useEffect(() => {
-    fetch('http://164.92.135.103/api/v1/attractions')
+    fetch('https://cktour.club/api/v1/attractions')
       .then(response => response.json())
-      .then(json => setAtractionsData(json));
+      .then(json => setAttractionsData(json));
   }, []);
-
-//   console.log(atractionsData)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -81,7 +79,7 @@ export const InfoCard = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {atractionsData.map(attraction => <PlaceItem key={attraction.id} {...attraction}/>)}
+        {attractionsData.map(attraction => <PlaceItem key={attraction.id} {...attraction}/>) }
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

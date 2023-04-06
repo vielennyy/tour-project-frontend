@@ -1,15 +1,28 @@
-import { Marker } from '@react-google-maps/api';
+import { Marker, MarkerProps } from '@react-google-maps/api';
 import { PlaceCoordinates } from 'src/components/TypesAndInterfaces';
 import attractionImg from '../MarkerImages/attraction_img.svg'
-
+import React from 'react'
 interface myComponentProps{
-    position: PlaceCoordinates
+    position: PlaceCoordinates,
+    onClick: any,
 }
 
-export const AttractionMarker = ({position}:myComponentProps) => {
+interface AttractionMarkerProps {
+    position: google.maps.LatLngLiteral;
+    setZoom: React.Dispatch<React.SetStateAction<number>>;
+  }
+
+export const AttractionMarker: React.FC<AttractionMarkerProps> = ({ position, setZoom }: AttractionMarkerProps) => {
+    const handleMarkerClick = () => {
+        console.log('zoom')
+        setZoom(15); // set the zoom level to 15 when the marker is clicked
+      };
+
     return(
-        <Marker position={position}
-            icon={attractionImg}/>
+        <Marker
+        position={position}
+        onClick={handleMarkerClick}
+        icon={attractionImg}/>
         
         // <></>
     )
