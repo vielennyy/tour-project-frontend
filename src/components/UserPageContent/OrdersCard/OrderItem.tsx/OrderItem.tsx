@@ -48,7 +48,7 @@ export const OrderItem = ({props}:myComponentProps) => {
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
                     borderRadius: '15px'}} 
-            width={920} 
+            width={720} 
             border={'none'} 
             margin={'0px'} 
             display="flex" 

@@ -8,7 +8,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { InfoCard } from '../InfoCard';
-import { PartnerInfoCardProps } from 'src/components/TypesAndInterfaces';
+import { PartnerInfoCardProps, User } from 'src/components/TypesAndInterfaces';
 import { OrdersCard } from '../OrdersCard';
 import { AdvertisementCard } from '../AdvertismentCard';
 import { RatesAndPaymentCard } from '../RatesAndPaymentsCard';
@@ -50,6 +50,7 @@ function a11yProps(index: number) {
 export const Sidebar = () => {
   const [value, setValue] = React.useState(0);
   const [ordersTab, setOrdersTab] = React.useState(false)
+  const [adverticementsTab, setAdverticementsTab] = React.useState(false)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -57,13 +58,17 @@ export const Sidebar = () => {
   const handlesClickOrdersTab = (event: React.SyntheticEvent) => {
     setOrdersTab(!ordersTab)
   }
+  const handlesClickAdverticementsTab = (event: React.SyntheticEvent) => {
+    setAdverticementsTab(!adverticementsTab)
+  }
 
-  const user:PartnerInfoCardProps = {
-    isCompany: true,
-    firstName: "Анастасія",
-    lastName: "Андрощук",
-    phoneNumber: "+38 (097) 00 11 111",
+  const user:User = {
+    id: 1,
+    name: "Анастасія Андрощук",
     email: "an.androshchuk@gmail.com",
+    phone: "+38 (097) 00 11 111",
+    password_digest: '906PY***kkk',
+    role: 1,
 }
 
   return (
@@ -72,11 +77,10 @@ export const Sidebar = () => {
     >
       <Tabs
         orientation="vertical"
-        variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={ { justifyContent: 'flex-start', marginLeft: '10px', color:'#777777', fontFamily: 'Roboto', 
+        sx={ { width: '250px', justifyContent: 'flex-start', margin: '0px 80px 0px 10px', color:'#777777', fontFamily: 'Roboto', 
         '& .MuiTabs-indicator': {
             display: 'none',
           },
@@ -92,50 +96,85 @@ export const Sidebar = () => {
                     Профіль
                 </Typography>
             </>} 
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
             {...a11yProps(0)} />
-        <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                    <SvgIcon component={BookingIcon} color='inherit'/>
-                    <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
-                        Мої бронювання
-                    </Typography>
-                </Box>
+        
+        <Box onClick={handlesClickOrdersTab}
+            sx={{ padding: '8px 0px', display: 'flex', alignItems: 'center', flexDirection: 'row', fontFamily: 'Roboto', cursor: 'pointer'}}>
+                <SvgIcon component={BookingIcon} color='inherit'/>
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+                Мої бронювання
+                </Typography>
+        </Box>
             
-            
-            
-        <Tab label={
-                    <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
-                        Житло
-                    </Typography>
+        {ordersTab ? 
+            <Tab label={
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+                    Житло
+                </Typography>
             }
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
-            onClick={handlesClickOrdersTab}
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
             {...a11yProps(1)} />
-        <Tab label={
-                    <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
-                        Заклади
-                    </Typography>
+            :
+            <></>
+        }  
+        {ordersTab ? 
+            <Tab label={
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+                    Заклади
+                </Typography>
             }
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
-            onClick={handlesClickOrdersTab}
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
             {...a11yProps(2)} />
-        <Tab label={
-                    <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+            :
+            <></>
+        }  
+        {ordersTab ? 
+            <Tab label={
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
                     Тури
-                    </Typography>
+                </Typography>
             }
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
-            onClick={handlesClickOrdersTab}
-            {...a11yProps(3)} />        
-        <Tab label={
-            <>
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
+            {...a11yProps(3)} />
+            :
+            <></>
+        }
+               
+        
+            <Box 
+                onClick={handlesClickAdverticementsTab}
+                sx={{ padding: '8px 0px', display: 'flex', alignItems: 'center', flexDirection: 'row', fontFamily: 'Roboto', cursor: 'pointer'}}
+            >
                 <SvgIcon component={AdvertismentIcon} color='inherit'/>
                 <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
                     Мої оголошення
                 </Typography>
-            </>}
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
-            {...a11yProps(4)} />       
+            </Box>
+            
+        {adverticementsTab ? 
+            <Tab label={
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+                    На перевірці
+                </Typography>
+            }
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
+            {...a11yProps(4)} />
+            :
+            <></>
+        }
+
+        {adverticementsTab ? 
+            <Tab label={
+                <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
+                    Активні
+                </Typography>
+            }
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'column', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
+            {...a11yProps(5)} />
+            :
+            <></>
+        }   
         <Tab label={
             <>
                 <SvgIcon component={PaymentIcon} color='inherit'/>
@@ -143,37 +182,35 @@ export const Sidebar = () => {
                     Тарифи і оплата
                 </Typography>
             </>}
-            sx={{ padding: '12px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
-            {...a11yProps(5)} />      
+            sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
+            {...a11yProps(6)} />      
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Box sx={{margin: '0px 80px'}}>
             <InfoCard user={user} />
-        </Box>
       </TabPanel>
-      {/* <TabPanel value={value} index={1}>
-        
-      </TabPanel> */}
+      <TabPanel value={value} index={1}>
+      <OrdersCard/>
+      </TabPanel>
       <TabPanel value={value} index={2}>
-      <Box sx={{padding: '0px 80px', width: '100%', height: '100%'}}>
-            <OrdersCard/>
-        </Box>
+        <OrdersCard/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <h1>Caterings</h1>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Item Five
+        <h1>Tours</h1>
       </TabPanel>
       <TabPanel value={value} index={5}>
-      <Box sx={{padding: '0px 80px', display: 'block'}}>
-            <AdvertisementCard/>
-        </Box>
+            {/* <AdvertisementCard/> */}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        <Box sx={{padding: '0px 80px', display: 'block', width: '100%', height: '100%'}}>
-                <RatesAndPaymentCard/>
-            </Box>
+        <AdvertisementCard isActive={false}/>
+      </TabPanel> 
+    <TabPanel value={value} index={7}>
+        <AdvertisementCard isActive={true}/>
+    </TabPanel>
+      <TabPanel value={value} index={8}>
+    <h1>Rates and payments</h1>
       </TabPanel>
     </Box>
   );

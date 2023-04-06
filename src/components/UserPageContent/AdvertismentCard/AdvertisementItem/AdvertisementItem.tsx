@@ -42,7 +42,7 @@ const CheckingItem = ({props}:myComponentProps) =>{
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
                     borderRadius: '15px'}} 
-            width={920} 
+            width={720} 
             border={'none'} 
             margin={'0px 0px 20px 0px'} 
             justifyContent={'space-between'}
@@ -78,7 +78,7 @@ const ConfirmedItem = ({props}:myComponentProps) => {
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
                     borderRadius: '15px'}} 
-            width={920} 
+            width={720} 
             border={'none'} 
             margin={'0px 0px 20px 0px'} 
             justifyContent={'space-between'}
@@ -102,8 +102,8 @@ const ConfirmedItem = ({props}:myComponentProps) => {
                         </>}
                     />
                     <Box display='flex' flexDirection={'column'}>
-                    <Button variant="contained"  sx={{width: '300px', marginBottom: '20px', textTransform:'none', fontSize:'20px', padding:'20px 60px'}}>Редагувати</Button>
-                    <Button variant="outlined" sx={{width: '300px', right: 0, textTransform:'none', fontSize:'20px', padding:'20px 60px', color: '#777777', borderColor:'#777777'}}>Переглянути</Button>
+                    <Button variant="contained"  sx={{width: '200px', marginBottom: '20px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Редагувати</Button>
+                    <Button variant="outlined" sx={{width: '200px', right: 0, textTransform:'none', fontSize:'20px', padding:'10px 30px', color: '#777777', borderColor:'#777777'}}>Переглянути</Button>
                     </Box>
 
                 </ListItem>

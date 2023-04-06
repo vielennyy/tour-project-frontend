@@ -10,6 +10,15 @@ export interface PartnerInfoCardProps {
     ZIPcode?:number;
 }
 
+export interface User {
+    id: number,
+    name?: string,
+    email: string,
+    password_digest: string,
+    phone?: string,
+    role: number,
+}
+
 export interface PlaceCoordinates {
     lat:number;
     lng:number;
@@ -73,4 +82,5 @@ export interface RoomBookingProps {
 export interface UserToken {
     token: string | undefined;
 }
+
 

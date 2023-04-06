@@ -2,7 +2,11 @@ import Typography from '@mui/material/Typography';
 import { Accommodation } from 'src/components/TypesAndInterfaces';
 import { AdvertisementItem } from './AdvertisementItem';
 
-export const AdvertisementCard = () => {
+interface myComponentProps {
+    isActive: boolean,
+}
+
+export const AdvertisementCard = (isActive :myComponentProps) => {
     const advertisement: Accommodation = {
         id: 1,
         name: "Hotel Selena Family Resort",
