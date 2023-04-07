@@ -13,7 +13,7 @@ export const AdminPage = ():JSX.Element => {
   const [isAuthorize, setIsAuthorize] = useState(false);
 
   const login = async () => {
-    const response = await fetch(`http://164.92.135.103/api/v1/auth/login`,
+    const response = await fetch(`https://cktour.club/api/v1/auth/login`,
       {
         method: "POST",
         headers: {

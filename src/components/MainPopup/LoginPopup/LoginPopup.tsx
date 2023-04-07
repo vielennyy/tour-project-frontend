@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {UserContext} from "../../../UserContext";
+// import {UserAuthorization} from "../../../UserContext";
 
 import { Box,
   Typography,
@@ -14,12 +15,11 @@ import {LoginTypes} from "../../TypesAndInterfaces";
 
 export const LoginPopup = ():JSX.Element =>  {
   const [values, setValues] = useState({});
-  const [token, setToken] = useState(undefined);
 
-  const {isAuthorize, setIsAuthorize} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
 
   const login = async () => {
-    const response = await fetch(`http://164.92.135.103/api/v1/auth/login`,
+    const response = await fetch(`https://cktour.club/api/v1/auth/login`,
       {
         method: "POST",
         headers: {
@@ -27,15 +27,26 @@ export const LoginPopup = ():JSX.Element =>  {
         },
         body: JSON.stringify(values)
       })
+
+    const res = await response.json();
     if(response.status === 200) {
-      setIsAuthorize(true);
+      // @ts-ignore
+      setUser(() => {
+        return ({
+          isAuthorize: true,
+          id: res.user_id,
+          token: res.token
+        });
+      });
+      localStorage.setItem('token', res.token)
     }
-    const token = await response.json();
-    setToken(token.token)
   }
+  // email: 'tourist@test.com',
+//   password: 'User123!',
   useEffect(() => {
     login();
   }, [values])
+
 
   const validationSchema = yup.object({
     email: yup
@@ -60,6 +71,9 @@ export const LoginPopup = ():JSX.Element =>  {
     onSubmit: (values: LoginTypes) => {
       setTimeout(() => {
         setValues(values);
+      }, 500)
+      setTimeout(() => {
+        login();
       }, 500)
     }
   });
@@ -112,6 +126,13 @@ export const LoginPopup = ():JSX.Element =>  {
             helperText={formik.touched.password && formik.errors.password}
             sx={{marginTop: '15px'}}
           />
+          {/*{response === 400 ?*/}
+          {/*  <Typography variant="body2" sx={{*/}
+          {/*    marginTop: 1,*/}
+          {/*    color: '#EF5151'*/}
+          {/*  }}>Invalid</Typography> :*/}
+          {/*  null*/}
+          {/*}*/}
           <Button color="primary" variant="contained" fullWidth type="submit" sx={{
             width: 200,
             height: 40,
@@ -125,6 +146,9 @@ export const LoginPopup = ():JSX.Element =>  {
     </Box>
   );
 }
+
+// email: 'tourist@test.com',
+//   password: 'User123!',
 //
 // <TextField
 //   hiddenLabel={true}
