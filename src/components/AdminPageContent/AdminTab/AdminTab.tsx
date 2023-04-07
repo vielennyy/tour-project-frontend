@@ -25,7 +25,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
   moment.locale('uk');
   const fetchingUsers = async () => {
     isLoading(true)
-    const fetching = await fetch('http://164.92.135.103/api/v1/users?role=admin',
+    const fetching = await fetch('https://cktour.club/api/v1/users?role=admin',
       {
         method: "GET",
         headers: { Authorization: 'Bearer ' +  token }

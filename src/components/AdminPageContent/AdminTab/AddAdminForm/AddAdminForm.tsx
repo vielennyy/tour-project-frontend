@@ -22,7 +22,7 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
   };
 
   const onAdminAdded = async () => {
-    const fetching = await fetch('http://164.92.135.103/api/v1/admins/create_admin',
+    const fetching = await fetch('https://cktour.club/api/v1/admins/create_admin',
       {
         method: "POST",
         headers: {
@@ -30,9 +30,9 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: "admin3",
-          email: "admin3@test.com",
-          password: "Admin1123!"
+          name: "admin1",
+          email: "admin1@test.com",
+          password: "Admin123!"
         })
       });
   }

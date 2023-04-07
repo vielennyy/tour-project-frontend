@@ -22,7 +22,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
 
   const fetchingUsers = async () => {
     isLoading(true)
-    const fetching = await fetch('http://164.92.135.103/api/v1/users/?role=tourist',
+    const fetching = await fetch('https://cktour.club/api/v1/users?role=tourist',
         {
           method: "GET",
           headers: { Authorization: 'Bearer ' +  token }

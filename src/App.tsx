@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useMemo } from 'react';
+import { useState} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {Box} from "@mui/material";
 
@@ -6,13 +6,15 @@ import {Layout} from "./pages/Layout";
 import AppRoutes from "./AppRoutes"
 
 import {UserContext} from "./UserContext";
+import { UserContextTypes} from "./components/TypesAndInterfaces";
 
 function App():JSX.Element {
-  const [isAuthorize, setIsAuthorize] = useState(false);
+  const [user, setUser] = useState({isAuthorize: false, token: '', id: ''});
 
+  console.log(user)
   return (
 	<Box>
-    <UserContext.Provider value={{isAuthorize, setIsAuthorize}}>
+    <UserContext.Provider value={{user, setUser}}>
       <Layout>
         <Routes>
           {AppRoutes.map((route, index) => {

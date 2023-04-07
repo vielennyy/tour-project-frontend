@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import { Link } from 'react-router-dom';
 import {UserContext} from "../../../UserContext";
+import { UserObject} from "../../TypesAndInterfaces";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -23,7 +24,22 @@ import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const {isAuthorize, setIsAuthorize} = useContext(UserContext);
+  // const [currentUser, setCurrentUser] = useState<string | undefined>();
+  const {user} = useContext(UserContext);
+
+  // const fetchingCurrentUsers = async () => {
+  //   const fetching = await fetch(`https://cktour.club/api/v1/users/${user.id}`,
+  //     {
+  //       method: "GET",
+  //       headers: { Authorization: 'Bearer ' +  user.token }
+  //     });
+  //   const json = await fetching.json();
+  //   return setCurrentUser(json.name);
+  // }
+  //
+  // useEffect(() => {
+  //   fetchingCurrentUsers()
+  // }, [user])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -32,7 +48,6 @@ export const DefaultNavBar = ():JSX.Element => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
 
   return (
     <AppBar position="static" sx={{background: 'transparent', position: 'relative', zIndex: 2, boxShadow: 'none'}}>
@@ -184,7 +199,7 @@ export const DefaultNavBar = ():JSX.Element => {
             {/*  }}/>*/}
             {/*</Box>*/}
           </Box>
-          {isAuthorize ?
+          {localStorage.getItem('token') ?
           <Box sx={{
             width: 150,
             display: 'flex',
@@ -192,7 +207,7 @@ export const DefaultNavBar = ():JSX.Element => {
             justifyContent: 'flex-end'
           }}>
             <Link to={'/user'}>
-              <AccountCircleIcon sx={{color: '#ffffff', marginTop: 1}}/>
+              <AccountCircleIcon sx={{color: '#ffffff', marginTop: 1}} fontSize='large'/>
             </Link>
           </Box> :
           <MainPopup/>

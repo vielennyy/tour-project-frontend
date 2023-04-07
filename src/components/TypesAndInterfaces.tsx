@@ -87,3 +87,13 @@ export interface LoginTypes {
   email: string;
   password: string;
 }
+
+export interface UserContextTypes {
+  isAuthorize: boolean;
+  token: string;
+  id: string
+}
+
+export interface UserObject {
+    name: string | undefined;
+}

@@ -25,7 +25,7 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
 
   const fetchingAttractions = async () => {
     isLoading(true)
-    const fetching = await fetch('http://164.92.135.103/api/v1/attractions',
+    const fetching = await fetch('https://cktour.club/api/v1/attractions',
         {
           method: "GET",
           headers: { Authorization: 'Bearer ' +  token }
