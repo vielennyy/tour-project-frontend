@@ -24,18 +24,27 @@ const theme = createTheme({
     },
     h3: {
       fontFamily: 'Gilroy, normal',
-      fontSize: 28,
+      fontSize: 32,
       fontWeight: 600,
       color: '#000000'
     },
     h4: {
-      fontFamily: 'Gilroy, normal'
+      fontFamily: 'Gilroy, normal',
+      fontSize: 28,
+      fontWeight: 500,
+      color: '#000000'
     },
     h5: {
-      fontFamily: 'Gilroy, normal'
+      fontFamily: 'Gilroy, normal',
+      fontSize: 20,
+      fontWeight: 500,
+      color: '#000000'
     },
     h6: {
-      fontFamily: 'Gilroy, normal'
+      fontFamily: 'Gilroy, normal',
+      fontSize: 16,
+      fontWeight: 400,
+      color: '#000000'
     },
     body1: {
       fontFamily: 'Roboto, sans-serif',
@@ -48,7 +57,8 @@ const theme = createTheme({
       fontWeight: 400,
       fontSize: 18,
       color: '#000000'
-    }
+    },
+
   },
 });
 
@@ -57,9 +67,14 @@ export const Layout = (props:any):JSX.Element => {
    return(
      <ThemeProvider theme={theme}>
        <CssBaseline/>
-       <Box>
+       <Box sx={{
+         display: 'flex',
+         flexDirection: 'column'
+       }}>
          <NavBar/>
-         <Box>
+         <Box sx={{
+           flex: 1
+         }}>
            {props.children}
          </Box>
          <Footer/>

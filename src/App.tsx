@@ -6,12 +6,10 @@ import {Layout} from "./pages/Layout";
 import AppRoutes from "./AppRoutes"
 
 import {UserContext} from "./UserContext";
-import { UserContextTypes} from "./components/TypesAndInterfaces";
 
 function App():JSX.Element {
   const [user, setUser] = useState({isAuthorize: false, token: '', id: ''});
 
-  console.log(user)
   return (
 	<Box>
     <UserContext.Provider value={{user, setUser}}>

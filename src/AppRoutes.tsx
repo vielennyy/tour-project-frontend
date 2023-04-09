@@ -1,9 +1,13 @@
 import { HomePage } from "./pages/HomePage";
 import { ToursPage } from './pages/ToursPage';
 import { UserPage } from "./pages/UserPage";
-import {AdminPage} from "./pages/AdminPage";
-import {MapPage} from "./pages/MapPage"
+import { AdminPage } from "./pages/AdminPage";
+import { MapPage } from "./pages/MapPage"
 import { PartnerPage } from "./pages/PartnerPage";
+import { AccommodationsPage } from "./pages/AccommodationsPage";
+import { AccommodationPage } from "./pages/AccommodationPage";
+import { CateringPage } from "./pages/CateringPage";
+import { CateringItemPage } from "./pages/CateringItemPage";
 
 const AppRoutes = [
   {
@@ -20,11 +24,19 @@ const AppRoutes = [
   },
   {
     path: '/accommodations',
-    element: <ToursPage />
+    element: <AccommodationsPage />
   },
   {
-    path: '/foods',
-    element: <ToursPage />
+    path: '/accommodations/:id',
+    element: <AccommodationPage/>
+  },
+  {
+    path: '/catering',
+    element: <CateringPage />
+  },
+  {
+    path: '/catering/:id',
+    element: <CateringItemPage />
   },
   {
     path: '/partner',
@@ -37,6 +49,10 @@ const AppRoutes = [
   {
     path: '/map',
     element: <MapPage/>
+  },
+  {
+    path: '/accommodations/:id',
+    element: <AccommodationPage/>
   }
 ];
 

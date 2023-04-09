@@ -1,6 +1,6 @@
 import {Box, Typography, Container} from '@mui/material';
 
-import bagIcon from '../../assets/icons/bag.svg';
+import bagIcon from '../../../assets/icons/bag.svg';
 
 export const TextBanner = ():JSX.Element => {
   return(
