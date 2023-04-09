@@ -1,16 +1,17 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import {Box} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import {Box,
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle} from '@mui/material';
 
 import {UserToken} from "../../../TypesAndInterfaces";
 
 export const AddAdminForm = ({token}:UserToken):JSX.Element => {
+  const [values, setValues] = useState({});
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -29,14 +30,46 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
           Authorization: 'Bearer ' +  token,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          name: "admin1",
-          email: "admin1@test.com",
-          password: "Admin123!"
-        })
+        body: JSON.stringify(values)
       });
   }
 
+  useEffect(() => {
+    onAdminAdded();
+    setTimeout(() => {
+      handleClose();
+    }, 1000)
+  }, [values])
+
+  const validationSchema = yup.object({
+    email: yup
+      // @ts-ignore
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+    password: yup
+
+      // @ts-ignore
+      .string("Enter your password")
+      .min(8, 'Password should be of minimum 8 characters length')
+      .required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: 'admin',
+      email: 'admin@test.com',
+      password: 'User123!',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      setValues(values)
+      // setTimeout(() => {
+      //   onAdminAdded()
+      // }, 500)
+    }
+  });
+  console.log(values)
   return (
     <Box>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -44,48 +77,57 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Новий адміністратор</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="ПІБ"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="E-mail адреса"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Пароль"
-            type="password"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Підтвердження пароля"
-            type="password"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onAdminAdded}>Створити</Button>
-          <Button onClick={handleClose}>Відмінити</Button>
-        </DialogActions>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: 2,
+          padding: 2,
+          minWidth: 400
+        }}>
+          <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
+            <TextField
+              fullWidth
+              id="name"
+              name="name"
+              label="Ім'я"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Електронна пошта"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              sx={{marginTop: "25px"}}
+            />
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Пароль"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              sx={{marginTop: '15px'}}
+            />
+            <Button color="primary" variant="contained" fullWidth type="submit" sx={{
+              width: 200,
+              height: 40,
+              marginTop: "25px",
+              borderRadius: '10px',
+            }}>
+              Додати
+            </Button>
+          </form>
+        </Box>
       </Dialog>
     </Box>
   );

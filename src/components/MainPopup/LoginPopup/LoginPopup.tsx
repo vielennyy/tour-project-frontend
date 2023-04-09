@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {UserContext} from "../../../UserContext";
-// import {UserAuthorization} from "../../../UserContext";
 
 import { Box,
   Typography,
@@ -41,8 +40,7 @@ export const LoginPopup = ():JSX.Element =>  {
       localStorage.setItem('token', res.token)
     }
   }
-  // email: 'tourist@test.com',
-//   password: 'User123!',
+
   useEffect(() => {
     login();
   }, [values])

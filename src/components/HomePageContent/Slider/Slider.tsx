@@ -10,11 +10,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 
-import card from '../../assets/image/Card.png';
-import card1 from '../../assets/image/Card1.png';
-import card2 from '../../assets/image/Card2.png';
-import card3 from '../../assets/image/Card3.png';
-import React from "react";
+import card from '../../../assets/image/Card.png';
+import card1 from '../../../assets/image/Card1.png';
+import card2 from '../../../assets/image/Card2.png';
+import card3 from '../../../assets/image/Card3.png';
 export const Slider = ():JSX.Element => {
   return(
     <Container sx={{
@@ -49,7 +48,7 @@ export const Slider = ():JSX.Element => {
           spaceBetween={10}
           slidesPerView={4}
           navigation
-          // autoplay={{delay: 4000}}
+          autoplay={{delay: 4000}}
           loop={true}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}

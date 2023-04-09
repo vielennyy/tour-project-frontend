@@ -1,40 +1,41 @@
-import {Box,
-  Typography,
-  Button,
-  TextField} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-
-import bg from '../../assets/image/banner.jpg';
 import React from "react";
-export const Banner = ():JSX.Element => {
-  return (
-    <Box sx={{position: 'relative', height: '700px', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
-      <img src={bg} style={{
-        position: 'absolute',
-        top: '-120px',
-        left: 0,
-        width: '100%',
-        filter: 'brightness(70%)',
-        objectFit: 'cover',
-        maxHeight: '820px'}}/>
-      <Typography sx={{
-        position: 'relative',
-        zIndex: 2,
-        color: '#FFFFFF',
-        width: '800px',
-        textAlign: 'center'
-      }} variant="h1">Подорож Україною - відкриття краси і культури</Typography>
+import { Link } from 'react-router-dom';
+
+import {Box, Button, Typography, Breadcrumbs} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+export const SearchBar = ():JSX.Element => {
+  const breadcrumbs = [
+    <Link to={'/'}>
+      <Typography variant="body2">
+        Головна
+      </Typography>
+    </Link>,
+    <Link to={'/catering'}>
+      <Typography variant="body2">
+        Де поїсти?
+      </Typography>
+    </Link>,
+  ];
+  return(
+    <Box sx={{
+      paddingTop: 2
+    }}>
+      <Breadcrumbs separator="·" aria-label="breadcrumb" sx={{color: '#EF5151'}}>
+        {breadcrumbs}
+      </Breadcrumbs>
       <Box sx={{
         position: 'relative',
         zIndex: 2,
         width: '650px',
         height: '60px',
         background: '#ffffff',
+        margin: '0 auto',
         marginTop: 4,
         borderRadius: '7px',
         padding: 1,
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)'
       }}>
         <Box sx={{
           display: 'flex',
@@ -55,12 +56,15 @@ export const Banner = ():JSX.Element => {
           padding: '10px 30px',
           borderRadius: '7px',
         }}
-        variant="contained">
+                variant="contained">
           <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
             Пошук
           </Typography>
         </Button>
       </Box>
+      <Typography variant='h3' sx={{textAlign: 'center', marginTop: 2}}>
+        Заклади у м. Черкаси:
+      </Typography>
     </Box>
   )
 }
