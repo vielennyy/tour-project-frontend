@@ -1,14 +1,12 @@
 import {Box} from '@mui/material';
 import {Typography, TextField, Button, FormControl} from '@mui/material';
 import {Link, SvgIcon} from '@mui/material';
-import { User } from 'src/components/TypesAndInterfaces';
+import { User, UserContextTypes } from 'src/components/TypesAndInterfaces';
 import { ReactComponent as EditIcon } from '../UserPageIcons/edit 1.svg';
 import { ReactComponent as LogOut } from '../UserPageIcons/log-out 1.svg';
-import { useState } from 'react';
-
-interface MyComponentProps {
-    user: User;
-}
+import { useState, useContext, useEffect } from 'react';
+import { UserContext } from 'src/UserContext';
+import { localStorageAvailable } from '@mui/x-data-grid/utils/utils';
 
 interface InfoBoxProps {
     user: User;
@@ -16,9 +14,10 @@ interface InfoBoxProps {
     setInfoEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
-export const InfoCard = ({user}:MyComponentProps) => {
+export const InfoCard = () => {
     const [ infoEditMode, setInfoEditMode ] = useState(false)
     const [ passwordEditMode, setPasswordEditMode ] = useState(false)
+    const { user } = useContext(UserContext)
 
     const handleInfoEditMode = () => {
         setInfoEditMode(!infoEditMode)
@@ -28,19 +27,47 @@ export const InfoCard = ({user}:MyComponentProps) => {
         setPasswordEditMode(!passwordEditMode)
     }
 
-    return(
-       <>   
-            {infoEditMode ? 
-                <EditInfoBox user={user} editMode={infoEditMode} setInfoEditMode={setInfoEditMode} /> 
-                : 
-                <InfoBox user={user} editMode={infoEditMode} setInfoEditMode={setInfoEditMode}/>
-            }
+    console.log(user)
+    const [userData, setUserData] = useState<User>();
 
-            {passwordEditMode ? <></> : <PasswordBox/>}
-            
-            <Exit/>
+    useEffect(() => {
+        fetch(`https://cktour.club/api/v1/users/${user.id}`, {
+            method: "GET",
+            headers: { Authorization: 'Bearer ' +  user.token }
+          })
+          .then(response => response.json())
+          .then(json => setUserData(json));
+      }, [userData]);
+
+    console.log(userData)
+
+    return (
+        <>
+          {userData ? (
+            <>
+              {infoEditMode ? (
+                <EditInfoBox
+                  user={userData as User}
+                  editMode={infoEditMode}
+                  setInfoEditMode={setInfoEditMode}
+                />
+              ) : (
+                <InfoBox
+                  user={userData as User}
+                  editMode={infoEditMode}
+                  setInfoEditMode={setInfoEditMode}
+                />
+              )}
+      
+              {passwordEditMode ? <></> : <PasswordBox />}
+      
+              <Exit />
+            </>
+          ) : (
+            <><Exit /></>
+          )}
         </>
-    )
+      );
 }
 
 // TODO editPassword component
@@ -55,7 +82,7 @@ const Exit = () => {
                 flexDirection={'row'} 
                 justifyContent={'right'}
             >
-                        <Link underline="hover" color="inherit" fontSize='25' href="/" sx={{marginRight: '10px'}}>
+                        <Link underline="hover" color="inherit" fontSize='25' href='/' onClick={() => {localStorage.removeItem('token')}} sx={{marginRight: '10px'}}>
                             <Typography fontSize={22} fontWeight={400}>Вийти з акаунту</Typography>
                         </Link>
                         <SvgIcon sx={{marginTop: '5px'}}><LogOut/></SvgIcon>
@@ -118,7 +145,7 @@ const InfoBox = ({user, editMode, setInfoEditMode}:InfoBoxProps) => {
                     justifyContent={'space-between'}
                 >
                     <Typography sx={{marginBottom: '20px'}}>{user.name}</Typography>
-                    <Typography sx={{marginBottom: '20px'}}>{user.phone}</Typography>
+                    {/* <Typography sx={{marginBottom: '20px'}}>'NOT in Base'</Typography> */}
                     <Typography >{user.email}</Typography>
                 </Box>
             </Box>
@@ -209,7 +236,7 @@ const EditInfoBox = ({user, editMode, setInfoEditMode}:InfoBoxProps) => {
                     <Typography fontSize={18} marginBottom={'5px'}>Ім’я та прізвище</Typography>
                     <TextField id="outlined-basic" defaultValue={user.name} onChange={handleFormChange}/>
                     <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Телефон</Typography>
-                    <TextField id="outlined-basic" defaultValue={user.phone} onChange={handleFormChange}/>
+                    {/* <TextField id="outlined-basic" defaultValue={user.phone} onChange={handleFormChange}/> */}
                     <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Email</Typography>
                     <TextField id="outlined-basic" defaultValue={user.email} onChange={handleFormChange}/>
                 </FormControl>

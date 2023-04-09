@@ -11,13 +11,18 @@ export interface PartnerInfoCardProps {
 }
 
 export interface User {
-    id: number,
-    name?: string,
-    email: string,
-    password_digest: string,
-    phone?: string,
-    role: number,
-}
+    created_at: string;
+    email: string;
+    id: number;
+    name: string;
+    password_digest: string;
+    reset_password_sent_at: string | null;
+    reset_password_token: string | null;
+    role: string;
+    stripe_id: string;
+    updated_at: string;
+  }
+  
 
 export interface PlaceCoordinates {
     lat:number;
