@@ -88,6 +88,13 @@ export interface LoginTypes {
   password: string;
 }
 
+export interface RegisterTypes {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+}
+
 export interface UserContextTypes {
   isAuthorize: boolean;
   token: string;

@@ -50,7 +50,7 @@ export const DefaultNavBar = ():JSX.Element => {
   };
 
   return (
-    <AppBar position="static" sx={{background: 'transparent', position: 'relative', zIndex: 2, boxShadow: 'none'}}>
+    <AppBar position="static" sx={{background: '#ffffff', position: 'relative', zIndex: 2}}>
       <Container sx={{
         width: 1440
       }}>
@@ -154,27 +154,27 @@ export const DefaultNavBar = ():JSX.Element => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
             <Link to={'/accommodations'}>
-              <Typography sx={{margin: '0 20px', color: `#FFFFFF`, fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Де жити?
               </Typography>
             </Link>
-            <Link to={'/foods'}>
-              <Typography sx={{margin: '0 20px',color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
+            <Link to={'/catering'}>
+              <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Де поїсти?
               </Typography>
             </Link>
             <Link to={'/tours'}>
-              <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Тури
               </Typography>
             </Link>
             <Link to={'/tours'}>
-              <Typography sx={{ margin: '0 20px',color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Атракції
               </Typography>
             </Link>
             <Link to={'/map'}>
-              <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 400}}>
+              <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Мапа
               </Typography>
             </Link>
@@ -207,7 +207,7 @@ export const DefaultNavBar = ():JSX.Element => {
             justifyContent: 'flex-end'
           }}>
             <Link to={'/user'}>
-              <AccountCircleIcon sx={{color: '#ffffff', marginTop: 1}} fontSize='large'/>
+              <AccountCircleIcon sx={{color: '#000000', marginTop: 1}} fontSize='large'/>
             </Link>
           </Box> :
           <MainPopup/>

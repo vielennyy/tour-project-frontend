@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {Box, Container, Typography, Button} from '@mui/material';
 import React from "react";
 
-import map from '../../assets/image/map.jpg';
+import map from '../../../assets/image/map.jpg';
 export const MapSection = ():JSX.Element => {
   return(
     <Container sx={{

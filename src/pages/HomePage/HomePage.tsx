@@ -1,17 +1,7 @@
-import Box from "@mui/material/Box";
-
-import {Banner} from "../../components/Banner";
-import {TextBanner} from "../../components/TextBanner";
-import {Slider} from "../../components/Slider";
-import {MapSection} from "../../components/MapSection";
+import { HomePageContent } from "../../components/HomePageContent";
 
 export const HomePage = () => {
   return(
-    <Box>
-      <Banner/>
-      <TextBanner/>
-      <Slider/>
-      <MapSection/>
-    </Box>
+    <HomePageContent/>
   )
-  }
+}
