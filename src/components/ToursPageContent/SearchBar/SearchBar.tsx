@@ -10,9 +10,9 @@ export const SearchBar = ():JSX.Element => {
         Головна
       </Typography>
     </Link>,
-    <Link to={'/catering'}>
+    <Link to={'/tours'}>
       <Typography variant="body2">
-        Де поїсти?
+        Тури
       </Typography>
     </Link>,
   ];
@@ -43,7 +43,7 @@ export const SearchBar = ():JSX.Element => {
           marginLeft: 1
         }}>
           <SearchIcon/>
-          <input type="text" placeholder="Де поїсти?" style={{
+          <input type="text" placeholder="Куди їдемо?" style={{
             border: 'none',
             width: 200,
             padding: '5px 10px',
@@ -63,7 +63,7 @@ export const SearchBar = ():JSX.Element => {
         </Button>
       </Box>
       <Typography variant='h3' sx={{textAlign: 'center', marginTop: 2}}>
-        Заклади у м. Черкаси:
+        Тури у м. Черкаси:
       </Typography>
     </Box>
   )
