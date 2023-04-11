@@ -9,6 +9,8 @@ import { CateringPage } from "./pages/CateringPage";
 import { CateringItemPage } from "./pages/CateringItemPage";
 import { ToursPage } from './pages/ToursPage';
 import { TourPage } from "./pages/TourPage";
+import { AttractionsPage } from "./pages/AttractionsPage";
+import { AttractionPage } from "./pages/AttractionPage";
 
 const AppRoutes = [
   {
@@ -44,6 +46,14 @@ const AppRoutes = [
     element: <TourPage />
   },
   {
+    path: '/attractions',
+    element: <AttractionsPage />
+  },
+  {
+    path: '/attractions/:id',
+    element: <AttractionPage />
+  },
+  {
     path: '/partner',
     element: <PartnerPage/>
   },
@@ -54,10 +64,6 @@ const AppRoutes = [
   {
     path: '/map',
     element: <MapPage/>
-  },
-  {
-    path: '/accommodations/:id',
-    element: <AccommodationPage/>
   }
 ];
 

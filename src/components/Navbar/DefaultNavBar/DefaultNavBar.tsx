@@ -168,7 +168,7 @@ export const DefaultNavBar = ():JSX.Element => {
                 Тури
               </Typography>
             </Link>
-            <Link to={'/tours'}>
+            <Link to={'/attractions'}>
               <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Атракції
               </Typography>
