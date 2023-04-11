@@ -3,6 +3,7 @@ import { Container } from "@mui/material";
 import { TourHeader } from "./TourHeader";
 import { TourSlide } from "./TourSlide";
 import { TourDescr } from "./TourDescr";
+import { TourPlaces } from "./TourPlaces";
 import { TourReservation } from "./TourReservation";
 import { TourComments } from "./TourComments";
 import { TourMap } from "./TourMap";
@@ -17,6 +18,7 @@ export const TourPageContent = ():JSX.Element => {
       <TourHeader/>
       <TourSlide/>
       <TourDescr/>
+      <TourPlaces/>
       <TourReservation/>
       <TourComments/>
       <TourMap/>
