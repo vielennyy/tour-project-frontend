@@ -45,32 +45,55 @@ const ShortPlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
 
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
-                <ListItem onClick={()=>{setShowMore(!showMore)}} sx={{cursor: 'pointer', boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
-                    borderRadius: '15px'}} alignItems="flex-start">
-            <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" variant="rounded" sx={{width: '70px', height: '70px', marginRight: '40px'}} src="/static/images/avatar/1.jpg" />
-                    </ListItemAvatar>
-                    <ListItemText
+            <ListItem onClick={() => { setShowMore(!showMore) }} sx={{ cursor: 'pointer', boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)', borderRadius: '15px' }} alignItems="flex-start">
+                <ListItemAvatar>
+                    {place.image_url ?
+                    <Avatar alt="Remy Sharp" variant="rounded" sx={{ width: '70px', height: '70px', marginRight: '40px' }} src={place.image_url} />
+                    :
+                    <Avatar alt="Remy Sharp" variant="rounded" sx={{ width: '70px', height: '70px', marginRight: '40px' }} src="/static/images/avatar/1.jpg" />
+                }
+                </ListItemAvatar>
+                <ListItemText
                     primary={place.title}
                     secondary={
-                        <React.Fragment>
-                        <HalfRating/>
+                    <React.Fragment>
+                    <HalfRating/>
+                    {place.geolocations.length > 0 && place.geolocations[0] && place.geolocations[0].geolocationable_type ?
+                        <Typography
+                        sx={{ display: 'block' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                    >
+                        {place.geolocations[0].geolocationable_type}
+                    </Typography>
+                        :
+                        <></>
+                    }
+                    {place.geolocations.length > 0 && place.geolocations[0] && place.geolocations[0].locality ?
+                        <>
+                        <img src={locationIcon}/>
                         <Typography
                             sx={{ display: 'block' }}
                             component="span"
                             variant="body2"
                             color="text.primary"
                         >
-                            {place.geolocations[0].geolocationable_type}
+                            {place.geolocations[0].locality}
                         </Typography>
-                        <img src={locationIcon}/>
-                        {place.geolocations[0].locality}
-                        </React.Fragment>
-                    }/>
-            </ListItem>
-     </List>
-    )
-}
+                        </>
+                        :
+                        <></>
+                        
+                    }
+                    </React.Fragment>
+      }
+    />
+  </ListItem>
+</List>
+)}
+
+  
 
 const MorePlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
 
@@ -78,8 +101,11 @@ const MorePlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
             <ListItem sx={{cursor: 'pointer', marginBottom: '10px', display: 'flex', flexDirection: 'column', boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
             borderRadius: '15px'}} alignItems="flex-start">
                 <Box sx={{ width: "100%", height: "100%", display: 'flex', justifyContent: "center", alignItems: "center"}}>
+                {place.image_url ?
+                    <Avatar alt="Remy Sharp" variant="rounded" sx={{width: '300px', height: '210px', margin: '10px 0px 0px 0px'}} src={place.image_url} />
+                    :
                     <Avatar alt="Remy Sharp" variant="rounded" sx={{width: '300px', height: '210px', margin: '10px 0px 0px 0px'}} src="/static/images/avatar/1.jpg" />
-                </Box>
+                }</Box>
                 <Box sx={{
                     width: '100%',
                     display: 'flex',
@@ -88,7 +114,11 @@ const MorePlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
                     margin: '10px 0px'
                 }}>
                     <Typography fontSize={18} fontWeight={500}>{place.title}</Typography>
-                    <Typography fontSize={14} fontWeight={300}>{place.geolocations[0].geolocationable_type}</Typography>
+                    {place.geolocations.length > 0 && place.geolocations[0] && place.geolocations[0].geolocationable_type ?
+                        <Typography fontSize={14} fontWeight={300}>{place.geolocations[0].geolocationable_type}</Typography>
+                        :
+                        <></>
+                    }
                 </Box>
                 <Box sx={{
                     width: '100%',
@@ -97,10 +127,15 @@ const MorePlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
                     alignItems: 'center',
                 }}>
                     <HalfRating/>
-                    <Typography fontSize={15} fontWeight={400}>
+                    {place.geolocations.length > 0 && place.geolocations[0] && place.geolocations[0].locality ?
+                        <Typography fontSize={15} fontWeight={400}>
                         <img src={locationIcon}/>
                         {place.geolocations[0].locality}
-                    </Typography>
+                        </Typography>
+                        :
+                        <></>
+                    }
+                    
                 </Box>
                 <Typography fontSize={15} fontWeight={400}>{place.description.slice(0, 150) + '...'}</Typography>
                 
@@ -117,7 +152,6 @@ const MorePlaceInfo = ({place, showMore, setShowMore}:myComponentProps) => {
                         <img src={arrow}/>
                     </Typography>
                 </Box>
-
         </ListItem>
         
     )

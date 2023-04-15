@@ -12,6 +12,14 @@ interface AttractionMarkerProps {
     setZoom: React.Dispatch<React.SetStateAction<number>>;
   }
 
+// const icon = {
+//   img: attractionImg,
+//   scaledSize: {
+//     width: 50,
+//     height: 50,
+//   }
+// }
+
 export const AttractionMarker: React.FC<AttractionMarkerProps> = ({ position, setZoom }: AttractionMarkerProps) => {
     const handleMarkerClick = () => {
         console.log('zoom')
