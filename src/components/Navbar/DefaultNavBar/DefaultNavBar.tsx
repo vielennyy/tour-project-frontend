@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { Link } from 'react-router-dom';
 import {UserContext} from "../../../UserContext";
-import { UserObject} from "../../TypesAndInterfaces";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -168,7 +167,7 @@ export const DefaultNavBar = ():JSX.Element => {
                 Тури
               </Typography>
             </Link>
-            <Link to={'/tours'}>
+            <Link to={'/attractions'}>
               <Typography sx={{ margin: '0 20px'}} variant="body2">
                 Атракції
               </Typography>

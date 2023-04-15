@@ -12,14 +12,17 @@ import {Table,
 
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-
-import {AddAdminForm} from "./AddAdminForm";
-import {DeleteConfirmModal} from "../DeleteConfirmModal";
 import CircularProgress from '@mui/material/CircularProgress';
+
+
+import { AddAdminForm } from "./AddAdminForm";
+import { DeleteConfirmModal } from "../DeleteConfirmModal"
+import { ViewModal } from "../ViewModal";
 
 import {UserToken} from "../../TypesAndInterfaces";
 
 export const AdminTab = ({token}:UserToken):JSX.Element =>  {
+  const fetchUrl = 'https://cktour.club/api/v1/users/';
   const [admins, setAdmins] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
@@ -28,7 +31,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/users?role=admin',
       {
         method: "GET",
-        headers: { Authorization: 'Bearer ' +  token }
+        headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
       });
     const json = await fetching.json();
     isLoading(false);
@@ -39,14 +42,13 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
     fetchingUsers()
   }, [])
 
-  console.log(admins)
   return (
     <Box>
       <AddAdminForm token={token}/>
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>
-          <Table sx={{ width: 1024 }} aria-label="simple table">
+          <Table sx={{ width: 1200 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
@@ -68,7 +70,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{name}</TableCell>
                     <TableCell align="right">{email}</TableCell>
                     <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right" sx={{display: 'flex', flexDirection: 'row-reverse'}}><EditIcon/><RemoveRedEyeIcon/><DeleteConfirmModal/></TableCell>
+                    <TableCell align="right" sx={{display: 'flex'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}
             </TableBody>

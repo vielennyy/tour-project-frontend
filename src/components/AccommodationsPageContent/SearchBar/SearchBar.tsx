@@ -43,7 +43,7 @@ export const SearchBar = ():JSX.Element => {
           marginLeft: 1
         }}>
           <SearchIcon/>
-          <input type="text" placeholder="Куди їдемо?" style={{
+          <input type="text" placeholder="Де жити?" style={{
             border: 'none',
             width: 200,
             padding: '5px 10px',
