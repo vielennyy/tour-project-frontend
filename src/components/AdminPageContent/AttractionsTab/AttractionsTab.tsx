@@ -10,15 +10,17 @@ import {Table,
   Box,
   TableRow} from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import {AddAttractionsForm} from "./AddAttractionsForm";
+import { DeleteConfirmModal } from "../DeleteConfirmModal";
+import { AddAttractionsForm } from "./AddAttractionsForm";
+import { EditAttractionForm } from "./EditAttractionForm";
+
 import {UserToken} from "../../TypesAndInterfaces";
 
 export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
+  const fetchUrl = 'https://cktour.club/api/v1/attractions/';
   const [attractions, setAttractions] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
@@ -38,10 +40,10 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
   useEffect(() => {
     fetchingAttractions()
   }, [])
-
+  console.log(attractions)
   return (
     <Box>
-      <AddAttractionsForm/>
+      <AddAttractionsForm token={token}/>
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>
@@ -69,11 +71,11 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
                     </TableCell>
                     <TableCell align="right">{title}</TableCell>
                     <TableCell align="right">{description}</TableCell>
-                    <TableCell align="right">{geolocations[0]["latitude"]}</TableCell>
-                    <TableCell align="right">{geolocations[0]["longitude"]}</TableCell>
+                    <TableCell align="right">{geolocations[0] ? geolocations[0]["latitude"] : 'Невказано' }</TableCell>
+                    <TableCell align="right">{geolocations[0] ? geolocations[0]["longitude"] : 'Невказано' }</TableCell>
                     <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
                     <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                    <TableCell align="right"><EditAttractionForm props={{title, description, id}}/><DeleteConfirmModal props={{id, fetchUrl}}/></TableCell>
                   </TableRow>
               ))}
             </TableBody>
@@ -84,3 +86,4 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
 
   );
 }
+

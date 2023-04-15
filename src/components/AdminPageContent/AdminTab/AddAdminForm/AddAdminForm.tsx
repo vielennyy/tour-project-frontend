@@ -69,7 +69,7 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
       // }, 500)
     }
   });
-  console.log(values)
+
   return (
     <Box>
       <Button variant="outlined" onClick={handleClickOpen}>

@@ -25,7 +25,7 @@ export const AttractionsPageContent = ():JSX.Element => {
       }}>
         <SearchBar/>
         <MainCards/>
-        <SecondaryCards/>
+        {/*<SecondaryCards/>*/}
         <Box sx={{
           display: 'flex',
           justifyContent: 'center'
@@ -36,6 +36,7 @@ export const AttractionsPageContent = ():JSX.Element => {
             borderRadius: '7px',
             width: 280,
             maxHeight: 60,
+            marginTop: 4
           }}
                   variant="contained">
             <Typography sx={{ color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>

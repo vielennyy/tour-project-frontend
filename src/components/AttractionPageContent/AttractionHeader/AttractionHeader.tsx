@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom';
 import { Box, Typography, Breadcrumbs} from "@mui/material";
 import rating from "../../../assets/image/accommodations/Rating.png";
 import location_icon from "../../../assets/image/accommodations/Location_icon.png";
+import {Attraction} from "../../TypesAndInterfaces";
 
-export const AttractionHeader = ():JSX.Element => {
+interface AttractionProps {
+  attraction: Attraction
+}
+
+export const AttractionHeader = ({attraction}:AttractionProps):JSX.Element => {
   const breadcrumbs = [
     <Link to={'/'}>
       <Typography variant="body2">
@@ -19,7 +24,7 @@ export const AttractionHeader = ():JSX.Element => {
     </Link>,
     <Link to={`/attractions/${1}`}>
       <Typography variant="body2">
-        Національний дендрологічний парк «Софіївка»
+        {attraction.title}
       </Typography>
     </Link>,
   ];
@@ -29,7 +34,7 @@ export const AttractionHeader = ():JSX.Element => {
       <Breadcrumbs separator="·" aria-label="breadcrumb" sx={{color: '#EF5151'}}>
         {breadcrumbs}
       </Breadcrumbs>
-      <Typography variant='h2' sx={{marginTop: 8}}>Національний дендрологічний парк «Софіївка»</Typography>
+      <Typography variant='h2' sx={{marginTop: 8}}>{attraction.title}</Typography>
       <Box sx={{
         marginTop: 3,
         display: 'flex',
@@ -57,7 +62,7 @@ export const AttractionHeader = ():JSX.Element => {
         }}>
           <img src={location_icon} alt='location_icon' style={{width: '24px', height: '28px'}}/>
           <Typography variant='h5' sx={{marginLeft: 2}}>
-            м. Умань, Уманський р-н, Черкаська обл.
+            {attraction.geolocations[0] ? attraction.geolocations[0]["locality"] : 'Невказано'}
           </Typography>
         </Box>
       </Box>

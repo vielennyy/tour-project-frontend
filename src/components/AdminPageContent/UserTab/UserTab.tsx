@@ -13,9 +13,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
+import { DeleteConfirmModal } from "../DeleteConfirmModal";
+import { ViewModal } from "../ViewModal";
+
 import {UserToken} from "../../TypesAndInterfaces";
 
 export const UserTab = ({token}:UserToken):JSX.Element =>  {
+  const fetchUrl = 'https://cktour.club/api/v1/users/';
   const [tourist, setTourist] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
@@ -31,9 +35,8 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
     isLoading(false);
     return setTourist(json);
   }
-
   useEffect(() => {
-    fetchingUsers()
+    fetchingUsers();
   }, [])
 
   return (
@@ -41,7 +44,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>
-          <Table sx={{ width: 1024 }} aria-label="simple table">
+          <Table sx={{ width: 1200 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
@@ -65,7 +68,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{email}</TableCell>
                     <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
                     <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right"><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                    <TableCell align="right" sx={{display: 'flex', borderBottom: 'none'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}
             </TableBody>
