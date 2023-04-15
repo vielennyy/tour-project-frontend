@@ -8,6 +8,7 @@ import { AccommodationsPage } from "./pages/AccommodationsPage";
 import { AccommodationPage } from "./pages/AccommodationPage";
 import { CateringPage } from "./pages/CateringPage";
 import { CateringItemPage } from "./pages/CateringItemPage";
+import { MainPage } from "./components/AddAdvertisement/MainPage";
 
 const AppRoutes = [
   {
@@ -53,6 +54,10 @@ const AppRoutes = [
   {
     path: '/accommodations/:id',
     element: <AccommodationPage/>
+  },
+  {
+    path: '/add-advertisement',
+    element: <MainPage/>
   }
 ];
 

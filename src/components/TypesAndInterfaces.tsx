@@ -18,6 +18,7 @@ export interface User {
     password_digest: string;
     reset_password_sent_at: string | null;
     reset_password_token: string | null;
+    phone?: string;
     role: string;
     stripe_id: string;
     updated_at: string;

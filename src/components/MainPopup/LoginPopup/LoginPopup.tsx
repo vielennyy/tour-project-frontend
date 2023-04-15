@@ -38,6 +38,7 @@ export const LoginPopup = ():JSX.Element =>  {
         });
       });
       localStorage.setItem('token', res.token)
+      localStorage.setItem('id', res.user_id)
     }
   }
 

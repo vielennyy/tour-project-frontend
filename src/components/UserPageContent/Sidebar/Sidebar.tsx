@@ -64,7 +64,7 @@ export const Sidebar = () => {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 500 }}
+      sx={{flexGrow: 1, bgcolor: 'background.paper', display: 'flex', minHeight: 700 }}
     >
       <Tabs
         orientation="vertical"
@@ -201,7 +201,7 @@ export const Sidebar = () => {
         <AdvertisementCard isActive={true}/>
     </TabPanel>
       <TabPanel value={value} index={8}>
-    <h1>Rates and payments</h1>
+          <RatesAndPaymentCard></RatesAndPaymentCard>
       </TabPanel>
     </Box>
   );
