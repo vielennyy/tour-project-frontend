@@ -25,6 +25,5 @@ export const TypeAdvertisement = () => {
                     <Typography fontSize={24} fontWeight={500} textAlign={'center'}>Зачекайте затвердження вашої реєстрації</Typography>
                 </Box>
         </Box>
-        // </Box>
     )
 }
