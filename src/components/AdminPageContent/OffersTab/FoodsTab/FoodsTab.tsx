@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
+import moment from 'moment';
+import 'moment/locale/uk';
 
 import {Table,
   TableBody,
@@ -10,6 +12,8 @@ import {Table,
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
+import {UserToken} from "../../../TypesAndInterfaces";
 
 function createData(
   id: number,
@@ -29,7 +33,28 @@ const rows = [
   createData(1, 'PartnerSecond', 'FastFood', 'McDonald`s', '231231231', '231231231', 'Очікує', '18.03.2023', '18.03.2023')
 ];
 
-export const FoodsTab = ():JSX.Element =>  {
+export const FoodsTab = ({token}:UserToken):JSX.Element =>  {
+  const [catering, setCatering] = useState<[]>([]);
+  const [loading, isLoading] = useState(false);
+  moment.locale('uk');
+
+  const fetchingCatering = async () => {
+    isLoading(true)
+    const fetching = await fetch('https://cktour.club/api/v1/caterings',
+      {
+        method: "GET",
+        headers: { Authorization: 'Bearer ' +  token }
+      });
+    const json = await fetching.json();
+    isLoading(false);
+    return setCatering(json.data);
+  }
+
+  // useEffect(() => {
+  //   fetchingCatering()
+  // }, [])
+  // console.log(catering)
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 1024 }} aria-label="simple table">

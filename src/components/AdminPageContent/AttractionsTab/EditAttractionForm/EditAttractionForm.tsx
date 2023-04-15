@@ -1,27 +1,33 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 
-import {
-  Box,
+import {Box,
   Button,
   TextField,
   Dialog,
-  Typography
-} from '@mui/material';
+  Typography} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { useFormik } from 'formik';
-import {UserToken} from "../../../TypesAndInterfaces";
 
 interface Values {
-  name: string;
+  title: string;
   description: string;
 }
 
-const initialValues = {
-  name: '',
-  description: '',
+interface ValuesProps {
+  props: {
+    title: string;
+    description: string;
+    id: string;
+  }
 }
-export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
+
+export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
+  const initialValues = {
+    title: props.title,
+    description: props.description,
+  }
   const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
   const [open, setOpen] = React.useState(false);
 
@@ -34,14 +40,13 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
   };
   const onAttractionAdded = (values: Values) => {
     const formData = new FormData();
-    console.log(values, file);
-    formData.append('title', values.name);
+    formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('image', file);
 
-    fetch('https://cktour.club/api/v1/attractions',
+    fetch(`https://cktour.club/api/v1/attractions/${props.id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
         },
@@ -60,22 +65,14 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
       image: file
     },
     onSubmit: (values:Values) => {
-      // console.log(values);
-      // setValues({...values});
       onAttractionAdded(values);
     }
   });
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //
-  //   }, 1000)
-  // }, [values])
-
   return (
     <Box>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Додати
+        <EditIcon/>
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <Box sx={{
@@ -99,7 +96,7 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
               id="name"
               name="name"
               label="Заголовок"
-              value={formik.values.name}
+              value={formik.values.title}
               onChange={formik.handleChange}
             />
             <TextField
@@ -130,7 +127,7 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
               marginTop: "25px",
               borderRadius: '10px',
             }}>
-              Додати
+              Редагувати
             </Button>
           </form>
         </Box>
@@ -138,57 +135,3 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
     </Box>
   );
 }
-
-// <DialogActions>
-//   <Button onClick={handleClose}>Переглянути</Button>
-//   <Button onClick={handleClose}>Опублікувати</Button>
-//   <Button onClick={handleClose}>Відмінити</Button>
-// </DialogActions>
-
-// <DialogContent>
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Заголовок"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Опис"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Широта"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Довгота"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Зображення"
-//     type="file"
-//     fullWidth
-//     variant="standard"
-//   />
-// </DialogContent>

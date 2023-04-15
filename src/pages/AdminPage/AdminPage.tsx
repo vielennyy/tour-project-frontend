@@ -24,8 +24,9 @@ export const AdminPage = ():JSX.Element => {
     if(response.status === 200) {
       setIsAuthorize(true);
     }
-    const token = await response.json();
-    setToken(token.token)
+    const res = await response.json();
+    setToken(res.token)
+    localStorage.setItem('adminToken', res.token);
   }
 
   useEffect(() => {

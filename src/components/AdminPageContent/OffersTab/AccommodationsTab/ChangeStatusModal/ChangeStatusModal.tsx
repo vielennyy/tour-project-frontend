@@ -5,26 +5,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Box} from '@mui/material';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 interface UserId {
   id: string | undefined;
-  fetchUrl: string | undefined;
 }
 
-interface ConfirmProps {
-  props: UserId
-}
-
-export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
+export const ChangeStatusModal = ({id}: UserId):JSX.Element => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
+    console.log(id)
   };
 
-  const onDelete = async () => {
-    const fetching = await fetch(`${props.fetchUrl}${props.id}`,
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+  const onAttractionUpdate = async () => {
+    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${id}`,
       {
-        method: "DELETE",
+        method: "PUT",
         headers: {
           Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
           'Content-Type': 'application/json'
@@ -35,9 +35,7 @@ export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
 
   return (
     <Box>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        <DeleteIcon onClick={handleClickOpen}/>
-      </Button>
+      <CheckCircleOutlineIcon onClick={handleClickOpen} sx={{cursor: 'pointer'}}/>
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -45,10 +43,10 @@ export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Видалити?"}
+          {"Опублікувати?"}
         </DialogTitle>
         <DialogActions>
-          <Button onClick={onDelete}>Підтвердити</Button>
+          <Button onClick={onAttractionUpdate}>Підтвердити</Button>
           <Button onClick={() => setOpen(false)} autoFocus>
             Відхилити
           </Button>

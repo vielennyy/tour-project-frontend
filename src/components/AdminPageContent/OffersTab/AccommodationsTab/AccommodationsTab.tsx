@@ -15,6 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { ChangeStatusModal } from "./ChangeStatusModal";
+
 import {UserToken} from "../../../TypesAndInterfaces";
 
 export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
@@ -75,7 +77,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{status}</TableCell>
                     <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
                     <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right"><EditIcon/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                    <TableCell align="right"><ChangeStatusModal id={id}/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
                   </TableRow>
               ))}
             </TableBody>

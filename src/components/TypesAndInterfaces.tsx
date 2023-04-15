@@ -33,7 +33,7 @@ export interface Attraction {
 id: number;
 title: string;
 description: string;
-image_url: string | null;
+image_url: string | undefined;
 geolocations: {
     id: number;
     geolocationable_id: number;
@@ -107,5 +107,14 @@ export interface UserContextTypes {
 }
 
 export interface UserObject {
-    name: string | undefined;
+    created_at?: string | undefined;
+    email?: string | undefined;
+    id?: string | undefined;
+    name?: string | undefined;
+    password_digest?: string | undefined;
+    reset_password_sent_at?: string | null;
+    reset_password_token?: string | null;
+    role?: string | undefined;
+    stripe_id?: string | undefined;
+    updated_at?: string | undefined;
 }
