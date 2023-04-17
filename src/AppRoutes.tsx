@@ -12,6 +12,8 @@ import { ToursPage } from './pages/ToursPage';
 import { TourPage } from "./pages/TourPage";
 import { AttractionsPage } from "./pages/AttractionsPage";
 import { AttractionPage } from "./pages/AttractionPage";
+import { TypeAdvertisement } from "./components/AddAdvertisement/TypeAdvertisementPage";
+import { AccommodationRegistration } from "./components/AddAdvertisement/FormPages/AccommodationRegistration";
 
 const AppRoutes = [
   {
@@ -71,9 +73,17 @@ const AppRoutes = [
     element: <AccommodationPage/>
   },
   {
-    path: '/add-advertisement',
+    path: '/registration',
     element: <MainPage/>
-  }
+  },
+  {
+    path: '/registration/type',
+    element: <TypeAdvertisement/>
+  },
+  {
+    path: '/registration/accommodation',
+    element: <AccommodationRegistration/>
+  },
 ];
 
 export default AppRoutes;

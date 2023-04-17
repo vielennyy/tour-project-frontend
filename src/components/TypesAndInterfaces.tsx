@@ -119,3 +119,20 @@ export interface UserObject {
     stripe_id?: string | undefined;
     updated_at?: string | undefined;
 }
+
+export interface MainAccommodationInfoProps {
+    id?: number;
+    name: string;
+    description: string;
+    kind: string;
+    person: string;
+    phone: string;
+    email: string;
+    reg_code: string;
+    address_owner: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    user_id: number;
+    image_urls: File[];
+}
