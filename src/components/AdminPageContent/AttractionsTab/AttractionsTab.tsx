@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/uk';
 
-import {Table,
+import {
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   Box,
-  TableRow} from '@mui/material';
+  TableRow, Button
+} from '@mui/material';
 
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -18,6 +21,7 @@ import { AddAttractionsForm } from "./AddAttractionsForm";
 import { EditAttractionForm } from "./EditAttractionForm";
 
 import {UserToken} from "../../TypesAndInterfaces";
+import EditIcon from "@mui/icons-material/Edit";
 
 export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/attractions/';
@@ -75,7 +79,15 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{geolocations[0] ? geolocations[0]["longitude"] : 'Невказано' }</TableCell>
                     <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
                     <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right"><EditAttractionForm props={{title, description, id}}/><DeleteConfirmModal props={{id, fetchUrl}}/></TableCell>
+                    <TableCell align="right">
+                      <Button variant="outlined">
+                        <Link to={`/attractions/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>
+                          <RemoveRedEyeIcon/>
+                        </Link>
+                      </Button>
+                      <EditAttractionForm props={{title, description, id}}/>
+                      <DeleteConfirmModal props={{id, fetchUrl}}/>
+                    </TableCell>
                   </TableRow>
               ))}
             </TableBody>
