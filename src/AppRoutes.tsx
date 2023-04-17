@@ -7,10 +7,13 @@ import { AccommodationsPage } from "./pages/AccommodationsPage";
 import { AccommodationPage } from "./pages/AccommodationPage";
 import { CateringPage } from "./pages/CateringPage";
 import { CateringItemPage } from "./pages/CateringItemPage";
+import { MainPage } from "./components/AddAdvertisement/MainPage";
 import { ToursPage } from './pages/ToursPage';
 import { TourPage } from "./pages/TourPage";
 import { AttractionsPage } from "./pages/AttractionsPage";
 import { AttractionPage } from "./pages/AttractionPage";
+import { TypeAdvertisement } from "./components/AddAdvertisement/TypeAdvertisementPage";
+import { AccommodationRegistration } from "./components/AddAdvertisement/FormPages/AccommodationRegistration";
 
 const AppRoutes = [
   {
@@ -64,7 +67,23 @@ const AppRoutes = [
   {
     path: '/map',
     element: <MapPage/>
-  }
+  },
+  {
+    path: '/accommodations/:id',
+    element: <AccommodationPage/>
+  },
+  {
+    path: '/registration',
+    element: <MainPage/>
+  },
+  {
+    path: '/registration/type',
+    element: <TypeAdvertisement/>
+  },
+  {
+    path: '/registration/accommodation',
+    element: <AccommodationRegistration/>
+  },
 ];
 
 export default AppRoutes;

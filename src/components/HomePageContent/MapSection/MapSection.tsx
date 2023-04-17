@@ -2,8 +2,14 @@ import { Link } from 'react-router-dom';
 
 import {Box, Container, Typography, Button} from '@mui/material';
 import React from "react";
+import { Map } from '../../../components/Map'
 
 import map from '../../../assets/image/map.jpg';
+const containerStyle = {
+  width: '600px',
+  height: '400px',
+  zoom: -2,
+}
 export const MapSection = ():JSX.Element => {
   return(
     <Container sx={{
@@ -38,7 +44,8 @@ export const MapSection = ():JSX.Element => {
         </Button>
       </Box>
       <Box>
-        <img src={map} alt={map} style={{width: '100%'}}/>
+        <Map props={containerStyle}></Map>
+        {/* <img src={map} alt={map} style={{width: '100%'}}/> */}
       </Box>
     </Container>
   )

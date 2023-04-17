@@ -62,18 +62,9 @@ export const Sidebar = () => {
     setAdverticementsTab(!adverticementsTab)
   }
 
-  const user:User = {
-    id: 1,
-    name: "Анастасія Андрощук",
-    email: "an.androshchuk@gmail.com",
-    phone: "+38 (097) 00 11 111",
-    password_digest: '906PY***kkk',
-    role: 1,
-}
-
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 500 }}
+      sx={{flexGrow: 1, bgcolor: 'background.paper', display: 'flex', minHeight: 700 }}
     >
       <Tabs
         orientation="vertical"
@@ -186,7 +177,7 @@ export const Sidebar = () => {
             {...a11yProps(6)} />      
       </Tabs>
       <TabPanel value={value} index={0}>
-            <InfoCard user={user} />
+            <InfoCard />
       </TabPanel>
       <TabPanel value={value} index={1}>
       <OrdersCard/>
@@ -210,7 +201,7 @@ export const Sidebar = () => {
         <AdvertisementCard isActive={true}/>
     </TabPanel>
       <TabPanel value={value} index={8}>
-    <h1>Rates and payments</h1>
+          <RatesAndPaymentCard></RatesAndPaymentCard>
       </TabPanel>
     </Box>
   );

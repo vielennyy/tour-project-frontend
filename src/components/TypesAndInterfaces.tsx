@@ -11,13 +11,19 @@ export interface PartnerInfoCardProps {
 }
 
 export interface User {
-    id: number,
-    name?: string,
-    email: string,
-    password_digest: string,
-    phone?: string,
-    role: number,
-}
+    created_at: string;
+    email: string;
+    id: number;
+    name: string;
+    password_digest: string;
+    reset_password_sent_at: string | null;
+    reset_password_token: string | null;
+    phone?: string;
+    role: string;
+    stripe_id: string;
+    updated_at: string;
+  }
+  
 
 export interface PlaceCoordinates {
     lat:number;
@@ -112,4 +118,21 @@ export interface UserObject {
     role?: string | undefined;
     stripe_id?: string | undefined;
     updated_at?: string | undefined;
+}
+
+export interface MainAccommodationInfoProps {
+    id?: number;
+    name: string;
+    description: string;
+    kind: string;
+    person: string;
+    phone: string;
+    email: string;
+    reg_code: string;
+    address_owner: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    user_id: number;
+    image_urls: File[];
 }

@@ -85,16 +85,20 @@ export const Map = ({props}:myComponentProps) => {
           .then(response => response.json())
           .then(json => setAttractions(json));
       }, []);
+
+      console.log(attractions)
       
       const attractionsCoordinatesList: PlaceCoordinates[] = [];
 
       attractions.forEach((attraction) => {
         const geolocations = attraction.geolocations;
+        console.log(geolocations)
         if (geolocations && geolocations.length > 0) {
           const latitude = geolocations[0].latitude;
           const longitude = geolocations[0].longitude;
           if (latitude && longitude) {
             attractionsCoordinatesList.push({ lat: +latitude, lng: +longitude });
+            console.log(attractionsCoordinatesList)
           }
         }
       });
@@ -109,15 +113,15 @@ export const Map = ({props}:myComponentProps) => {
 
       // console.log(accommodations)
 
-    const [caterings, setCaterings] = useState([])
+    // const [caterings, setCaterings] = useState([])
 
-    useEffect(() => {
-      fetch('https://cktour.club/api/v1/accommodations')
-        .then(response => response.json())
-        .then(json => setCaterings(json.data));
-    }, []);
+    // useEffect(() => {
+    //   fetch('https://cktour.club/api/v1/accommodations')
+    //     .then(response => response.json())
+    //     .then(json => setCaterings(json.data));
+    // }, []);
 
-    console.log(caterings)
+    // console.log(caterings)
     
     return (isLoaded ? (
         <Box sx={{overflow: 'hidden'}}>
