@@ -23,7 +23,7 @@ export const MainCard = ({attraction}:AttractionProps):JSX.Element => {
       <Box sx={{
         padding: 2,
         display: 'grid',
-        gridTemplateRows: '15% 15% 55% 15%'
+        gridTemplateRows: '25% 15% 50% 10%'
       }}>
       <Typography variant='h5'>{attraction.title}</Typography>
       <Box sx={{
