@@ -6,7 +6,6 @@ import parking from './parking.svg'
 import breakfast from './breakfast.svg'
 import wifi from './wifi.svg'
 import pet from './pet.svg'
-import { Data } from '@react-google-maps/api';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -16,7 +15,19 @@ interface ComponentProps {
     setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
 }
 
-interface CheckBoxValues {
+// interface CheckBoxValues {
+//     credit_card: boolean,
+//     free_parking: boolean,
+//     wi_fi: boolean,
+//     breakfast: boolean,
+//     pets: boolean
+// }
+
+interface FormData {
+    checkin_start: string,
+    checkin_end: string,
+    checkout_start: string,
+    checkout_end: string,
     credit_card: boolean,
     free_parking: boolean,
     wi_fi: boolean,
@@ -24,65 +35,19 @@ interface CheckBoxValues {
     pets: boolean
 }
 
-
-
 export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
-    const [isFreeParking, setIsFreeParking] = useState(false)
-    const [creditCard, setCreditCard] = useState(false)
-    const [hasWifi, setHasWifi] = useState(false)
-    const [hasBreakfast, setHasBreakfast] = useState(false)
-    const [pets, setPets] = useState(false)
     const [show, setShow] = useState(true)
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
-    const [departureStartTime, setDepartureStartTime] = useState<Date | null>(null);
-    const [departureEndTime, setDepartureEndTime] = useState<Date | null>(null);
     const userToken = localStorage.getItem('token')
-    const [checkboxValues, setCheckboxValues] = useState<CheckBoxValues>({
-        credit_card: false,
-        free_parking: false,
-        wi_fi: false,
-        breakfast: false,
-        pets: false
-      });
+    // const [checkboxValues, setCheckboxValues] = useState<CheckBoxValues>({
+    //     credit_card: false,
+    //     free_parking: false,
+    //     wi_fi: false,
+    //     breakfast: false,
+    //     pets: false
+    //   });
     const today = new Date();
 
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, checked } = event.target;
-        setCheckboxValues({
-          ...checkboxValues,
-          [name]: checked,
-        });
-      };
-
-    const handleStartDateChange = (date: Date | null) => {
-        setStartDate(date);
-    };
-
-    const handleEndDateChange = (date: Date | null) => {
-        setEndDate(date);
-    };
-
-    const handleDepartureStartTimeChange = (date: Date | null) => {
-        setDepartureStartTime(date);
-    };
-
-    const handleDepartureEndTimeChange = (date: Date | null) => {
-        setDepartureEndTime(date);
-    };
-    console.log(mainInfo)
-    interface FormData {
-        checkin_start: string,
-        checkin_end: string,
-        checkout_start: string,
-        checkout_end: string,
-        credit_card: boolean,
-        free_parking: boolean,
-        wi_fi: boolean,
-        breakfast: boolean,
-        pets: boolean
-    }
     const [formState, setFormState] = useState<FormData>({
         checkin_start: '',
         checkin_end: '',
@@ -94,20 +59,6 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
         breakfast: false,
         pets: false
         });
-
-    const handleChangeCheckBox = (event: React.ChangeEvent<HTMLFormElement>) => {
-        setFormState({
-            ...formState,
-            [event.target.name]: event.target.checked,
-        });
-    }
-
-    // const handleChangeDate = () => {
-    //     setFormState({
-    //         ...formState,
-    //         [event.target.name]: event.target.checked,
-    //     });
-    // }
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -138,7 +89,7 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                 body: JSON.stringify(formState),
             })
             .then(response => response.json())
-            .then(json => setMainInfo(json))
+            .then(json => console.log(json))
             .catch(error => console.error('Error:', error));
                 } else {
                     console.log("Error: accommodation id is undefined");
@@ -154,6 +105,15 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                 //     .then(response => response.json())
                 //     .then(json => console.log(json)); 
               }
+              fetch(`https://cktour.club/api/v1/accommodations`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNywiZXhwIjoxNjgyNDYwOTE3fQ.McMucd5FXSzn8WsLc3FD1FT0JJP9I19ayFIlZmt_d5E"
+                },
+            })
+            .then(response => response.json())
+            .then(json => console.log(json))
         }
 
 
@@ -174,8 +134,6 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
                     <Box sx={{display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
                         <Checkbox name={'credit_card'} onChange={(event) => {
-                            // setCreditCard(event.target.checked);
-                            // console.log(creditCard)
                             setFormState(prevState => {
                                 return { ...prevState, credit_card: event.target.checked };
                             })
@@ -305,10 +263,10 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
-                                    onChange={()=>{
-                                        if(selectedDate)
+                                    onChange={(newValue)=>{
+                                        if(newValue)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkin_start: selectedDate.toISOString() };
+                                                return { ...prevState, checkin_start: newValue.toISOString() };
                                         })
                                     }}
                                     />
@@ -321,10 +279,10 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
-                                    onChange={()=>{
-                                        if(selectedDate)
+                                    onChange={(newValue)=>{
+                                        if(newValue)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkin_end: selectedDate.toISOString() };
+                                                return { ...prevState, checkin_end: newValue.toISOString() };
                                         })
                                     }}
                                     />
@@ -340,10 +298,10 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                 defaultValue={today}
                                 label="Choose a date"
                                 value={selectedDate}
-                                onChange={()=>{
-                                    if(selectedDate)
+                                onChange={(newValue)=>{
+                                    if(newValue)
                                         setFormState(prevState => {
-                                            return { ...prevState, checkout_start: selectedDate.toISOString() };
+                                            return { ...prevState, checkout_start: newValue.toISOString() };
                                     })
                                 }}
                                 />
@@ -356,10 +314,10 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
-                                    onChange={()=>{
-                                        if(selectedDate)
+                                    onChange={(newValue)=>{
+                                        if(newValue)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkout_end: selectedDate.toISOString() };
+                                                return { ...prevState, checkout_end: newValue.toISOString() };
                                         })
                                     }}
                                     />

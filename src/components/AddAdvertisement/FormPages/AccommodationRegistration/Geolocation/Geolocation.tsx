@@ -65,6 +65,14 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const data = {
+            locality: { type: "string", value: formState.locality },
+            latitude: { type: "number", value: formState.latitude },
+            longitude: { type: "number", value: formState.longitude },
+            suite: { type: "string", value: formState.suite },
+            zip_code: { type: "string", value: formState.zip_code },
+            street: { type: "string", value: formState.street },
+          };
         if(mainInfo?.data.accommodation.id !== undefined) {
             console.log(formState)
             const url = `https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/geolocations`;
@@ -73,7 +81,7 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
               headers: {
                 Authorization: "Bearer " + localStorage.getItem('token')
               },
-              body: JSON.stringify(formState),
+              body: JSON.stringify(data),
             })
               .then(response => response.json())
               .then(json => console.log(json));

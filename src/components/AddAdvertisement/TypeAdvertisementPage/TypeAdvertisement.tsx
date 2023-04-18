@@ -2,12 +2,21 @@ import {
     Box,
     Typography
 } from '@mui/material'
+import { useEffect } from 'react'
 import apartment from './apartment.jpg'
 import catering from './catering.jpg'
 import tour from './tour.jpg'
 import { Link } from 'react-router-dom'
 
 export const TypeAdvertisement = () => {
+    useEffect(() => {
+        fetch(`https://cktour.club/api/v1/users/${localStorage.getItem('id')}`, {
+            method: "GET",
+            headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+          })
+          .then(response => response.json())
+          .then(json => console.log(json));
+      }, []);
     return(
         <Box sx={{background:"white", placeItems: 'center', margin: '120px auto', width:'960px'}}>
             <Typography fontSize={46} fontWeight={700} zIndex={3} color={'#000'} sx={{marginBottom: '20px', textAlign: 'center'}}>Оберіть тип пропозиції, яку хочете зареєструвати</Typography>

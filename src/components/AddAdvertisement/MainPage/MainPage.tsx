@@ -15,12 +15,24 @@ export const MainPage = () => {
             <Box zIndex={3} position={'absolute'} sx={{maxWidth:'60vw', textAlign: 'center'}}>
                 <Typography fontSize={70} fontWeight={700} zIndex={3} color={'#fff'}>Зареєструйте свій об’єкт</Typography>
                 <Typography fontSize={26} fontWeight={400} zIndex={3} color={'#fff'}>Наш сайт є надійним та зручним ресурсом для розміщення оголошень. Не зволікайте і виводьте свій бізнес на новий рівень!</Typography>
-                <Button variant="contained" href='registration/type' sx={{
+                <Button variant="contained" href='registration/type' 
+                sx={{
                     width: '300px', 
                     textTransform:'none', 
                     fontSize:'20px', 
                     marginTop:'30px', 
                     marginBottom:'100px'}}
+                onClick={()=>{
+                    fetch(`https://cktour.club/api/v1/users/${localStorage.getItem('id')}`, {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: "Bearer " + localStorage.getItem('token')
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(json => console.log(json))
+                }}    
                     > Додати пропозицію</Button>
             <Typography fontSize={20} fontWeight={400} zIndex={3} color={'#fff'} sx={{maxWidth:'480px', textAlign: 'center', margin: '0 auto'}}>Після додавання пропозиції ваш акаунт перейде в статус партнера. Дізнатися більше</Typography>
             </Box>
