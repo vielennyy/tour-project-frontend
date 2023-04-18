@@ -121,18 +121,22 @@ export interface UserObject {
 }
 
 export interface MainAccommodationInfoProps {
-    id?: number;
-    name: string;
-    description: string;
-    kind: string;
-    person: string;
-    phone: string;
-    email: string;
-    reg_code: string;
-    address_owner: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
-    user_id: number;
-    image_urls: File[];
+    data:{
+        accommodation: {
+            id: number;
+            name: string;
+            description: string;
+            kind: string;
+            person: string;
+            phone: string;
+            email: string;
+            reg_code: string;
+            address_owner: string;
+            status: string;
+            created_at: Date;
+            updated_at: string;
+            user_id: number;
+        }
+        image_urls: string[];
+    }
 }

@@ -1,146 +1,126 @@
-import { useState, ChangeEvent } from 'react'
-import { Box, Typography, FormControl, TextField, Button, Input, Grid } from '@mui/material'
+import { useState, ChangeEvent, useEffect } from 'react'
+import { Box, Typography, FormControl, TextField, Button } from '@mui/material'
 import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
 import house from '../home.svg'
 import apartment from '../apartment.svg'
 import hostel from '../hostel.svg'
 import hotel from '../hotel.svg'
 import other from '../other.svg'
-import { string } from 'yup'
 
 interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,
     setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
 }
 
+interface FormData {
+    name: string,
+    description: string,
+    address_owner: string,
+    phone: string,
+    email: string,
+    kind: string,
+    user_id: number,
+    reg_code: string,
+    person: string,
+    images: File[]|undefined
+};
+
 export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
     const [show, setShow] = useState(true)
-    const [clicked, setClicked] = useState(false);
     const typeAccommodationImages = [house, hotel, apartment, hostel, other];
     const [clickedIndex, setClickedIndex] = useState(-1);
     const [type, setType] = useState('Інше')
     const userToken = localStorage.getItem('token')
 
-  const handleTypeAccommodationClick = (index:number) => {
-    setClickedIndex(index);
-    switch (index) {
-        case 0:
-          setType('Будинок');
-          break;
-        case 1:
-          setType('Готель');
-          break;
-        case 2:
-          setType('Апартаменти');
-          break;
-        case 3:
-          setType('Хостел');
-          break;
-        default:
-          setType('Інше');
+
+    const [formState, setFormState] = useState<FormData>({
+        name: "",
+        description: "",
+        address_owner: "",
+        phone: "",
+        email: "",
+        kind: "Інше",
+        user_id: Number(localStorage.getItem('id')),
+        reg_code: "",
+        person: "",
+        images: undefined
+      });
+
+    const handleTypeAccommodationClick = (index:number) => {
+        setClickedIndex(index);
+        switch (index) {
+            case 0:
+            setType('Будинок');
+            break;
+            case 1:
+            setType('Готель');
+            break;
+            case 2:
+            setType('Апартаменти');
+            break;
+            case 3:
+            setType('Хостел');
+            break;
+        }
+    };
+
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState({
+        ...formState,
+        kind: type,
+        [event.target.name]: event.target.value,
+        });
+        console.log('Input!')
+    };
+
+    function convertFile(files: FileList|null) {
+        if (files) {
+          const filesList = Object.entries(files).map(([key, value]) => (value));
+          setFormState({
+            ...formState,
+            kind: type,
+            // images: filesList
+          });
+        }
       }
-      setFormState( {...formState, kind:type})
-  };
-  
-  const [formState, setFormState] = useState<MainAccommodationInfoProps>({
-    name: "",
-    description: "",
-    address_owner: "",
-    phone: "",
-    email: "",
-    kind: "Інше",
-    user_id: Number(localStorage.getItem('id')),
-    reg_code: "",
-    person: "",
-    image_urls: [],
-    status: "",
-    created_at: "",
-    updated_at: "",
-  });
-  
 
-  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
-    console.log('Input!')
-};
-// const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-//     console.log(formState)
-//     console.log(userToken)
-//     fetch(`https://cktour.club/api/v1/accommodations`, {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: "Bearer " + userToken
-//               },
-//             // { Authorization: "Bearer " + userToken },
-//             body: JSON.stringify(formState),
-//         })
-//         .then(response => response.json())
-//         .then(json => console.log(json));
-// };
-const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  
-    const formData = new FormData();
-    formData.append("name", formState.name);
-    formData.append("description", formState.description);
-    formData.append("address_owner", formState.address_owner);
-    formData.append("phone", formState.phone);
-    formData.append("email", formState.email);
-    formData.append("kind", formState.kind);
-    // formData.append("user_id", formState.user_id);
-    formData.append("reg_code", formState.reg_code);
-    formData.append("person", formState.person);
-    formState.image_urls.forEach((image:File) => formData.append("images[]", image));
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    // setMainInfo(formData)
-  
-    console.log(formData);
-    console.log(userToken);
-  
-    fetch(`https://cktour.club/api/v1/accommodations`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + userToken,
-      },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((json) => 
-        setMainInfo(json)
-      );
-  };
-  
+        // const { name, description,address_owner,phone,email,kind,user_id,reg_code,person,images} = formState;
+        // const formData = new FormData();
 
-const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      uploadFile(file);
-    }
-  };
-  
-  const uploadFile = async (file: File) => {
-    const formData = new FormData();
-    formData.append('images', file);
-  
-    // try {
-    //   const response = await fetch('/upload', {
-    //     method: 'POST',
-    //     body: formData
-    //   });
-  
-    //   const result = await response.json();
-    //   console.log('Upload successful:', result);
-    // } catch (error) {
-    //   console.error('Upload failed:', error);
-    // }
-  };
-    
+        // formData.append('name', name);
+        // formData.append('description', description);
+        // formData.append('address_owner', address_owner);
+        // formData.append('phone', phone);
+        // formData.append('email', email);
+        // formData.append('kind', kind);
+        // formData.append('user_id', user_id.toString());
+        // formData.append('reg_code', reg_code);
+        // formData.append('person', person);
+        // if (images !== undefined) {
+        //     for (let i = 0; i < images.length; i++) {
+        //         formData.append('files', images[i]);
+        //     }
+        // }
+        // console.log(formData)
+
+        // console.log(JSON.stringify(formState))
+        fetch(`https://cktour.club/api/v1/accommodations`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + userToken
+                },
+                body: JSON.stringify(formState),
+            })
+            .then(response => response.json())
+            .then(json => setMainInfo(json))
+            .catch(error => console.error('Error:', error));
+        setShow(false)
+    };
+
     return(
         <Box sx={{
             width: '960px',
@@ -195,34 +175,23 @@ const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
                     <TextField name='reg_code' id="outlined-basic" required onChange={handleFormChange}/>
                     <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Адреса юридичної особи</Typography>
                     <TextField name='address_owner' id="outlined-basic" required onChange={handleFormChange}/>
-                    <Input
+                    {/* <Input
                         id="image-upload"
                         type="file"
                         name="images"
-                        onChange={handleImageUpload}
+                        onChange={(e)=> convertFile(e.target.file)}
+                        // onChange={handleImageUpload}
                         style={{border:'none', height:'200px'}}
-                        />
-                    {/* <Button
-                            variant="contained"
-                            component="label"
-                            htmlFor="image-upload"
-                            >
-                            Upload Image
-                            </Button> */}
-                    {/* <Box sx={{display:'flex', justifyContent:'space-between'}}>
-                        <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Місто</Typography>
-                            <TextField name='confirmNewPassword' id="outlined-basic" onChange={handleFormChange}/>
-                        </Box>
-                        <Box sx={{display:'flex', flexDirection:'column'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
-                            <TextField name='confirmNewPassword' id="outlined-basic" onChange={handleFormChange}/>
-                        </Box>
-                    </Box> */}
+                        /> */}
+                    <input type="file" onChange={(e)=> convertFile(e.target.files)} multiple/>
+                    {/* {(filebase64.indexOf("image/") > -1) && (images !== undefined) ?
+                    <>{images.map((image) => <img src={image} width={300} />)}</>
+                    :
+                    <></>
+                    } */}
                     <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                 </FormControl>
                 </form>
-
             </>
             :
             <Typography fontSize={24} fontWeight={500}>Основна інформація</Typography>

@@ -27,51 +27,60 @@ interface data {
 
 export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
     const [show, setShow] = useState(true)
+    // const id = mainInfo.accommodation.id
+    // console.log(id)
     console.log(mainInfo)
+    console.log(mainInfo?.data.accommodation)
     interface FormData {
-        geolocationable_type: string,
-        geolocationable_id: number|undefined,
         locality: string,
-        latitude: string,
-        longitude: string,
+        latitude: number|undefined,
+        longitude: number|undefined,
         street: string,
         suite: string,
         zip_code: string
     }
     const [formState, setFormState] = useState<FormData>({
-        geolocationable_type: 'Accomodation',
-        geolocationable_id: mainInfo?.id ? +mainInfo?.id : undefined,
         locality: "",
-        latitude: "",
-        longitude: "",
+        latitude: undefined,
+        longitude: undefined,
         street: "",
         suite: "",
         zip_code: ""
-        });
+        })
     
       const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            
-    
-        setFormState({
-          ...formState,
-          [event.target.name]: event.target.value,
-        });
+        if(event.target.name === 'latitude' || event.target.name === 'longitude') {
+            setFormState({
+                ...formState,
+                [event.target.name]: parseFloat(Number(event.target.value).toFixed(6)),
+              });
+        } else {
+            setFormState({
+                ...formState,
+                [event.target.name]: event.target.value,
+            });
+        }
         console.log('Input!')
     };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(formState)
-        // fetch(`https://cktour.club/api/v1/accommodations`, {
-        //         method: "POST",
-        //         headers: {
-        //             // 'Content-Type': 'application/json',
-        //             Authorization: "Bearer " + localStorage.getItem('token')
-        //           },
-        //         // { Authorization: "Bearer " + userToken },
-        //         body: JSON.stringify(formState),
-        //     })
-        //     .then(response => response.json())
-        //     .then(json => console.log(json));
+        if(mainInfo?.data.accommodation.id !== undefined) {
+            console.log(formState)
+            const url = `https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/geolocations`;
+            fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+              },
+              body: JSON.stringify(formState),
+            })
+              .then(response => response.json())
+              .then(json => console.log(json));
+          } else {
+            console.log("Error: accommodation id is undefined");
+          }
+        
     };
     return(
         <Box sx={{
@@ -83,7 +92,7 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
             margin: '30px auto'
         }}
         >
-            {/* {mainInfo!== undefined ? */}
+            {mainInfo!== undefined ?
             <>
                 <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
@@ -118,9 +127,9 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
                 </form>
 
             </>
-            {/* :
-            <Typography fontSize={24} fontWeight={500}>Основна інформація</Typography>
-            } */}
+           :
+            <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
+            }
         </Box>
     )
 }

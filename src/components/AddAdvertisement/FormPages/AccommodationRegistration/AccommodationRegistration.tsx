@@ -15,7 +15,7 @@ export const AccommodationRegistration = () => {
 
     return(
         <>
-        <MainInfo mainInfo={mainInfo} setMainInfo={setMainInfo}></MainInfo>
+        <MainInfo mainInfo={mainInfo} setMainInfo={setMainInfo}/>
         <Geolocation mainInfo={mainInfo} setMainInfo={setMainInfo}/>
         <Facilities mainInfo={mainInfo} setMainInfo={setMainInfo}/>
         </>
