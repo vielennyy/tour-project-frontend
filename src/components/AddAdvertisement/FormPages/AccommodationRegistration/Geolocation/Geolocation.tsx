@@ -66,19 +66,20 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = {
-            locality: { type: "string", value: formState.locality },
-            latitude: { type: "number", value: formState.latitude },
-            longitude: { type: "number", value: formState.longitude },
-            suite: { type: "string", value: formState.suite },
-            zip_code: { type: "string", value: formState.zip_code },
-            street: { type: "string", value: formState.street },
+            "locality": formState.locality,
+            "latitude": Number(formState.latitude),
+            "longitude": Number(formState.longitude),
+            "suite": formState.suite,
+            "zip_code": formState.zip_code,
+            "street": formState.street,
           };
         if(mainInfo?.data.accommodation.id !== undefined) {
-            console.log(formState)
+            console.log(data)
+            console.log(JSON.stringify(data))
             const url = `https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/geolocations`;
             fetch(url, {
               method: "POST",
-              headers: {
+                headers: {'Content-Type': 'application/json',
                 Authorization: "Bearer " + localStorage.getItem('token')
               },
               body: JSON.stringify(data),
@@ -88,7 +89,6 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
           } else {
             console.log("Error: accommodation id is undefined");
           }
-        
     };
     return(
         <Box sx={{
