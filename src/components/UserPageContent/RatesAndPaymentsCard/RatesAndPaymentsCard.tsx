@@ -61,7 +61,7 @@ export const RatesAndPaymentCard = () => {
             <Typography fontSize={20} fontWeight={400} sx={{marginBottom: '35px', maxWidth:'600px'}}>
             Для можливості безобмежно публікувати ваші оголошення, наш сервіс пропонує вам обрати один з можливих варіантів:
             </Typography>
-            <Button variant="contained" type='submit' href='https://cktour.club/api/v1/plans/show' sx={{width: '300px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px', textAlign:'center'}}>Переглянути плани оплати</Button>
+            <Button variant="contained" type='submit' href='https://cktour.club/api/v1/plans' sx={{width: '300px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px', textAlign:'center'}}>Переглянути плани оплати</Button>
             {/* <Box dangerouslySetInnerHTML={{ __html: html }} /> */}
         </Box>
     )

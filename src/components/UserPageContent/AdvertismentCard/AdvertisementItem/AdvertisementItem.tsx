@@ -35,9 +35,12 @@ function formatDate(date:Date) {
     return `${day} ${months[monthIndex]} ${year}`;
 }
 
-const CheckingItem = ({props}:myComponentProps) =>{
+export const CheckingItem = ({props}:myComponentProps) =>{
+    const date = new Date(props.updated_at)
+    console.log(date)
+    const updatedAt = formatDate(date)
 
-    const updatedAt = formatDate(props.updated_at)
+    // const updatedAt = formatDate(date)
 
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
@@ -71,9 +74,11 @@ const CheckingItem = ({props}:myComponentProps) =>{
         
     )
 }
-const ConfirmedItem = ({props}:myComponentProps) => {
-
-    const updatedAt = formatDate(props.updated_at)
+export const ConfirmedItem = ({props}:myComponentProps) => {
+    console.log(props)
+    const date = new Date(props.updated_at)
+    console.log(date)
+    const updatedAt = formatDate(date)
       
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
@@ -117,6 +122,7 @@ export const AdvertisementItem = ({props}:myComponentProps) => {
     
     return(
         <>
+            
             <CheckingItem props={props}/>
             <ConfirmedItem props={props}/>
         </>
