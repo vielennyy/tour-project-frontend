@@ -22,7 +22,11 @@ const AppRoutes = [
   },
   {
     path: '/user',
-    element: <UserPage />
+    element: <UserPage changePassword={false}/>
+  },
+  {
+    path: '/user/:token',
+    element: <UserPage changePassword={true}/>
   },
   {
     path: '/accommodations',

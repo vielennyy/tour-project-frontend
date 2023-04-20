@@ -13,13 +13,14 @@ import { OrdersCard } from '../OrdersCard';
 import { AdvertisementCard } from '../AdvertismentCard';
 import { RatesAndPaymentCard } from '../RatesAndPaymentsCard';
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-
+interface MyComponentProps{
+  changePassword: boolean
+}
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -47,7 +48,7 @@ function a11yProps(index: number) {
   };
 }
 
-export const Sidebar = () => {
+export const Sidebar = ({changePassword}:MyComponentProps) => {
   const [value, setValue] = React.useState(0);
   const [ordersTab, setOrdersTab] = React.useState(false)
   const [adverticementsTab, setAdverticementsTab] = React.useState(false)
@@ -177,7 +178,7 @@ export const Sidebar = () => {
             {...a11yProps(6)} />      
       </Tabs>
       <TabPanel value={value} index={0}>
-            <InfoCard />
+            <InfoCard changePassword={changePassword}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
       <OrdersCard/>

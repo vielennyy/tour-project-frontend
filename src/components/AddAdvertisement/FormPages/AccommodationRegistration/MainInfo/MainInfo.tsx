@@ -31,6 +31,8 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
     const [clickedIndex, setClickedIndex] = useState(-1);
     const [type, setType] = useState('Інше')
     const userToken = localStorage.getItem('token')
+    const [files, setFiles] = useState<File[]>([new File(['file'], "image.png", {type: 'image/png'})]);
+
 
 
     const [formState, setFormState] = useState<FormData>({
@@ -43,7 +45,7 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
         user_id: Number(localStorage.getItem('id')),
         reg_code: "",
         person: "",
-        images: undefined
+        images: [new File(['file'], "image.png", {type: 'image/png'})]
       });
 
     const handleTypeAccommodationClick = (index:number) => {
@@ -78,47 +80,62 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
           const filesList = Object.entries(files).map(([key, value]) => (value));
           setFormState({
             ...formState,
-            kind: type,
-            // images: filesList
+            images: filesList
           });
         }
       }
 
+    // const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
+    //     // @ts-ignore
+    //     const uploadedFile:File[] = []
+    //     (event.target as HTMLInputElement).files.map((file:File) =>
+    //         uploadedFile.push(file)
+    //     )
+    //     // const uploadedFile = (event.target as HTMLInputElement).files;
+    //     console.log(uploadedFile)
+    //     setFormState({
+    //         ...formState,
+    //         images: uploadedFile
+    //       });
+    // }
+    
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        // const { name, description,address_owner,phone,email,kind,user_id,reg_code,person,images} = formState;
-        // const formData = new FormData();
+        const { name, description, address_owner, phone, email, kind, user_id, reg_code, person, images} = formState;
+        const formData = new FormData();
 
-        // formData.append('name', name);
-        // formData.append('description', description);
-        // formData.append('address_owner', address_owner);
-        // formData.append('phone', phone);
-        // formData.append('email', email);
-        // formData.append('kind', kind);
-        // formData.append('user_id', user_id.toString());
-        // formData.append('reg_code', reg_code);
-        // formData.append('person', person);
-        // if (images !== undefined) {
-        //     for (let i = 0; i < images.length; i++) {
-        //         formData.append('files', images[i]);
-        //     }
-        // }
-        // console.log(formData)
-
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('address_owner', address_owner);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('kind', kind);
+        formData.append('user_id', user_id.toString());
+        formData.append('reg_code', reg_code);
+        formData.append('person', person);
+        if (images !== undefined) {
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images', images[i]);
+            }
+        }
+        console.log(formState)
+        console.log(formData)
         // console.log(JSON.stringify(formState))
         fetch(`https://cktour.club/api/v1/accommodations`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: "Bearer " + userToken
                 },
-                body: JSON.stringify(formState),
-            })
-            .then(response => response.json())
-            .then(json => setMainInfo(json))
+                body: formData })
+                // JSON.stringify(formState),
+            .then(response => console.log(response))
+
+            // .then(response => response.json())
+            // .then(json => setMainInfo(json))
             .catch(error => console.error('Error:', error));
-        setShow(false)
+        // setShow(false)
     };
 
     return(
@@ -183,7 +200,9 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
                         // onChange={handleImageUpload}
                         style={{border:'none', height:'200px'}}
                         /> */}
-                    <input type="file" onChange={(e)=> convertFile(e.target.files)} multiple/>
+                    <input type="file" onChange={(e)=>{convertFile(e.target.files)}} multiple/>
+                    {/* <input type="file" onChange={handleFileLoad} multiple/> */}
+
                     {/* {(filebase64.indexOf("image/") > -1) && (images !== undefined) ?
                     <>{images.map((image) => <img src={image} width={300} />)}</>
                     :

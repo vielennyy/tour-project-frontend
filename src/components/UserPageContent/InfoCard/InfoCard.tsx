@@ -5,12 +5,15 @@ import { User, UserContextTypes } from 'src/components/TypesAndInterfaces';
 import { ReactComponent as EditIcon } from '../UserPageIcons/edit 1.svg';
 import { ReactComponent as LogOut } from '../UserPageIcons/log-out 1.svg';
 import { useState, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { UserContext } from 'src/UserContext';
-import { localStorageAvailable } from '@mui/x-data-grid/utils/utils';
 
 // TODO editPassword component
 // TODO get textField values and send it to the database
 // Todo validate TextField
+interface MyComponentProps{
+    changePassword: boolean
+  } 
 
 interface EditInfoBoxProps {
     user: User;
@@ -23,26 +26,26 @@ interface EditInfoBoxProps {
 
 interface EditPasswordBoxProps {
     user: User; 
-    userToken: string|null;  
+    userToken: string|null,  
+    changePasswordToken?: string|null,
     passwordEditMode: boolean;
     setPasswordEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   }
-
-  interface InfoBoxProps {
+  
+interface InfoBoxProps {
     user: User;
     // editMode: boolean;
     // setInfoEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  }
+}
 
-export const InfoCard = () => {
-    // const [ infoEditMode, setInfoEditMode ] = useState(false)
-    const [ passwordEditMode, setPasswordEditMode ] = useState(false)
+export const InfoCard = ({changePassword}:MyComponentProps) => {
+    const [ passwordEditMode, setPasswordEditMode ] = useState(true)
     const userId = Number(localStorage.getItem('id'))
     const userToken = localStorage.getItem('token')
-
-    // const handleInfoEditMode = () => {
-    //     setInfoEditMode(!infoEditMode)
-    // }
+    const changePasswordToken = useParams<{ token: string }>()
+    const token = changePasswordToken.token
+    // console.log(token)
+    // const [token, setToken] = useState(changePasswordToken.token.toString())
 
     const handlePasswordEditMode = () => {
         setPasswordEditMode(!passwordEditMode)
@@ -57,7 +60,7 @@ export const InfoCard = () => {
           })
           .then(response => response.json())
           .then(json => setUser(json));
-      }, [user]);
+    }, [user]);
 
 
 
@@ -65,24 +68,11 @@ export const InfoCard = () => {
         <Box sx={{}}>
           {user ? (
             <>
-              {/* {infoEditMode ? (
-                <EditInfoBox
-                  user={user as User}
-                  setUser={setUser}
-                  userId={userId}
+                <InfoBox user={user as User}/>
+                {changePassword && passwordEditMode ? 
+                    <EditPasswordBox user={user as User}
                   userToken={userToken}
-                  editMode={infoEditMode}
-                  setInfoEditMode={setInfoEditMode}
-                />
-              ) : ( */}
-                <InfoBox
-                  user={user as User}
-                //   editMode={infoEditMode}
-                //   setInfoEditMode={setInfoEditMode}
-                />
-              {/* )} */}
-              {passwordEditMode ? <EditPasswordBox user={user as User}
-                  userToken={userToken}
+                  changePasswordToken={token}
                   passwordEditMode={passwordEditMode}
                   setPasswordEditMode={setPasswordEditMode}></EditPasswordBox>
                   : 
@@ -181,6 +171,25 @@ const InfoBox = ({user}:InfoBoxProps) => {
 }
 
 const PasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode}:EditPasswordBoxProps) => {
+    const handleChangePassword = () =>{
+        const reqBody = {
+            email: user.email
+        }
+        console.log(user.email)
+        fetch(`https://cktour.club/api/v1/password/forgot`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json',
+                Authorization: 'Bearer ' +  userToken },
+            body: JSON.stringify(reqBody)
+          })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json)
+            // localStorage.removeItem('id')
+            // localStorage.removeItem('token')
+          })
+    }
+    
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
                     borderRadius: '15px'}} 
@@ -190,40 +199,48 @@ const PasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode}:Ed
                     justifyContent={'space-between'}padding={'30px'}>
             <Box display="flex" flexDirection={'row'} justifyContent={'space-between'}>
                 <Typography fontSize={28} fontWeight={500}>Пароль</Typography>
-                    <Box display="flex" flexDirection={'row'}>
+                    {/* <Box display="flex" flexDirection={'row'}>
                         <Link underline="hover" color="inherit" fontSize='25' onClick={()=>{setPasswordEditMode(!passwordEditMode)}} sx={{marginRight: '10px', cursor: 'pointer'}}>
                             <Typography fontSize={22} fontWeight={400}>Редагувати</Typography>
                         </Link>
                         <SvgIcon sx={{marginTop: '5px'}}><EditIcon/></SvgIcon>
-                    </Box>
+                    </Box> */}
             </Box>
-            <Box margin={'30px'} fontFamily='Inter, normal' display="flex" flexDirection={'row'}>
+            <Box margin={'30px'} fontFamily='Inter, normal' display="flex" flexDirection={'column'}>
                 <Typography fontSize={24} color={'#646464'} letterSpacing={'0.335em'}>•••••••••</Typography>
+                <Button variant="contained" onClick={handleChangePassword} href='/' sx={{width: '40vw', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Змінити пароль</Button>
+                <Typography fontSize={18} color={'#646464'} letterSpacing={'0.335em'}>При зміні паролю на вашу електронну адресу буде надіслано лист із подальшими інструкціями</Typography>
             </Box>
                     
         </Box>
     )
 }
 
-const EditPasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode}:EditPasswordBoxProps) => {
-    // console.log(user)
+const EditPasswordBox = ({user, userToken, changePasswordToken, passwordEditMode, setPasswordEditMode}:EditPasswordBoxProps) => {
     const [isCorrectInput, setIsCorrectInput] = useState(false)
     interface FormData {
-        prevPassword: string;
         newPassword: string;
         confirmNewPassword: string;
     }
+
     const [formState, setFormState] = useState<FormData>({
-        prevPassword: "",
         newPassword: "",
         confirmNewPassword: "",
     });
 
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormState({
+          ...formState,
+          [event.target.name]: event.target.value,
+        });
+        console.log('Input!')
+    };
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (formState.prevPassword && formState.prevPassword === user.password_digest) {
             if(formState.newPassword && formState.confirmNewPassword && formState.newPassword === formState.confirmNewPassword) {
+                console.log(changePasswordToken)
                 const resetPasswordData = {
+                    token: changePasswordToken,
                     email: user.email,
                     password: formState.newPassword,
                 }
@@ -231,8 +248,8 @@ const EditPasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode
                 fetch(`https://cktour.club/api/v1/password/reset`, {
                     method: "POST",
                     headers: {
-                        Authorization: `Bearer ${userToken}`,
-                        "accept": "*/*",
+                        // Authorization: `Bearer ${changePasswordToken}`,
+                        // "accept": "*/*",
                         "Content-Type": "application/json"
                       },
                     body: JSON.stringify(resetPasswordData),
@@ -240,19 +257,19 @@ const EditPasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode
                 .then(response => {
                     if (!response.ok) {
                       throw new Error(response.statusText);
+                    } else {
+                        setPasswordEditMode(false)
                     }
                     return response.json();
                   })
                   .then(json => console.log(json))
                   .catch(error => console.log("Error:", error));
             }
-            else setIsCorrectInput(false)
-        } 
-        else setIsCorrectInput(false)
-          
-        if(isCorrectInput){
-            setPasswordEditMode(!passwordEditMode);
-        }
+        //     else setIsCorrectInput(false)
+       
+        // if(isCorrectInput){
+        //     setPasswordEditMode(!passwordEditMode);
+        // }
         else setPasswordEditMode(passwordEditMode)
         console.log("submit");
           
@@ -271,15 +288,7 @@ const EditPasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode
     };
 
 
-    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        
-
-        setFormState({
-          ...formState,
-          [event.target.name]: event.target.value,
-        });
-        console.log('Input!')
-    };
+    
 
     return(
         <Box sx = {{boxShadow: '0px 4px 15px rgba(3, 2, 2, 0.25)',
@@ -298,8 +307,8 @@ const EditPasswordBox = ({user, userToken, passwordEditMode, setPasswordEditMode
             </Box>
             <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
-                    <Typography fontSize={18} marginBottom={'5px'}>Старий пароль</Typography>
-                    <TextField name='prevPassword'  id="outlined-basic" type="password" onChange={handleFormChange}/>
+                    {/* <Typography fontSize={18} marginBottom={'5px'}>Старий пароль</Typography>
+                    <TextField name='prevPassword'  id="outlined-basic" type="password" onChange={handleFormChange}/> */}
                     <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Новий пароль</Typography>
                     <TextField name='newPassword' id="outlined-basic" type="password" onChange={handleFormChange}/>
                     <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Повторіть пароль</Typography>
