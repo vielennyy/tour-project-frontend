@@ -1,25 +1,28 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/uk';
 
-import {Table,
+import {
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   Box,
-  TableRow} from '@mui/material';
+  TableRow, Button
+} from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { ChangeStatusModal } from "./ChangeStatusModal";
+import { ChangeStatusModal } from "../ChangeStatusModal";
+import { DeleteConfirmModal } from "../../DeleteConfirmModal";
 
 import {UserToken} from "../../../TypesAndInterfaces";
 
 export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
+  const fetchUrl = 'https://cktour.club/api/v1/accommodations/';
   const [accommodations, setAccommodations] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
@@ -61,7 +64,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {accommodations.map(({id, person, kind, name, status, created_at, updated_at}) => (
+              {accommodations.map(({id, person, kind, name, status, created_at, updated_at}, index) => (
                   <TableRow
                       key={id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -75,9 +78,17 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
                     {/*<TableCell align="right">{row.latitude}</TableCell>*/}
                     {/*<TableCell align="right">{row.longitude}</TableCell>*/}
                     <TableCell align="right">{status}</TableCell>
-                    <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right"><ChangeStatusModal id={id}/><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
+                    <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
+                    <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
+                    <TableCell align="right">
+                      <ChangeStatusModal props={accommodations[index]}/>
+                      <Button variant="outlined">
+                        <Link to={`/accommodations/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>
+                          <RemoveRedEyeIcon/>
+                        </Link>
+                      </Button>
+                      <DeleteConfirmModal props={{id, fetchUrl}}/>
+                    </TableCell>
                   </TableRow>
               ))}
             </TableBody>
@@ -87,3 +98,4 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
     </Box>
   );
 }
+

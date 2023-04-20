@@ -6,36 +6,36 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Box} from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-interface UserId {
-  id: string | undefined;
+interface AccomodationProps {
+  props: {
+    id: string;
+  };
 }
 
-export const ChangeStatusModal = ({id}: UserId):JSX.Element => {
+export const ChangeStatusModal = ({props}: AccomodationProps):JSX.Element => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
-    console.log(id)
   };
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
   const onAttractionUpdate = async () => {
-    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${id}`,
+    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${props.id}`,
       {
         method: "PUT",
         headers: {
           Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({...props, status: 'published'})
       });
     setOpen(false);
   }
 
   return (
     <Box>
-      <CheckCircleOutlineIcon onClick={handleClickOpen} sx={{cursor: 'pointer'}}/>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        <CheckCircleOutlineIcon/>
+      </Button>
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

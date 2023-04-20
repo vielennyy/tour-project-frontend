@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import moment from "moment";
 import { useParams} from "react-router-dom";
 import { Container } from "@mui/material";
 
@@ -13,7 +12,6 @@ import { Attraction } from "../TypesAndInterfaces";
 
 export const AttractionPageContent = ():JSX.Element => {
   const [attraction, setAttraction] = useState<Attraction>();
-  moment.locale('uk');
   const { id } = useParams();
 
   const fetchingAttraction = async () => {

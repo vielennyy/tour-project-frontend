@@ -60,17 +60,9 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
       image: file
     },
     onSubmit: (values:Values) => {
-      // console.log(values);
-      // setValues({...values});
       onAttractionAdded(values);
     }
   });
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //
-  //   }, 1000)
-  // }, [values])
 
   return (
     <Box>
@@ -138,57 +130,3 @@ export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
     </Box>
   );
 }
-
-// <DialogActions>
-//   <Button onClick={handleClose}>Переглянути</Button>
-//   <Button onClick={handleClose}>Опублікувати</Button>
-//   <Button onClick={handleClose}>Відмінити</Button>
-// </DialogActions>
-
-// <DialogContent>
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Заголовок"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Опис"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Широта"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Довгота"
-//     type="text"
-//     fullWidth
-//     variant="standard"
-//   />
-//   <TextField
-//     autoFocus
-//     margin="dense"
-//     id="name"
-//     label="Зображення"
-//     type="file"
-//     fullWidth
-//     variant="standard"
-//   />
-// </DialogContent>
