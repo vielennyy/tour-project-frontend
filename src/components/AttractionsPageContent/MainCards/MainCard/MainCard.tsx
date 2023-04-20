@@ -18,12 +18,14 @@ export const MainCard = ({attraction}:AttractionProps):JSX.Element => {
       borderRadius: '15px',
       width: '100%',
       display: 'grid',
-      gridTemplateColumns: '60% 40%'
+      gridTemplateColumns: '60% 40%',
+      height: 260,
+      overflow: 'hidden'
     }}>
       <Box sx={{
         padding: 2,
         display: 'grid',
-        gridTemplateRows: '25% 15% 50% 10%'
+        gridTemplateRows: '25% 15% 48% 10%'
       }}>
       <Typography variant='h5'>{attraction.title}</Typography>
       <Box sx={{
@@ -52,13 +54,15 @@ export const MainCard = ({attraction}:AttractionProps):JSX.Element => {
       </Box>
 
       </Box>
-      <Box>
+      <Box sx={{
+        height: '100%'
+      }}>
         <img src={attraction.image_url} alt='card'
              style={{width: '100%',
-               height: '100%',
+               minHeight: 259,
+               maxHeight: 260,
                borderBottomRightRadius: '15px',
                borderTopRightRadius: '15px',
-               minHeight: '250px',
                objectFit: 'cover'}}/>
       </Box>
     </Box>

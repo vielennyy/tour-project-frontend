@@ -77,8 +77,8 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{description}</TableCell>
                     <TableCell align="right">{geolocations[0] ? geolocations[0]["latitude"] : 'Невказано' }</TableCell>
                     <TableCell align="right">{geolocations[0] ? geolocations[0]["longitude"] : 'Невказано' }</TableCell>
-                    <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
+                    <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
+                    <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right">
                       <Button variant="outlined">
                         <Link to={`/attractions/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>

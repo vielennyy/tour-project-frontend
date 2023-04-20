@@ -5,7 +5,13 @@ import { Box, Typography, Breadcrumbs} from "@mui/material";
 import rating from "../../../assets/image/accommodations/Rating.png";
 import location_icon from "../../../assets/image/accommodations/Location_icon.png";
 
-export const AccommodationHeader = ():JSX.Element => {
+import { Accommodation } from "../../TypesAndInterfaces";
+
+interface AccommodationProps {
+  accommodation: Accommodation;
+}
+
+export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Element => {
   const breadcrumbs = [
     <Link to={'/'}>
       <Typography variant="body2">
@@ -19,17 +25,16 @@ export const AccommodationHeader = ():JSX.Element => {
     </Link>,
     <Link to={`/accommodations/${1}`}>
       <Typography variant="body2">
-        Готель «Телячі Ніжності»
+        {accommodation.name}
       </Typography>
     </Link>,
   ];
-
   return (
     <Box>
       <Breadcrumbs separator="·" aria-label="breadcrumb" sx={{color: '#EF5151'}}>
         {breadcrumbs}
       </Breadcrumbs>
-      <Typography variant='h2' sx={{marginTop: 8}}>Готель «Телячі Ніжності»</Typography>
+      <Typography variant='h2' sx={{marginTop: 8}}>{accommodation.name}</Typography>
       <Box sx={{
         marginTop: 3,
         display: 'flex',
@@ -57,7 +62,7 @@ export const AccommodationHeader = ():JSX.Element => {
         }}>
           <img src={location_icon} alt='location_icon' style={{width: '24px', height: '28px'}}/>
           <Typography variant='h5' sx={{marginLeft: 2}}>
-            м. Умань, Уманський р-н, Черкаська обл.
+            {accommodation.address_owner}
           </Typography>
         </Box>
       </Box>

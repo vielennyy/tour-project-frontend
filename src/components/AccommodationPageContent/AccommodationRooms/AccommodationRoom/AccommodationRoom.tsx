@@ -2,7 +2,16 @@ import {Box, Button, Typography} from "@mui/material";
 
 import luks from '../../../../assets/image/accommodations/luks.png';
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-export const AccommodationRoom = ():JSX.Element => {
+
+import { BookingPopup } from "../../BookingPopup";
+
+import {Room} from "../../../TypesAndInterfaces";
+
+interface RoomProps {
+  room: Room
+}
+
+export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
@@ -19,10 +28,10 @@ export const AccommodationRoom = ():JSX.Element => {
           justifyContent: 'space-between'
         }}>
           <Typography variant='h5'>
-            Номер «Люкс»
+            {room.name}
           </Typography>
           <Typography variant='h5'>
-            $900
+            {`$${room.price_per_night}`}
           </Typography>
         </Box>
         <Box sx={{
@@ -35,7 +44,7 @@ export const AccommodationRoom = ():JSX.Element => {
             color: '#777777',
             fontSize: 14
           }}>
-            До 4 чоловік
+            До {room.places} чоловік
           </Typography>
           <Typography variant='h6' sx={{
             color: '#777777',
@@ -56,12 +65,7 @@ export const AccommodationRoom = ():JSX.Element => {
             border: '1px solid #EF5151',
             padding: '20px'
           }}>
-            <Typography variant='body2' sx={{
-              textTransform: 'none',
-              color: '#EF5151'
-            }}>
-              Бронювати
-            </Typography>
+            <BookingPopup props={room.id}/>
           </Button>
           <Box sx={{
             display: 'flex'

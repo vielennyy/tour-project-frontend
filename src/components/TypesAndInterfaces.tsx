@@ -73,6 +73,32 @@ export interface Accommodation {
     user_id: number;
 }
 
+export interface AccommodationData {
+    room: [];
+    accommodation: Accommodation;
+    image_urls: [];
+}
+
+export interface Facilities {
+    breakfast: boolean;
+    credit_card: boolean;
+    free_parking: boolean;
+    pets: boolean;
+    wi_fi: boolean;
+}
+
+export interface Room {
+    accommodation_id: number;
+    bed: string;
+    created_at: string;
+    description: string;
+    id: number;
+    name: string;
+    places: number;
+    price_per_night: string;
+    quantity: number;
+    updated_at: string;
+}
 export interface RoomBookingProps {
     id: number,
     userId: number,

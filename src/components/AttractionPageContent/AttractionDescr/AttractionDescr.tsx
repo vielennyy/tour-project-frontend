@@ -29,7 +29,7 @@ export const AttractionDescr = ({attraction}:AttractionProps):JSX.Element => {
         }}
                 variant="contained">
           <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-            Бронювати
+            Переглянути на мапі
           </Typography>
         </Button>
       </Box>

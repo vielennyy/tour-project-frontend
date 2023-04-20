@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 import { AccommodationCard } from "../AccommodationCard";
+import { Accommodation } from "../../TypesAndInterfaces";
 
 export const AccommodationsList = ():JSX.Element => {
-  const [accommodationsList, setAccommodationsLest] = useState();
+  const [accommodationsList, setAccommodationsLest] = useState<[]>([]);
   const fetchingAccommodations = async () => {
-    // isLoading(true)
     const fetching = await fetch('https://cktour.club/api/v1/accommodations',
       {
         method: "GET",
@@ -17,15 +17,13 @@ export const AccommodationsList = ():JSX.Element => {
         },
       });
     const json = await fetching.json();
-    // isLoading(false);
     return setAccommodationsLest(json.data);
   }
 
   useEffect(() => {
     fetchingAccommodations()
   }, [])
-
-  console.log(accommodationsList);
+  console.log(accommodationsList)
   return (
     <Box sx={{
       display: 'grid',
@@ -33,14 +31,14 @@ export const AccommodationsList = ():JSX.Element => {
       gap: '30px',
       margin: '40px 0'
     }}>
-      <Link key='1' to={`/accommodations/${1}`}>
-        <AccommodationCard/>
-      </Link>
-      <AccommodationCard/>
-      <AccommodationCard/>
-      <AccommodationCard/>
-      <AccommodationCard/>
-      <AccommodationCard/>
+      {accommodationsList.length > 0 ?
+        accommodationsList.map((accommodation:Accommodation) =>
+          <Link to={`/accommodations/${accommodation.id}`} key={accommodation.id}>
+            <AccommodationCard accommodation={accommodation}/>
+          </Link>)
+      :
+      <Typography>Готелей не знайдено</Typography>
+      }
     </Box>
   )
 }

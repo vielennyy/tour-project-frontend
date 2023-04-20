@@ -42,7 +42,6 @@ export const MainPopup = ():JSX.Element =>  {
         background: 'rgba(255, 255, 255, 0.15)',
         height: 45,
         width: 140,
-        // border: '1px solid #EF5151',
         borderRadius: '9px',
         boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)'
       }}>

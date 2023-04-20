@@ -66,8 +66,8 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
                     </TableCell>
                     <TableCell align="right">{name}</TableCell>
                     <TableCell align="right">{email}</TableCell>
-                    <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
-                    <TableCell align="right">{moment(updated_at).format("dddd, MMM DD HH:mm a")}</TableCell>
+                    <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
+                    <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right" sx={{display: 'flex', borderBottom: 'none'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}

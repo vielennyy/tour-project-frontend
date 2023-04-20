@@ -10,10 +10,7 @@ import {Table,
   Box,
   TableRow} from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from '@mui/material/CircularProgress';
-
 
 import { AddAdminForm } from "./AddAdminForm";
 import { DeleteConfirmModal } from "../DeleteConfirmModal"
@@ -69,7 +66,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
                     </TableCell>
                     <TableCell align="right">{name}</TableCell>
                     <TableCell align="right">{email}</TableCell>
-                    <TableCell align="right">{moment(created_at).format("dddd, MMM DD HH:mm a")}</TableCell>
+                    <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right" sx={{display: 'flex'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}

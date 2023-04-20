@@ -13,7 +13,7 @@ import slide3 from "../../../assets/image/accommodations/slide3.png";
 import slide4 from "../../../assets/image/accommodations/slide4.png";
 import slide5 from "../../../assets/image/accommodations/slide5.png";
 
-export const AccommodationSlider = ():JSX.Element => {
+export const AccommodationSlider = ({image_urls}:any):JSX.Element => {
   return(
     <Box sx={{
         display: 'grid',
@@ -34,21 +34,11 @@ export const AccommodationSlider = ():JSX.Element => {
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
         >
-          <SwiperSlide>
-            <img src={slide1} alt={slide1} style={{height: '100%', width: '100%'}}/>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={slide2} alt={slide2} style={{height: '100%', width: '100%'}}/>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={slide3} alt={slide3} style={{height: '100%', width: '100%'}}/>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={slide4} alt={slide4} style={{height: '100%', width: '100%'}}/>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={slide5} alt={slide5} style={{height: '100%', width: '100%'}}/>
-          </SwiperSlide>
+          {image_urls.map((img:string) =>
+            <SwiperSlide>
+              <img src={img} alt={slide1} style={{height: 400, width: 600, borderRadius: '15px', objectFit: 'cover'}}/>
+            </SwiperSlide>
+          )}
         </Swiper>
       </Box>
       <Box sx={{
@@ -59,10 +49,9 @@ export const AccommodationSlider = ():JSX.Element => {
         maxHeight: 400
       }}>
 
-        <img src={slide2} alt={slide2} style={{height: '100%', width: '100%'}}/>
-        <img src={slide3} alt={slide3} style={{height: '100%', width: '100%'}}/>
-        <img src={slide4} alt={slide4} style={{height: '100%', width: '100%'}}/>
-        <img src={slide5} alt={slide5} style={{height: '100%', width: '100%'}}/>
+        {image_urls.map((img:string) =>
+            <img src={img} alt={slide1} style={{height: 187, width: 247, borderRadius: '15px', objectFit: 'cover'}}/>
+        )}
       </Box>
     </Box>
   )

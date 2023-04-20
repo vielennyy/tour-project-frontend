@@ -2,7 +2,15 @@ import {Box, Button, Typography} from '@mui/material';
 
 import picture from '../../../assets/image/accommodations/third.png';
 import star from '../../../assets/image/accommodations/Star.png';
-export const AccommodationCard = ():JSX.Element => {
+
+import { Accommodation } from "../../TypesAndInterfaces";
+
+interface AccommodationProps {
+  accommodation: Accommodation
+}
+
+export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Element => {
+  console.log(accommodation)
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
@@ -19,7 +27,7 @@ export const AccommodationCard = ():JSX.Element => {
           justifyContent: 'space-between'
         }}>
           <Typography variant='h5'>
-            Готель "Телячі ніжності"
+            {accommodation.name}
           </Typography>
           <Box sx={{
             display: 'flex',
