@@ -12,7 +12,7 @@ interface ComponentProps {
     setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
 }
 
-interface FormData {
+interface FormDataValues {
     name: string,
     description: string,
     address_owner: string,
@@ -32,7 +32,7 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
     const [type, setType] = useState('Інше')
     const userToken = localStorage.getItem('token')
 
-    const [formState, setFormState] = useState<FormData>({
+    const [formState, setFormState] = useState<FormDataValues>({
         name: "",
         description: "",
         address_owner: "",
@@ -73,14 +73,14 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
     };
 
     function convertFile(files: FileList|null) {
-        // if (files) {
-        //   const filesList = Object.entries(files).map(([key, value]) => (value));
-        //   setFormState({
-        //     ...formState,
-        //     images: filesList
-        //   });
-        // }
-      }
+        if (files) {
+          const filesList = Object.entries(files).map(([key, value]) => (value));
+          setFormState({
+            ...formState,
+            images: filesList
+          });
+        }
+    }
 
     // const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
     //     // @ts-ignore
@@ -99,35 +99,35 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        // const { name, description, address_owner, phone, email, kind, user_id, reg_code, person} = formState;
+        const { name, description, address_owner, phone, email, kind, user_id, reg_code, person, images} = formState;
 
-        // const formData = new FormData();
-        // formData.append('name', name);
-        // formData.append('description', description);
-        // formData.append('address_owner', address_owner);
-        // formData.append('phone', phone);
-        // formData.append('email', email);
-        // formData.append('kind', kind);
-        // formData.append('user_id', user_id.toString());
-        // formData.append('reg_code', reg_code);
-        // formData.append('person', person);
-        // if (images !== undefined) {
-        //     for (let i = 0; i < images.length; i++) {
-        //         formData.append('images[]', images[i]);
-        //     }
-        // }
-        
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('address_owner', address_owner);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('kind', kind);
+        formData.append('user_id', user_id.toString());
+        formData.append('reg_code', reg_code);
+        formData.append('person', person);
+        if (images !== undefined) {
+            for (let i = 0; i < images.length; i++) {
+                formData.append('images[]', images[i]);
+            }
+        }
+        // console.log(images)
         console.log(formState)
         fetch(`https://cktour.club/api/v1/accommodations`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/json',
                     // 'Content-Type': 'multipart/form-data',
                     // 'accept': '*/*',
                     Authorization: "Bearer " + userToken
                 },
-                body: 
-                JSON.stringify(formState)})
+                body: formData})
+                // JSON.stringify(formState)})
             .then(response => response.json())
             .then(json => setMainInfo(json))
             .catch(error => console.error('Error:', error));

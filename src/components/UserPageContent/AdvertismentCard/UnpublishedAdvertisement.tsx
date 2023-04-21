@@ -1,13 +1,9 @@
 import {Typography, Button} from '@mui/material';
 import { Accommodation } from 'src/components/TypesAndInterfaces';
-import { AdvertisementItem, CheckingItem, ConfirmedItem} from './AdvertisementItem';
+import { CheckingItem, ConfirmedItem} from './AdvertisementItem';
 import { useState, useEffect } from 'react'
 
-interface myComponentProps {
-    isActive: boolean,
-}
-
-export const AdvertisementCard = (isActive :myComponentProps) => {
+export const UnpablishedAdverticement = () => {
     
     const [accommodations, setAccommodations] = useState<Accommodation[]>([])
     useEffect(() => {
@@ -24,15 +20,7 @@ export const AdvertisementCard = (isActive :myComponentProps) => {
         <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>Мої оголошення</Typography>
         {accommodations && accommodations !== undefined ?
             <>
-            {isActive ?
-                <>
-                    {accommodations.map((accommodation) => accommodation.status === 'published' ? <ConfirmedItem props={accommodation}/> : <></>)}
-                </>
-            :
-                <>
-                    {accommodations.map((accommodation) => accommodation.status === 'published' ? <></> : <CheckingItem props={accommodation}/>)}
-                </>
-            }
+                {accommodations.map((accommodation) => accommodation.status === 'published' ? <></> : <CheckingItem props={accommodation}/>)}
             </>
             :
             <>

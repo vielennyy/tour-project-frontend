@@ -107,25 +107,11 @@ export const ConfirmedItem = ({props}:myComponentProps) => {
                         </>}
                     />
                     <Box display='flex' flexDirection={'column'}>
-                    <Button variant="contained"  sx={{width: '200px', marginBottom: '20px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Редагувати</Button>
+                    <Button variant="contained" href='user/advertisement/change' sx={{width: '200px', marginBottom: '20px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Редагувати</Button>
                     <Button variant="outlined" sx={{width: '200px', right: 0, textTransform:'none', fontSize:'20px', padding:'10px 30px', color: '#777777', borderColor:'#777777'}}>Переглянути</Button>
                     </Box>
 
                 </ListItem>
         </Box>
-    )
-}
-export const AdvertisementItem = ({props}:myComponentProps) => {
-    
-      
-      
-    
-    return(
-        <>
-            
-            <CheckingItem props={props}/>
-            <ConfirmedItem props={props}/>
-        </>
-        
     )
 }

@@ -10,8 +10,9 @@ import Box from '@mui/material/Box';
 import { InfoCard } from '../InfoCard';
 import { PartnerInfoCardProps, User } from 'src/components/TypesAndInterfaces';
 import { OrdersCard } from '../OrdersCard';
-import { AdvertisementCard } from '../AdvertismentCard';
 import { RatesAndPaymentCard } from '../RatesAndPaymentsCard';
+import { PublishedAdvertisement } from '../AdvertismentCard/PublishedAdvertisement';
+import { UnpablishedAdverticement } from '../AdvertismentCard/UnpublishedAdvertisement';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -196,10 +197,10 @@ export const Sidebar = ({changePassword}:MyComponentProps) => {
             {/* <AdvertisementCard/> */}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        <AdvertisementCard isActive={false}/>
+        <UnpablishedAdverticement/>
       </TabPanel> 
     <TabPanel value={value} index={7}>
-        <AdvertisementCard isActive={true}/>
+        <PublishedAdvertisement/>
     </TabPanel>
       <TabPanel value={value} index={8}>
           <RatesAndPaymentCard></RatesAndPaymentCard>

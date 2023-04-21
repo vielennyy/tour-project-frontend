@@ -14,6 +14,7 @@ import { AttractionsPage } from "./pages/AttractionsPage";
 import { AttractionPage } from "./pages/AttractionPage";
 import { TypeAdvertisement } from "./components/AddAdvertisement/TypeAdvertisementPage";
 import { AccommodationRegistration } from "./components/AddAdvertisement/FormPages/AccommodationRegistration";
+import { EditAccommodation } from "./components/UserPageContent/AdvertismentCard";
 
 const AppRoutes = [
   {
@@ -86,6 +87,14 @@ const AppRoutes = [
   },
   {
     path: '/registration/accommodation',
+    element: <AccommodationRegistration/>
+  },
+  {
+    path: '/user/advertisement/change',
+    element: <EditAccommodation/>
+  },
+  {
+    path: '/registration/accommodation/room',
     element: <AccommodationRegistration/>
   },
 ];
