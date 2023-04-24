@@ -71,6 +71,7 @@ export interface Accommodation {
     created_at: Date;
     updated_at: Date;
     user_id: number;
+    images: string[]
 }
 
 export interface AccommodationData {
@@ -146,6 +147,20 @@ export interface UserObject {
     updated_at?: string | undefined;
 }
 
+export interface AccommodationFormValues {
+    name: string,
+    description: string,
+    address_owner: string,
+    phone: string,
+    email: string,
+    kind: string,
+    user_id: number,
+    reg_code: string,
+    status?: string,
+    person: string,
+    images?: File[],
+};
+
 export interface MainAccommodationInfoProps {
     data:{
         accommodation: {
@@ -166,3 +181,40 @@ export interface MainAccommodationInfoProps {
         image_urls: string[];
     }
 }
+
+export interface AccommodationRoomInfo {
+    name: string,
+    places: string,
+    quantity: string,
+    description: string,
+    bed: string,
+    price_per_night: string,
+    images: File[],
+}
+
+export interface AccommodationRoomResponce {
+    image_urls: string[];
+    room: {
+        accommodation_id: number;
+        bed: string;
+        created_at: string;
+        description: string;
+        id: number;
+        name: string;
+        places: number;
+        price_per_night: string;
+        quantity: number;
+        updated_at: string;
+    }    
+  }
+
+  export interface RoomAmenities {
+    conditioner: boolean,
+    tv: boolean,
+    refrigerator: boolean,
+    kettle: boolean,
+    mv_owen: boolean,
+    hair_dryer: boolean,
+    nice_view: boolean,
+    inclusive: boolean,
+  }

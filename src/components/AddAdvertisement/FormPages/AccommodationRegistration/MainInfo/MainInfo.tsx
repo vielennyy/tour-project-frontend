@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, Typography, FormControl, TextField, Button } from '@mui/material'
 import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
-import house from '../home.svg'
-import apartment from '../apartment.svg'
-import hostel from '../hostel.svg'
-import hotel from '../hotel.svg'
-import other from '../other.svg'
+import house from '../../../../../assets/icons/accommodation/home.svg'
+import apartment from '../../../../../assets/icons/accommodation/apartment.svg'
+import hostel from '../../../../../assets/icons/accommodation/hostel.svg'
+import hotel from '../../../../../assets/icons/accommodation/hotel.svg'
+import other from '../../../../../assets/icons/accommodation/other.svg'
 
 interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,

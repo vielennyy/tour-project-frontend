@@ -44,7 +44,6 @@ export const InfoCard = ({changePassword}:MyComponentProps) => {
     const userToken = localStorage.getItem('token')
     const changePasswordToken = useParams<{ token: string }>()
     const token = changePasswordToken.token
-    // console.log(token)
     // const [token, setToken] = useState(changePasswordToken.token.toString())
 
     const handlePasswordEditMode = () => {
@@ -61,6 +60,7 @@ export const InfoCard = ({changePassword}:MyComponentProps) => {
           .then(response => response.json())
           .then(json => setUser(json));
     }, [user]);
+    console.log(user)
 
 
 

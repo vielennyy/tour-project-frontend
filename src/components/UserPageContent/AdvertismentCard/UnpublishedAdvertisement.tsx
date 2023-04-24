@@ -4,10 +4,11 @@ import { CheckingItem, ConfirmedItem} from './AdvertisementItem';
 import { useState, useEffect } from 'react'
 
 export const UnpablishedAdverticement = () => {
+    const userId = localStorage.getItem('id')
     
     const [accommodations, setAccommodations] = useState<Accommodation[]>([])
     useEffect(() => {
-        fetch('https://cktour.club/api/v1/accommodations', {
+        fetch(`https://cktour.club/api/v1/accommodations`, {
             method: "GET",
             headers: { Authorization: 'Bearer ' +  localStorage.getItem('token') }
         })
@@ -20,12 +21,12 @@ export const UnpablishedAdverticement = () => {
         <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>Мої оголошення</Typography>
         {accommodations && accommodations !== undefined ?
             <>
-                {accommodations.map((accommodation) => accommodation.status === 'published' ? <></> : <CheckingItem props={accommodation}/>)}
+                {accommodations.map((accommodation) => (accommodation.status === 'unpublished' && accommodation.user_id===Number(userId)) ? <CheckingItem props={accommodation}/> : <></>)}
             </>
             :
             <>
-                <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>На даний момент ви не розмістили ще жодного оголошення</Typography>
-                <Button variant="contained" sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Зберегти</Button>
+                <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>На даний момент у вас немає неопублікованих оголошень</Typography>
+                <Button variant="contained" href='/registration' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Додати пропозицію</Button>
 
             </>
         }

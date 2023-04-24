@@ -1,11 +1,11 @@
 import { useState, ChangeEvent } from 'react'
 import { Box, Typography, FormControl, TextField, Button, Input, Grid, Checkbox } from '@mui/material'
 import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
-import cardpayment from './cardpayment.svg'
-import parking from './parking.svg'
-import breakfast from './breakfast.svg'
-import wifi from './wifi.svg'
-import pet from './pet.svg'
+import cardpayment from '../../../../../assets/icons/accommodation/cardpayment.svg'
+import parking from '../../../../../assets/icons/accommodation/parking.svg'
+import breakfast from '../../../../../assets/icons/accommodation/breakfast.svg'
+import wifi from '../../../../../assets/icons/accommodation/wifi.svg'
+import pet from '../../../../../assets/icons/accommodation/pet.svg'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -14,14 +14,6 @@ interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,
     setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
 }
-
-// interface CheckBoxValues {
-//     credit_card: boolean,
-//     free_parking: boolean,
-//     wi_fi: boolean,
-//     breakfast: boolean,
-//     pets: boolean
-// }
 
 interface FormData {
     checkin_start: string,
@@ -39,13 +31,6 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
     const [show, setShow] = useState(true)
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const userToken = localStorage.getItem('token')
-    // const [checkboxValues, setCheckboxValues] = useState<CheckBoxValues>({
-    //     credit_card: false,
-    //     free_parking: false,
-    //     wi_fi: false,
-    //     breakfast: false,
-    //     pets: false
-    //   });
     const today = new Date();
 
     const [formState, setFormState] = useState<FormData>({
@@ -105,15 +90,6 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                 //     .then(response => response.json())
                 //     .then(json => console.log(json)); 
               }
-              fetch(`https://cktour.club/api/v1/accommodations`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNywiZXhwIjoxNjgyNDYwOTE3fQ.McMucd5FXSzn8WsLc3FD1FT0JJP9I19ayFIlZmt_d5E"
-                },
-            })
-            .then(response => response.json())
-            .then(json => console.log(json))
         }
 
 
