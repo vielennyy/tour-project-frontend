@@ -29,9 +29,6 @@ interface RoomId {
 export const BookingPopup = ({props}:RoomId):JSX.Element => {
   const [open, setOpen] = useState(false);
   const {id} = useParams();
-  const [startDay, setStartDay] = useState();
-  const [endDay, setEndDay] = useState()
-  console.log(props)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -62,11 +59,9 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
 
   const handleStartDay = (event:any) => {
     const start = event['$d'].toISOString().slice(0, 10);
-    setStartDay(start)
   }
   const handleEndDay = (event:any) => {
     const end = event['$d'].toISOString().slice(0, 10);
-    setEndDay(end)
   }
 
   const formik = useFormik({

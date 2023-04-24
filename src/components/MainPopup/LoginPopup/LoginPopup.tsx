@@ -125,13 +125,6 @@ export const LoginPopup = ():JSX.Element =>  {
             helperText={formik.touched.password && formik.errors.password}
             sx={{marginTop: '15px'}}
           />
-          {/*{response === 400 ?*/}
-          {/*  <Typography variant="body2" sx={{*/}
-          {/*    marginTop: 1,*/}
-          {/*    color: '#EF5151'*/}
-          {/*  }}>Invalid</Typography> :*/}
-          {/*  null*/}
-          {/*}*/}
           <Button color="primary" variant="contained" fullWidth type="submit" sx={{
             width: 200,
             height: 40,

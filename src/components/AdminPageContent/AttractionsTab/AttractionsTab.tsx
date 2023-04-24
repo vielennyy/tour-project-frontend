@@ -21,7 +21,6 @@ import { AddAttractionsForm } from "./AddAttractionsForm";
 import { EditAttractionForm } from "./EditAttractionForm";
 
 import {UserToken} from "../../TypesAndInterfaces";
-import EditIcon from "@mui/icons-material/Edit";
 
 export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/attractions/';
@@ -44,7 +43,7 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
   useEffect(() => {
     fetchingAttractions()
   }, [])
-  console.log(attractions)
+
   return (
     <Box>
       <AddAttractionsForm token={token}/>
