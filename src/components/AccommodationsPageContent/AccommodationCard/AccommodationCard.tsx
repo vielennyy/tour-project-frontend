@@ -1,3 +1,5 @@
+import {useEffect, useState} from "react";
+
 import {Box, Button, Typography} from '@mui/material';
 
 import picture from '../../../assets/image/accommodations/third.png';
@@ -10,7 +12,23 @@ interface AccommodationProps {
 }
 
 export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Element => {
-  console.log(accommodation)
+  const [rate, setRate] = useState()
+
+  const fetchingRate = async () => {
+    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
+      {
+        method: "GET"
+      });
+    const json = await  fetching.json();
+    // console.log(json)
+    return setRate(json);
+  }
+
+  useEffect(() => {
+    fetchingRate()
+  }, [])
+
+  console.log(rate)
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
@@ -35,7 +53,7 @@ export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Elemen
           }}>
             <img src={star} alt='star' style={{width: '18px', height: '18px', margin: '0 10px 5px 0'}}/>
             <Typography variant='h5'>
-              4.7
+              {rate}
             </Typography>
           </Box>
         </Box>

@@ -34,8 +34,8 @@ export const AccommodationSlider = ({image_urls}:any):JSX.Element => {
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
         >
-          {image_urls.map((img:string) =>
-            <SwiperSlide>
+          {image_urls.map((img:string, index: any) =>
+            <SwiperSlide key={index}>
               <img src={img} alt={slide1} style={{height: 400, width: 600, borderRadius: '15px', objectFit: 'cover'}}/>
             </SwiperSlide>
           )}

@@ -1,6 +1,7 @@
 import {Box, Button, Typography} from "@mui/material";
 
 import { Comment } from "./Comment";
+import { AddComment } from "../../AddComment";
 
 import star from '../../../assets/image/accommodations/Star.png';
 import React from "react";
@@ -35,7 +36,8 @@ export const AccommodationComments = ():JSX.Element => {
         <Comment/>
       </Box>
       <Box sx={{
-        marginTop: 4
+        marginTop: 4,
+        display: 'flex'
       }}>
         <Button sx={{
           background: '#EF5151',
@@ -49,21 +51,23 @@ export const AccommodationComments = ():JSX.Element => {
             Читати всі відгуки
           </Typography>
         </Button>
-        <Button sx={{
-          background: '#FFFFFF',
-          padding: '18px',
-          borderRadius: '7px',
-          width: 280,
-          maxHeight: 60,
-          marginLeft: 4,
-          border: '1px solid #EF5151'
-        }}
-                variant="contained">
-          <Typography sx={{ margin: '0 20px', color: '#EF5151', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-            Написати відгук
-          </Typography>
-        </Button>
+        <AddComment/>
       </Box>
     </Box>
   )
 }
+
+// <Button sx={{
+//   background: '#FFFFFF',
+//   padding: '18px',
+//   borderRadius: '7px',
+//   width: 280,
+//   maxHeight: 60,
+//   marginLeft: 4,
+//   border: '1px solid #EF5151'
+// }}
+//         variant="contained">
+//   <Typography sx={{ margin: '0 20px', color: '#EF5151', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
+//     Написати відгук
+//   </Typography>
+// </Button>

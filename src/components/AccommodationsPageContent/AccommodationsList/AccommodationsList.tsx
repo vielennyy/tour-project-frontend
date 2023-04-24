@@ -23,7 +23,6 @@ export const AccommodationsList = ():JSX.Element => {
   useEffect(() => {
     fetchingAccommodations()
   }, [])
-  console.log(accommodationsList)
   return (
     <Box sx={{
       display: 'grid',

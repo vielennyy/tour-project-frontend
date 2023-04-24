@@ -16,6 +16,7 @@ import {
   Input  } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddIcon from '@mui/icons-material/Add';
 
 import { MainPopup} from "../../MainPopup";
 
@@ -205,6 +206,23 @@ export const DefaultNavBar = ():JSX.Element => {
             alignItems: 'center',
             justifyContent: 'flex-end'
           }}>
+            <Link to={'/registration'}>
+              <Button sx={{
+                textTransform: 'none',
+                background: 'rgba(255, 255, 255, 0.15)',
+                height: 45,
+                width: 220,
+                borderRadius: '9px',
+                boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
+                border: '1px solid black',
+                marginRight: 2
+              }}>
+                <AddIcon sx={{marginRight: '5px'}}/>
+                <Typography variant="body2">
+                  Додати пропозицію
+                </Typography>
+              </Button>
+            </Link>
             <Link to={'/user'}>
               <AccountCircleIcon sx={{color: '#000000', marginTop: 1}} fontSize='large'/>
             </Link>

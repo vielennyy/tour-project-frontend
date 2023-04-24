@@ -1,15 +1,21 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/uk';
 
-import {Table,
+import {
+  Box, Button,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow} from '@mui/material';
+  TableRow, Typography
+} from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import CircularProgress from "@mui/material/CircularProgress";
 
 function createData(
   id: number,
@@ -27,39 +33,71 @@ const rows = [
 ];
 
 export const CommentsTab = ():JSX.Element =>  {
+  const [commentsList, setCommentsList] = useState<[]>([]);
+  const [loading, isLoading] = useState(false);
+  moment.locale('uk');
+
+  const fetchingComments = async () => {
+    isLoading(true)
+    const fetching = await fetch('https://cktour.club/api/v1/admins/unpublished_comments',
+      {
+        method: "GET",
+        headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
+      });
+    const json = await fetching.json();
+    isLoading(false);
+    return setCommentsList(json.data);
+  }
+
+  useEffect(() => {
+    fetchingComments()
+  }, [])
+
+  console.log(commentsList)
   return (
-    <TableContainer>
-      <Table sx={{ width: 1024 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="right">Нік користувача</TableCell>
-            <TableCell align="right">Email користувача</TableCell>
-            <TableCell align="right">Текст коментаря</TableCell>
-            <TableCell align="right">Статус</TableCell>
-            <TableCell align="right">Створено</TableCell>
-            <TableCell align="right">Опції</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.id}
-              </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.text}</TableCell>
-              <TableCell align="right">{row.status}</TableCell>
-              <TableCell align="right">{row.createAt}</TableCell>
-              <TableCell align="right"><RemoveRedEyeIcon/><DeleteIcon/></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box>
+      {loading ?
+        <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
+        <TableContainer>
+          <Table sx={{ width: 1024 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Id</TableCell>
+                <TableCell align="right">Коментар</TableCell>
+                <TableCell align="right">Об'єкт коментаря</TableCell>
+                <TableCell align="right">Статус</TableCell>
+                <TableCell align="right">Створено</TableCell>
+                <TableCell align="right">Змінено</TableCell>
+                <TableCell align="right">Опції</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {commentsList.map(({id, body, commentable_type, created_at, status, updated_at}) => (
+                <TableRow
+                  key={id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {id}
+                  </TableCell>
+                  <TableCell align="right">{body}</TableCell>
+                  <TableCell align="right">{commentable_type}</TableCell>
+                  <TableCell align="right">{status}</TableCell>
+                  <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
+                  <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
+                  <TableCell align="right">
+                    <Button variant="outlined">
+                      <Link to={`/accommodations/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>
+                        <RemoveRedEyeIcon/>
+                      </Link>
+                    </Button>
+                    <DeleteIcon/></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      }
+    </Box>
   );
 }
