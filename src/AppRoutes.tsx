@@ -16,6 +16,7 @@ import { TypeAdvertisement } from "./components/AddAdvertisement/TypeAdvertiseme
 import { AccommodationRegistration } from "./components/AddAdvertisement/FormPages/AccommodationRegistration";
 import { EditAccommodation } from "./components/UserPageContent/AdvertismentCard";
 import { CreateRoom } from "./components/CreateRoom";
+import { EditPassword } from "./components/UserPageContent/EditPassword";
 
 const AppRoutes = [
   {
@@ -24,11 +25,11 @@ const AppRoutes = [
   },
   {
     path: '/user',
-    element: <UserPage changePassword={false}/>
+    element: <UserPage/>
   },
   {
     path: '/user/:token',
-    element: <UserPage changePassword={true}/>
+    element: <EditPassword/>
   },
   {
     path: '/accommodations',

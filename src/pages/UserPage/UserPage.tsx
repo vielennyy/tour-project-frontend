@@ -6,7 +6,7 @@ interface MyComponentProps{
   changePassword: boolean
 }
 
-export const UserPage = ({changePassword}:MyComponentProps) => {
+export const UserPage = () => {
   return(
     <Box sx={{
       width: {xs: '100%', md: '1024px'},
@@ -14,7 +14,7 @@ export const UserPage = ({changePassword}:MyComponentProps) => {
     }}>
     <>
       {localStorage.getItem('token') ?
-      <UserPageContent changePassword={changePassword}/>
+      <UserPageContent/>
       :
       <></>
     }

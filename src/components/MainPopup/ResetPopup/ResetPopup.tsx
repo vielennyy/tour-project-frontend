@@ -13,6 +13,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export const ResetPopup = ():JSX.Element => {
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('')
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,6 +22,25 @@ export const ResetPopup = ():JSX.Element => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleForgotPasswordClick = () => {
+    fetch(`https://cktour.club/api/v1/password/forgot`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json',
+                // Authorization: 'Bearer ' +  userToken 
+              },
+            body: JSON.stringify({email: email})
+          })
+          .then(response => {
+            if(response.ok){
+            response.json()
+            setOpen(false);
+            }
+          })
+          .then(json => {
+            console.log(json)
+          })
+  }
 
   return (
     <div>
@@ -47,11 +67,12 @@ export const ResetPopup = ():JSX.Element => {
             <TextField
               hiddenLabel={true}
               required={true}
-              label="Електронна почта"
+              label="Електронна пошта"
               id="outlined-size-normal"
               placeholder={'E-mail'}
               fullWidth
               type="email"
+              onChange={(e)=> {setEmail(e.target.value)}}
               sx={{marginTop: "35px"}}/>
           </DialogContent>
           <Box sx={{
@@ -60,7 +81,9 @@ export const ResetPopup = ():JSX.Element => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Button variant="contained" sx={{
+            <Button variant="contained" 
+            onClick={handleForgotPasswordClick}
+            sx={{
               background: '#FF3939',
               width: 200,
               height: 40,

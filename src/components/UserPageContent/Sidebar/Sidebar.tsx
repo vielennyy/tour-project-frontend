@@ -49,7 +49,7 @@ function a11yProps(index: number) {
   };
 }
 
-export const Sidebar = ({changePassword}:MyComponentProps) => {
+export const Sidebar = () => {
   const [value, setValue] = React.useState(0);
   const [ordersTab, setOrdersTab] = React.useState(false)
   const [adverticementsTab, setAdverticementsTab] = React.useState(false)
@@ -179,7 +179,7 @@ export const Sidebar = ({changePassword}:MyComponentProps) => {
             {...a11yProps(6)} />      
       </Tabs>
       <TabPanel value={value} index={0}>
-            <InfoCard changePassword={changePassword}/>
+            <InfoCard/>
       </TabPanel>
       <TabPanel value={value} index={1}>
       <OrdersCard/>
