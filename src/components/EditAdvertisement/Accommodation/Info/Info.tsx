@@ -40,7 +40,7 @@ interface EditGeolocationFormData {
     zip_code: string
 }
 
-export const EditAccommodationInfo = (props:ComponentProps) => {
+export const Info = (props:ComponentProps) => {
     const [show, setShow] = useState(true)
     const typeAccommodationImages = [house, hotel, apartment, hostel, other];
     const [clickedIndex, setClickedIndex] = useState(-1);

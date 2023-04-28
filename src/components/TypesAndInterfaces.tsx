@@ -218,3 +218,19 @@ export interface AccommodationRoomResponce {
     nice_view: boolean,
     inclusive: boolean,
   }
+
+ export interface Reservation {
+    id: number;
+    number_of_peoples: number;
+    check_in: string;
+    check_out: string;
+    user_id: number;
+    room_id: number;
+    created_at: string;
+    updated_at: string;
+    note?: string;
+    confirmation: "pending" | "approved" | "declined";
+    full_name: string;
+    phone: string;
+  }
+  

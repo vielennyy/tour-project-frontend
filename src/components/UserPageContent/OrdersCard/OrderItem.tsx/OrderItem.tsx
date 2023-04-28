@@ -1,4 +1,4 @@
-import { RoomBookingProps } from "src/components/TypesAndInterfaces"
+import { Reservation } from "src/components/TypesAndInterfaces"
 import ListItem from '@mui/material/ListItem';
 import * as React from 'react';
 import List from '@mui/material/List';
@@ -14,7 +14,7 @@ import { SvgIcon } from "@mui/material";
 import { ReactComponent as LocationIcon } from '../../UserPageIcons/Location icon.svg';
 
 interface myComponentProps {
-    props: RoomBookingProps,
+    props: Reservation,
 }
 
 export const OrderItem = ({props}:myComponentProps) => {
@@ -41,8 +41,10 @@ export const OrderItem = ({props}:myComponentProps) => {
         return `${day} ${months[monthIndex]} ${year}`;
       }
       
-    const checkIn = formatDate(props.checkIn)
-    const checkOut = formatDate(props.checkOut)
+    const checkIn = new Date(props.check_in)
+    
+    const checkOut = new Date(props.check_out)
+    
       
     
     return(
@@ -67,7 +69,7 @@ export const OrderItem = ({props}:myComponentProps) => {
 
                 secondary={<>
                     <Typography fontSize={22} color='#777777' sx={{marginBottom: '10px'}}>
-                    {checkIn + ' - ' + checkOut}
+                    {formatDate(checkIn) + ' - ' + formatDate(checkOut)}
                     </Typography>
                     
 </>

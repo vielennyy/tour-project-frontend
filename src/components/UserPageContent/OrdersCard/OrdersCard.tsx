@@ -1,23 +1,36 @@
 import { OrderItem } from "./OrderItem.tsx"
-import { RoomBookingProps } from "src/components/TypesAndInterfaces";
+import { RoomBookingProps, Reservation } from "src/components/TypesAndInterfaces";
 import Typography from '@mui/material/Typography';
+import {useState, useEffect} from 'react'
+
 
 export const OrdersCard = () => {
-    const booking: RoomBookingProps = {
-        id: 1,
-        userId: 2,
-        roomId: 3,
-        numberOfPeople: 4,
-        checkIn: new Date('2022-04-01'),
-        checkOut: new Date('2022-04-05'),
-        confirmation: true,
-        note: 'Additional note for the booking',
-      };
+    const [bookings, setBookings] = useState<Reservation[]|undefined>()
+    
+    useEffect(() => {
+        fetch(`https://cktour.club/api/v1/users/${localStorage.getItem('id')}/bookings`, {
+            method: "GET",
+            headers: { Authorization: 'Bearer ' +  localStorage.getItem('token') }
+        })
+          .then(response => response.json())
+          .then(json => setBookings(json.data));
+      }, []);
+
+      console.log(bookings)
 
     return (
         <>
         <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>Мої бронювання</Typography>
-        <OrderItem props={booking}/>
+        {bookings && Array.isArray(bookings) && bookings.length > 0 ? (
+        <>
+        {bookings.map((booking) => (
+            <OrderItem key={booking.id} props={booking} />
+        ))}
+        </>
+        ):
+        <Typography>У Вас поки що немає бронювань</Typography>
+        }
+        
         </>
     )
 }
