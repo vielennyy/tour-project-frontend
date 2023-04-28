@@ -100,7 +100,7 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
             margin: '30px auto'
         }}
         >
-            {mainInfo!== undefined ?
+            {/* {mainInfo!== undefined ? */}
             <>
                 <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
@@ -135,9 +135,9 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
                 </form>
 
             </>
-           :
+           {/* :
             <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
-            }
+            } */}
         </Box>
     )
 }
