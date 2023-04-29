@@ -9,7 +9,8 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Accommodation, MainAccommodationInfoProps } from '../../TypesAndInterfaces';
-import { EditAccommodationInfo } from './EditAccommodation/EditAccommodationInfo'
+import { Info } from './Info/Info'
+import { Facilities } from './Facilities';
 
 interface MyComponentProps {
     accommodation: Accommodation,
@@ -44,7 +45,15 @@ export const EditAccommodation = (props:MyComponentProps) => {
           <Typography variant='h6'>Редагувати</Typography>
           <CloseIcon onClick={handleWindowClose} sx={{cursor: 'pointer'}}/>
         </Box>
-        <EditAccommodationInfo accommodation={props.accommodation} 
+        <Info accommodation={props.accommodation} 
+                                showMainInfo =  {showMainInfo}
+                                setShowMainInfo = {setShowMainInfo}
+                                showGeolocationInfo = {showGeolocationInfo}
+                                setShowGeolocationInfo = {setShowGeolocationInfo}
+                                showFacilitiesInfo = {showFacilitiesInfo}
+                                setShowFacilitiesInfo = {setShowFacilitiesInfo}
+                                />
+        <Facilities accommodation={props.accommodation} 
                                 showMainInfo =  {showMainInfo}
                                 setShowMainInfo = {setShowMainInfo}
                                 showGeolocationInfo = {showGeolocationInfo}

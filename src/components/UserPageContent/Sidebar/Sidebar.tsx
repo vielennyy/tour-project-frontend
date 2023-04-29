@@ -172,7 +172,7 @@ export const Sidebar = () => {
             <>
                 <SvgIcon component={PaymentIcon} color='inherit'/>
                 <Typography sx={{ paddingLeft: '20px', fontFamily: 'Roboto', textTransform:'none', fontStyle:'normal', fontWeight: 400, fontSize: '24px'}}>
-                    Тарифи і оплата
+                Мої підписки
                 </Typography>
             </>}
             sx={{ padding: '8px 0px', display: 'flex', flexDirection: 'row', fontFamily: 'Roboto', '&.Mui-selected': {color: '#222222'}}} 
