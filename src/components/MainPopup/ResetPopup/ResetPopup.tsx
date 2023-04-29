@@ -1,105 +1,154 @@
 import * as React from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 
 import {Box,
   Button,
   TextField,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Typography} from "@mui/material";
 
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { ForgotPassword } from "../../TypesAndInterfaces";
 
 export const ResetPopup = ():JSX.Element => {
-  const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState('')
+  const [success, setSuccess] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleForgotPasswordClick = () => {
-    fetch(`https://cktour.club/api/v1/password/forgot`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json',
-                // Authorization: 'Bearer ' +  userToken 
-              },
-            body: JSON.stringify({email: email})
-          })
-          .then(response => {
-            if(response.ok){
-            response.json()
-            setOpen(false);
-            }
-          })
-          .then(json => {
-            console.log(json)
-          })
+  const forgotPassword = async (values:ForgotPassword) => {
+    const response = await fetch(`https://cktour.club/api/v1/password/forgot`,
+      {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
+    if(response.status === 200) {
+      setSuccess(prevState => true)
+    }
   }
 
+  const validationSchema = yup.object({
+    email: yup
+      // @ts-ignore
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required')
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: 'tourist@test.com',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values: ForgotPassword) => {
+      forgotPassword(values)
+    }
+  });
+
+
   return (
-    <div>
-      <Typography onClick={handleClickOpen}
-        sx={{fontSize: 16, fontWeight: 500}}
-      >
-        Забули пароль?
-      </Typography>
-      <Dialog open={open}>
-        <Box sx={{maxWidth: 400, borderRadius: 2}}>
-          <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '15px 16px 0 5px'}}>
-            <DialogTitle sx={{fontSize: 16, fontWeight: 500}}>Відновлення паролю</DialogTitle>
-            <Button onClick={handleClose} sx={{
-              minWidth: 20,
-              color: "inherit"
-            }}>
-              <CloseIcon/>
-            </Button>
-          </Box>
-          <DialogContent sx={{padding: '30px'}}>
-            <Typography sx={{fontSize: 16, fontWeight: 500}}>
-              Введіть вашу пошту для відновлення паролю. Ми надішлемо вам форму для відновлення паролю.
-            </Typography>
-            <TextField
-              hiddenLabel={true}
-              required={true}
-              label="Електронна пошта"
-              id="outlined-size-normal"
-              placeholder={'E-mail'}
-              fullWidth
-              type="email"
-              onChange={(e)=> {setEmail(e.target.value)}}
-              sx={{marginTop: "35px"}}/>
-          </DialogContent>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
+    <Box sx={{
+      padding: '30px',
+      paddingBottom: 0
+    }}>
+      <Typography sx={{fontSize: 16, fontWeight: 500}}>Забули пароль?</Typography>
+
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: 2
+      }}>
+         <Typography sx={{fontSize: 16, fontWeight: 500}}>
+         Введіть вашу пошту для відновлення паролю. Ми надішлемо вам форму для відновлення паролю.
+        </Typography>
+        <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
+          <TextField
+            fullWidth
+            id="email"
+            name="email"
+            label="Електронна пошта"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            sx={{marginTop: "25px"}}
+          />
+          {success ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+              Інструкції з відновлення паролю будуть відпралені на вашу пошту.
+            </Typography> :
+            null
+          }
+          <Button color="primary" variant="contained" fullWidth type="submit" sx={{
+            width: 200,
+            height: 40,
+            marginTop: "25px",
+            borderRadius: '10px',
           }}>
-            <Button variant="contained" 
-            onClick={handleForgotPasswordClick}
-            sx={{
-              background: '#FF3939',
-              width: 200,
-              height: 40,
-              margin: "0 auto",
-              color: '#ffffff',
-              borderRadius: '10px',
-              display: 'block',
-              marginTop: '10px'
-            }}>Підтвердити
-            </Button>
-            <Button  sx={{fontSize: 10, color: "#000000", padding: '20px 0 14px 0'}} onClick={handleClose}>
-              <KeyboardBackspaceIcon fontSize={'small'}/>Назад до входу
-            </Button>
-          </Box>
-        </Box>
-      </Dialog>
-    </div>
+            Підтвердити
+          </Button>
+        </form>
+      </Box>
+    </Box>
   );
 }
+
+
+// <div>
+//   <Typography onClick={handleClickOpen}
+//               sx={{fontSize: 16, fontWeight: 500}}
+//   >
+//     Забули пароль?
+//   </Typography>
+//   <Dialog open={open}>
+//     <Box sx={{maxWidth: 400, borderRadius: 2}}>
+//       <Box sx={{display: 'flex', justifyContent: 'space-between', padding: '15px 16px 0 5px'}}>
+//         <DialogTitle sx={{fontSize: 16, fontWeight: 500}}>Відновлення паролю</DialogTitle>
+//         <Button onClick={handleClose} sx={{
+//           minWidth: 20,
+//           color: "inherit"
+//         }}>
+//           <CloseIcon/>
+//         </Button>
+//       </Box>
+//       <Typography sx={{fontSize: 16, fontWeight: 500}}>
+//         Введіть вашу пошту для відновлення паролю. Ми надішлемо вам форму для відновлення паролю.
+//       </Typography>
+//       <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
+//         <TextField
+//           fullWidth
+//           id="email"
+//           name="email"
+//           label="Електронна пошта"
+//           value={formik.values.email}
+//           onChange={formik.handleChange}
+//           error={formik.touched.email && Boolean(formik.errors.email)}
+//           helperText={formik.touched.email && formik.errors.email}
+//           sx={{marginTop: "25px"}}
+//         />
+//         <Button variant="contained" color="primary"
+//                 sx={{
+//                   width: 200,
+//                   height: 40,
+//                   margin: "0 auto",
+//                   color: '#ffffff',
+//                   borderRadius: '10px',
+//                   display: 'block',
+//                   marginTop: '10px'
+//                 }}>Підтвердити
+//         </Button>
+//       </form>
+//       <Box sx={{
+//         display: 'flex',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//         justifyContent: 'center'
+//       }}>
+//         <Button  sx={{fontSize: 10, color: "#000000", padding: '20px 0 14px 0'}} onClick={handleClose}>
+//           <KeyboardBackspaceIcon fontSize={'small'}/>Назад до входу
+//         </Button>
+//       </Box>
+//     </Box>
+//   </Dialog>
+// </div>

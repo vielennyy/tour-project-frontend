@@ -50,7 +50,7 @@ export const DefaultNavBar = ():JSX.Element => {
   };
 
   return (
-    <AppBar position="static" sx={{background: '#ffffff', position: 'relative', zIndex: 2}}>
+    <AppBar position="static" sx={{background: '#ffffff', position: 'relative', zIndex: 2, height: 95}}>
       <Container sx={{
         width: 1440
       }}>

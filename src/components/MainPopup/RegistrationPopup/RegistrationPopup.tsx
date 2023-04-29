@@ -49,14 +49,13 @@ export const RegistrationPopup = ():JSX.Element =>  {
   const formik = useFormik({
     initialValues: {
       name: 'Tourist',
-      surname: '1',
       email: 'tourist1@test.com',
       password: 'User123!',
     },
     validationSchema: validationSchema,
     onSubmit: (values: RegisterTypes) => {
       setValues(() => ({
-        name: `${values.name}${values.surname}`,
+        name: values.name,
         email: values.email,
         password: values.password
       }))
@@ -78,32 +77,42 @@ export const RegistrationPopup = ():JSX.Element =>  {
         marginTop: 2
       }}>
         <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-          <Box sx={{
-            display: 'flex',
-            marginTop: 3,
-            gap: '10px'
-          }}>
-            <TextField
-              fullWidth
-              id="name"
-              name="name"
-              label="Ім'я"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
-            />
-            <TextField
-              fullWidth
-              id="surname"
-              name="surname"
-              label="Призвіще"
-              value={formik.values.surname}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-          </Box>
+          {/*<Box sx={{*/}
+          {/*  display: 'flex',*/}
+          {/*  marginTop: 3,*/}
+          {/*  gap: '10px'*/}
+          {/*}}>*/}
+          {/*  <TextField*/}
+          {/*    fullWidth*/}
+          {/*    id="name"*/}
+          {/*    name="name"*/}
+          {/*    label="Ім'я"*/}
+          {/*    value={formik.values.name}*/}
+          {/*    onChange={formik.handleChange}*/}
+          {/*    error={formik.touched.email && Boolean(formik.errors.email)}*/}
+          {/*    helperText={formik.touched.email && formik.errors.email}*/}
+          {/*  />*/}
+          {/*  <TextField*/}
+          {/*    fullWidth*/}
+          {/*    id="surname"*/}
+          {/*    name="surname"*/}
+          {/*    label="Призвіще"*/}
+          {/*    value={formik.values.surname}*/}
+          {/*    onChange={formik.handleChange}*/}
+          {/*    error={formik.touched.password && Boolean(formik.errors.password)}*/}
+          {/*    helperText={formik.touched.password && formik.errors.password}*/}
+          {/*  />*/}
+          {/*</Box>*/}
+          <TextField
+            fullWidth
+            id="name"
+            name="name"
+            label="Ім'я та призвіще"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
           <TextField
             fullWidth
             id="email"

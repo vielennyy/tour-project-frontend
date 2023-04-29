@@ -17,7 +17,8 @@ export const LoginPopup = ():JSX.Element =>  {
 
   const {user, setUser} = useContext(UserContext);
 
-  const login = async () => {
+
+  const login = async (values:LoginTypes) => {
     const response = await fetch(`https://cktour.club/api/v1/auth/login`,
       {
         method: "POST",
@@ -30,21 +31,21 @@ export const LoginPopup = ():JSX.Element =>  {
     const res = await response.json();
     if(response.status === 200) {
       // @ts-ignore
-      setUser(() => {
-        return ({
-          isAuthorize: true,
-          id: res.user_id,
-          token: res.token
-        });
-      });
+      // setUser(() => {
+      //   return ({
+      //     isAuthorize: true,
+      //     id: res.user_id,
+      //     token: res.token
+      //   });
+      // });
       localStorage.setItem('token', res.token)
       localStorage.setItem('id', res.user_id)
+      window.location.reload();
     }
   }
-
-  useEffect(() => {
-    login();
-  }, [values])
+  //
+  // useEffect(() => {
+  // }, [localStorage.getItem('token')])
 
 
   const validationSchema = yup.object({
@@ -68,12 +69,13 @@ export const LoginPopup = ():JSX.Element =>  {
     },
     validationSchema: validationSchema,
     onSubmit: (values: LoginTypes) => {
-      setTimeout(() => {
-        setValues(values);
-      }, 500)
-      setTimeout(() => {
-        login();
-      }, 500)
+      login(values)
+      // setTimeout(() => {
+      //   setValues(values);
+      // }, 500)
+      // setTimeout(() => {
+      //   login();
+      // }, 500)
     }
   });
 
@@ -101,18 +103,6 @@ export const LoginPopup = ():JSX.Element =>  {
             helperText={formik.touched.email && formik.errors.email}
             sx={{marginTop: "25px"}}
           />
-          <Box sx={{
-            marginTop: "15px",
-            display: "flex",
-            justifyContent: "flex-end",
-            width: '100%'
-          }}>
-            <Link
-              component="button"
-              variant="body2">
-              <ResetPopup/>
-            </Link>
-          </Box>
           <TextField
             fullWidth
             id="password"
@@ -123,7 +113,7 @@ export const LoginPopup = ():JSX.Element =>  {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-            sx={{marginTop: '15px'}}
+            sx={{marginTop: '25px'}}
           />
           <Button color="primary" variant="contained" fullWidth type="submit" sx={{
             width: 200,
