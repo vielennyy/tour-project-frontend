@@ -17,6 +17,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { PublishCommentModal } from "./PublishCommentModal";
+import { DeleteCommentModal } from "./DeleteCommentModal";
+
 function createData(
   id: number,
   name: string,
@@ -33,7 +36,9 @@ const rows = [
 ];
 
 export const CommentsTab = ():JSX.Element =>  {
+  const fetchUrl = 'https://cktour.club/api/v1/accommodations/5/comments/1'
   const [commentsList, setCommentsList] = useState<[]>([]);
+
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
 
@@ -72,7 +77,7 @@ export const CommentsTab = ():JSX.Element =>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {commentsList.map(({id, body, commentable_type, created_at, status, updated_at}) => (
+              {commentsList.map(({id, body, commentable_type, commentable_id, created_at, status, updated_at}) => (
                 <TableRow
                   key={id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -86,12 +91,14 @@ export const CommentsTab = ():JSX.Element =>  {
                   <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
                   <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                   <TableCell align="right">
+                    <PublishCommentModal props={{id, commentable_id, commentable_type}}/>
                     <Button variant="outlined">
-                      <Link to={`/accommodations/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>
+                      <Link to={`/accommodations/${commentable_id}`} target='_blank' style={{width: '24px', height: '24px', color: '#EF5151'}}>
                         <RemoveRedEyeIcon/>
                       </Link>
                     </Button>
-                    <DeleteIcon/></TableCell>
+                    <DeleteCommentModal props={{id, commentable_id}}/>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -1,11 +1,43 @@
+import React, {useState, useEffect} from "react";
+import { useParams} from "react-router-dom";
+
 import {Box, Button, Typography} from "@mui/material";
 
 import { Comment } from "./Comment";
 import { AddComment } from "../../AddComment";
+import { CommentType } from "../../TypesAndInterfaces";
 
 import star from '../../../assets/image/accommodations/Star.png';
-import React from "react";
 export const AccommodationComments = ():JSX.Element => {
+  const [commentList, setCommentList] = useState<[]>([])
+  const [rate, setRate] = useState()
+  const {id} = useParams();
+
+  const fetchingComments = async () => {
+    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${id}/comments`,
+      {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+    const json = await fetching.json();
+    return setCommentList(json);
+  }
+
+  useEffect(() => {
+    fetchingComments()
+  }, [])
+
+  useEffect( () => {
+    fetch(`https://cktour.club/api/v1/accommodations/${id}/rates`,
+      {
+        method: "GET"
+      })
+      .then(response => response.json())
+      .then(result => setRate(result))
+  }, [])
+
   return(
     <Box sx={{
       marginTop: 8
@@ -16,11 +48,11 @@ export const AccommodationComments = ():JSX.Element => {
       }}>
         <img src={star} alt='star_logo' style={{width: '30px', height: '30px'}}/>
         <Typography variant='h5' sx={{marginLeft: 2}}>
-          4.7
+          {rate}
         </Typography>
         <span style={{color: 'red', marginLeft: '8px'}}>·</span>
         <Typography variant='h5' sx={{marginLeft: 1}}>
-          12 відгуків
+          {commentList.length} відгуків
         </Typography>
       </Box>
       <Box sx={{
@@ -30,10 +62,17 @@ export const AccommodationComments = ():JSX.Element => {
         columnGap: '100px',
         rowGap: '40px'
       }}>
-        <Comment/>
-        <Comment/>
-        <Comment/>
-        <Comment/>
+        {commentList.length > 0 ?
+          commentList.map((comment: CommentType) =>
+          <Comment key={comment.id} comment={comment}/>
+          )
+          :
+          <Typography>Немає жодного коментаря</Typography>
+        }
+        {/*<Comment/>*/}
+        {/*<Comment/>*/}
+        {/*<Comment/>*/}
+        {/*<Comment/>*/}
       </Box>
       <Box sx={{
         marginTop: 4,

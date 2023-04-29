@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import {Box, Button, Typography, Breadcrumbs} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 export const SearchBar = ():JSX.Element => {
+  const [searchParams] = useSearchParams();
+
   const breadcrumbs = [
     <Link to={'/'}>
       <Typography variant="body2">
@@ -43,7 +45,9 @@ export const SearchBar = ():JSX.Element => {
           marginLeft: 1
         }}>
           <SearchIcon/>
-          <input type="text" placeholder="Умань" style={{
+          <input type="text"
+           placeholder="Куди їдемо?"
+           style={{
             border: 'none',
             width: 200,
             padding: '5px 10px',
@@ -63,7 +67,7 @@ export const SearchBar = ():JSX.Element => {
         </Button>
       </Box>
       <Typography variant='h3' sx={{textAlign: 'center', marginTop: 2}}>
-        Цікаві місця в м. Умань:
+        {searchParams.get('search') ? `Цікаві місця в ${searchParams.get('search')}` : 'Цікаві місця'}
       </Typography>
     </Box>
   )

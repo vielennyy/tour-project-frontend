@@ -14,18 +14,26 @@ interface AccommodationProps {
 export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Element => {
   const [rate, setRate] = useState()
 
-  const fetchingRate = async () => {
-    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
+  // const fetchingRate = async () => {
+  //   const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
+  //     {
+  //       method: "GET"
+  //     });
+  //   const json = await  fetching.json();
+  //   return setRate(json);
+  // }
+  //
+  // useEffect(() => {
+  //   fetchingRate()
+  // }, [])
+
+  useEffect( () => {
+    fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
       {
         method: "GET"
-      });
-    const json = await  fetching.json();
-    // console.log(json)
-    return setRate(json);
-  }
-
-  useEffect(() => {
-    fetchingRate()
+      })
+      .then(response => response.json())
+      .then(result => setRate(result))
   }, [])
 
   console.log(rate)

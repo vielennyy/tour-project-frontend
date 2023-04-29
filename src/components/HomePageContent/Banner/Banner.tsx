@@ -1,34 +1,44 @@
+import React, { useState} from "react";
+import { Link } from 'react-router-dom';
+
 import { useFormik } from 'formik';
 
 import {
-  Box,
+  Box, Button,
   Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import bg from '../../../assets/image/banner.jpg';
-import React from "react";
+
+interface SearchString {
+  value: string;
+}
 
 export const Banner = ():JSX.Element => {
+  const [searchValue, setSearchValues] = useState<SearchString | undefined>();
+  // const search = async () => {
+  //   const fetching = await fetch(`https://cktour.club/api/v1/attractions?search=долина`,
+  //     {
+  //       method: "GET"
+  //     });
+  //   const json = await fetching.json();
+  //   console.log(json)
+  // }
+  //
+  // const formik = useFormik({
+  //   initialValues: {
+  //     value: ''
+  //   },
+  //   onSubmit: (values:SearchString) => {
+  //     setSearchValues(prevState => values);
+  //   }
+  // });
 
-  const search = async () => {
-    const fetching = await fetch(`https://cktour.club/api/v1/attractions?search=долина`,
-      {
-        method: "GET"
-      });
-    const json = await fetching.json();
-    console.log(json)
+  const handleChange = (event:any) => {
+    setSearchValues(event.target.value)
   }
-
-  const formik = useFormik({
-    initialValues: {
-      name: ''
-    },
-    onSubmit: (values) => {
-      search();
-    }
-  });
-
+  console.log(searchValue)
   return (
     <Box sx={{position: 'relative', height: '880px', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
       <img src={bg} style={{
@@ -65,32 +75,65 @@ export const Banner = ():JSX.Element => {
         }}>
           <SearchIcon/>
         </Box>
-        <form onSubmit={formik.handleSubmit} style={{ display: 'flex', justifyContent: 'space-between', width: '100%',height: '100%', padding: '10px' }}>
-          <input
-            id="name"
-            name="name"
+        <Box sx={{
+          display: 'flex', justifyContent: 'space-between', width: '100%',height: '100%', padding: '10px'
+        }}>
+          <input onChange={handleChange}
             placeholder="Куди їдемо?"
-            value={formik.values.name}
-            onChange={formik.handleChange}
             style={{
               border: 'none',
               width: 300,
               marginLeft: '30px',
               fontSize: 16,
-              padding: 0,
+              padding: '0 0 0 15px',
             }}
           />
-          <button type="submit" style={{background: '#EF5151',
+          <Button variant="contained" sx={{background: '#EF5151',
             padding: '0 30px',
             borderRadius: '7px',
-            border: 'none'}}>
-            <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-              Пошук
-            </Typography>
-          </button>
-        </form>
+            border: 'none'}}
+          >
+            <Link to={`/attractions?search=${searchValue}`}>
+              <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
+                Пошук
+              </Typography>
+            </Link>
+          </Button>
+        </Box>
       </Box>
     </Box>
   )
 }
+
+// <form onSubmit={formik.handleSubmit} style={{ display: 'flex', justifyContent: 'space-between', width: '100%',height: '100%', padding: '10px' }}>
+//   <input
+//     id="value"
+//     name="value"
+//     placeholder="Куди їдемо?"
+//     value={formik.values.value}
+//     onChange={formik.handleChange}
+//     style={{
+//       border: 'none',
+//       width: 300,
+//       marginLeft: '30px',
+//       fontSize: 16,
+//       padding: '0 0 0 15px',
+//     }}
+//   />
+//   <button type="submit" style={{background: '#EF5151',
+//     padding: '0 30px',
+//     borderRadius: '7px',
+//     border: 'none'}}>
+//     {searchValue ?
+//       <Link to={`/attractions?search=${searchValue}`}>
+//         <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
+//           Пошук
+//         </Typography>
+//       </Link> :
+//       <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
+//         Пошук
+//       </Typography>
+//     }
+//   </button>
+// </form>
 

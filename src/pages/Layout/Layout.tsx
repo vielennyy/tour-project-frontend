@@ -73,7 +73,7 @@ export const Layout = (props:any):JSX.Element => {
        }}>
          <NavBar/>
          <Box sx={{
-           flex: 1
+           minHeight: 'calc(100vh - 395px)'
          }}>
            {props.children}
          </Box>
