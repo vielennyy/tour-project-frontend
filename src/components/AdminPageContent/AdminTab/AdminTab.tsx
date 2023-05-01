@@ -16,9 +16,7 @@ import { AddAdminForm } from "./AddAdminForm";
 import { DeleteConfirmModal } from "../DeleteConfirmModal"
 import { ViewModal } from "../ViewModal";
 
-import {UserToken} from "../../TypesAndInterfaces";
-
-export const AdminTab = ({token}:UserToken):JSX.Element =>  {
+export const AdminTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/users/';
   const [admins, setAdmins] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
@@ -42,7 +40,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
 
   return (
     <Box>
-      <AddAdminForm token={token}/>
+      <AddAdminForm props={fetchData}/>
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>

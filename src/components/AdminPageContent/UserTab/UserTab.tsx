@@ -10,15 +10,11 @@ import {Table,
   Box,
   TableRow} from '@mui/material';
 import CircularProgress from "@mui/material/CircularProgress";
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 import { DeleteConfirmModal } from "../DeleteConfirmModal";
 import { ViewModal } from "../ViewModal";
 
-import {UserToken} from "../../TypesAndInterfaces";
-
-export const UserTab = ({token}:UserToken):JSX.Element =>  {
+export const UserTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/users/';
   const [tourist, setTourist] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
@@ -29,7 +25,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/users?role=tourist',
         {
           method: "GET",
-          headers: { Authorization: 'Bearer ' +  token }
+          headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
         });
     const json = await fetching.json();
     isLoading(false);

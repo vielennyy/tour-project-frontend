@@ -33,7 +33,6 @@ export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
           'Content-Type': 'application/json'
         }
       });
-    console.log(fetching)
     if(fetching.status === 200) {
       setSuccess(true)
       setTimeout(() => {

@@ -14,9 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { DeleteConfirmModal } from "../DeleteConfirmModal";
 import { ViewModal } from "../ViewModal";
 
-import {UserToken} from "../../TypesAndInterfaces";
-
-export const PartnerTab = ({token}:UserToken):JSX.Element =>  {
+export const PartnerTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/users/';
   const [partners, setPartners] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
@@ -27,7 +25,7 @@ export const PartnerTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/users?role=partner',
         {
           method: "GET",
-          headers: { Authorization: 'Bearer ' +  token }
+          headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken')  }
         });
     const json = await fetching.json();
     isLoading(false);

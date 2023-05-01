@@ -65,16 +65,16 @@ export const AdminPageContent = ({token}:UserToken):JSX.Element => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <AdminTab token={token}/>
+        <AdminTab/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PartnerTab token={token}/>
+        <PartnerTab/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserTab token={token}/>
+        <UserTab/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <AttractionsTab token={token}/>
+        <AttractionsTab/>
       </TabPanel>
       <TabPanel value={value} index={4}>
         <OffersTabs token={token}/>

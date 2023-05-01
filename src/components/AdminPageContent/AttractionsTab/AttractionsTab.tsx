@@ -20,9 +20,7 @@ import { DeleteConfirmModal } from "../DeleteConfirmModal";
 import { AddAttractionsForm } from "./AddAttractionsForm";
 import { EditAttractionForm } from "./EditAttractionForm";
 
-import {UserToken} from "../../TypesAndInterfaces";
-
-export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
+export const AttractionsTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/attractions/';
   const [attractions, setAttractions] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
@@ -33,7 +31,7 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/attractions',
         {
           method: "GET",
-          headers: { Authorization: 'Bearer ' +  token }
+          headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken')  }
         });
     const json = await fetching.json();
     isLoading(false);
@@ -46,7 +44,7 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
 
   return (
     <Box>
-      <AddAttractionsForm token={token}/>
+      <AddAttractionsForm/>
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>
