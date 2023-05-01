@@ -137,7 +137,7 @@ const InfoBox = ({user}:InfoBoxProps) => {
                     >
                         <Typography fontSize={22} fontWeight={400}>Редагувати</Typography>
                     </Link> */}
-                    <SvgIcon sx={{marginTop: '5px'}}><EditIcon/></SvgIcon>
+                    {/* <SvgIcon sx={{marginTop: '5px'}}><EditIcon/></SvgIcon> */}
                 </Box>
             </Box>
 
