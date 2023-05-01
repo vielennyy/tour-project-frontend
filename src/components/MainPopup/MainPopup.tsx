@@ -1,19 +1,26 @@
 import React, {useState} from "react";
 
-import { Box,
+import {
+  Box,
   Dialog,
   DialogContent,
   Button,
-  Typography} from '@mui/material';
+  Typography, Link
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 
 import {RegistrationPopup} from "./RegistrationPopup";
 import {LoginPopup} from "./LoginPopup";
+import {ResetPopup} from "./ResetPopup";
 
 export const MainPopup = ():JSX.Element =>  {
   const [open, setOpen] = useState(false);
+  const [currentPopup, setCurrentPopup] = useState('loginPopup')
   const [loginPopup, setLoginPopup] = useState(true);
-  const [registerPopup, setRegisterPopup] = useState(false)
+  const [registerPopup, setRegisterPopup] = useState(false);
+  const [resetPopup, setResetPopup] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,11 +33,19 @@ export const MainPopup = ():JSX.Element =>  {
   const handleRegisterOpen = () => {
     setLoginPopup(false);
     setRegisterPopup(true);
+    setResetPopup(false);
   }
 
   const handleLoginOpen = () => {
     setLoginPopup(true);
     setRegisterPopup(false);
+    setResetPopup(false);
+  }
+
+  const handleResetOpen = () => {
+    setLoginPopup(false);
+    setRegisterPopup(false);
+    setResetPopup(true);
   }
 
 
@@ -64,30 +79,45 @@ export const MainPopup = ():JSX.Element =>  {
             <CloseIcon/>
           </Button>
           <DialogContent sx={{padding: 0}}>
-            {loginPopup ?
-              <LoginPopup/> :
-              <RegistrationPopup/>
+            {loginPopup ? <LoginPopup /> :
+              registerPopup ? <RegistrationPopup/> :
+              resetPopup ? <ResetPopup/> :
+              null
             }
 
           </DialogContent>
           <Box sx={{
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             padding: 2,
             paddingBottom: 1
           }}>
-            {loginPopup ?
-              <Button sx={{fontSize: 10, color: "#000000"}} onClick={handleRegisterOpen}>
-                Не має акаунту? Реєстрація
-              </Button> :
-              <Button  sx={{fontSize: 10, color: "#000000"}} onClick={handleLoginOpen}>
-                Вже маєш акаунт? Вхід
-              </Button>
-            }
+            <Box>
+              {loginPopup ?
+                <Button sx={{fontSize: 10, color: "#000000"}} onClick={handleRegisterOpen}>
+                  Не має акаунту? Реєстрація
+                </Button> :
+                registerPopup ?
+                <Button  sx={{fontSize: 10, color: "#000000"}} onClick={handleLoginOpen}>
+                  Вже маєш акаунт? Вхід
+                </Button> :
+                <Button  sx={{fontSize: 10, color: "#000000", padding: '20px 0 14px 0'}} onClick={handleLoginOpen}>
+                  <KeyboardBackspaceIcon fontSize={'small'}/>Назад до входу
+                </Button>
+              }
+            </Box>
+            <Box>
+              {loginPopup ?
+                <Button sx={{fontSize: 10, color: "#000000"}} onClick={handleResetOpen}>
+                  Забули пароль?
+                </Button> :
+                null
+              }
+            </Box>
           </Box>
-          {loginPopup ?
-            null :
+          {registerPopup ?
             <Box sx={{
               margin: '0 auto',
               width: 300,
@@ -98,7 +128,8 @@ export const MainPopup = ():JSX.Element =>  {
               textAlign: 'center'
             }}>
               <Typography sx={{fontSize: '10px', fontWeight: 500}}>Натискаючи кнопку «Реєстрація», я погоджуюсть з Умовами сайту, враховуючи Умови оплати, і Політикою конфіденційності.</Typography>
-            </Box>
+            </Box> :
+            null
           }
         </Box>
       </Dialog>

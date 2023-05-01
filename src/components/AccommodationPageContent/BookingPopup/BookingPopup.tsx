@@ -43,8 +43,8 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
     formData.append('phone', values.phone);
     formData.append('note', values.note);
     formData.append('number_of_peoples', values.number);
-    formData.append('check_in', '2023-05-01');
-    formData.append('check_out', '2023-05-05');
+    formData.append('check_in', '2023-05-10');
+    formData.append('check_out', '2023-05-15');
     formData.append('room_id', props);
 
     fetch(`https://cktour.club/api/v1/accommodations/${id}/rooms/${props}/bookings`,

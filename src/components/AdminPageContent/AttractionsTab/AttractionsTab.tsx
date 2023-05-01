@@ -80,7 +80,7 @@ export const AttractionsTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right">
                       <Button variant="outlined">
-                        <Link to={`/attractions/${id}`} target='_blank' style={{width: '100%', color: '#EF5151'}}>
+                        <Link to={`/attractions/${id}`} target='_blank' style={{width: '24px', height: '24px', color: '#EF5151'}}>
                           <RemoveRedEyeIcon/>
                         </Link>
                       </Button>

@@ -1,4 +1,8 @@
+import * as React from "react";
+import { useSearchParams } from "react-router-dom";
+
 import {Box, Button, Container, Typography} from "@mui/material";
+
 
 import { SearchBar } from "./SearchBar";
 import { MainCards } from "./MainCards";
@@ -6,6 +10,9 @@ import { SecondaryCards } from "./SecondaryCards";
 
 
 export const AttractionsPageContent = ():JSX.Element => {
+  const [searchParams] = useSearchParams();
+
+  console.log(searchParams.get('search'))
   return(
     <Box sx={{
       position: 'relative'
@@ -30,19 +37,19 @@ export const AttractionsPageContent = ():JSX.Element => {
           display: 'flex',
           justifyContent: 'center'
         }}>
-          <Button sx={{
-            background: '#EF5151',
-            padding: '18px',
-            borderRadius: '7px',
-            width: 280,
-            maxHeight: 60,
-            marginTop: 4
-          }}
-                  variant="contained">
-            <Typography sx={{ color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-              Показати більше
-            </Typography>
-          </Button>
+          {/*<Button sx={{*/}
+          {/*  background: '#EF5151',*/}
+          {/*  padding: '18px',*/}
+          {/*  borderRadius: '7px',*/}
+          {/*  width: 280,*/}
+          {/*  maxHeight: 60,*/}
+          {/*  marginTop: 4*/}
+          {/*}}*/}
+          {/*        variant="contained">*/}
+          {/*  <Typography sx={{ color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>*/}
+          {/*    Показати більше*/}
+          {/*  </Typography>*/}
+          {/*</Button>*/}
         </Box>
       </Container>
     </Box>

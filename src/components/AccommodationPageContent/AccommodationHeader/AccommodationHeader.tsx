@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import { Link, useParams } from 'react-router-dom';
 
 import { Box, Typography, Breadcrumbs} from "@mui/material";
 import rating from "../../../assets/image/accommodations/Rating.png";
@@ -12,6 +12,18 @@ interface AccommodationProps {
 }
 
 export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Element => {
+  const [rate, setRate] = useState()
+  const {id} = useParams();
+
+  useEffect( () => {
+    fetch(`https://cktour.club/api/v1/accommodations/${id}/rates`,
+      {
+        method: "GET"
+      })
+      .then(response => response.json())
+      .then(result => setRate(result))
+  }, [])
+
   const breadcrumbs = [
     <Link to={'/'}>
       <Typography variant="body2">
@@ -46,15 +58,15 @@ export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Elem
         }}>
           <img src={rating} alt='rating' style={{height: '25px'}}/>
           <Typography variant='h5' sx={{marginLeft: 2}}>
-            4.7
+            {rate}
           </Typography>
-          <Typography variant='h6' sx={{
-            marginLeft: 2,
-            color: '#777777',
-            fontSize: 14
-          }}>
-            (12 відгуків)
-          </Typography>
+          {/*<Typography variant='h6' sx={{*/}
+          {/*  marginLeft: 2,*/}
+          {/*  color: '#777777',*/}
+          {/*  fontSize: 14*/}
+          {/*}}>*/}
+          {/*  (12 відгуків)*/}
+          {/*</Typography>*/}
         </Box>
         <Box sx={{
           display: 'flex',
