@@ -7,14 +7,17 @@ import {
   Button,
   TextField,
   Dialog,
-  DialogTitle, Typography
+  Typography
 } from '@mui/material';
 
-import {UserToken} from "../../../TypesAndInterfaces";
 import {RegisterTypes} from "../../../TypesAndInterfaces";
 import CloseIcon from '@mui/icons-material/Close';
 
-export const AddAdminForm = ({token}:UserToken):JSX.Element => {
+interface FetchDataType {
+  props: () => void;
+}
+
+export const AddAdminForm = ({props}:FetchDataType):JSX.Element => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -32,7 +35,7 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
       {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ' +  token,
+          Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(values)
@@ -42,6 +45,7 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
       setError(false)
       setTimeout(() => {
         handleClose();
+        props();
       }, 3000)
     } else {
       setError(true)

@@ -40,7 +40,7 @@ export const DefaultFooter = ():JSX.Element => {
                   Де жити?
                 </Typography>
               </Link>
-              <Link to={'/foods'}>
+              <Link to={'/catering'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400, marginBottom: 1}}>
                   Де поїсти?
                 </Typography>
@@ -52,7 +52,7 @@ export const DefaultFooter = ():JSX.Element => {
               </Link>
             </Box>
             <Box>
-              <Link to={'/tours'}>
+              <Link to={'/attractions'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400, marginBottom: 1}}>
                   Атракції
                 </Typography>

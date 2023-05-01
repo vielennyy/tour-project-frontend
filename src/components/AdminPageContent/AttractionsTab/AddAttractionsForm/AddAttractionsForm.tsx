@@ -10,7 +10,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 import { useFormik } from 'formik';
-import {UserToken} from "../../../TypesAndInterfaces";
+
 
 interface Values {
   name: string;
@@ -21,7 +21,7 @@ const initialValues = {
   name: '',
   description: '',
 }
-export const AddAttractionsForm = ({token}:UserToken):JSX.Element => {
+export const AddAttractionsForm = ():JSX.Element => {
   const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
   const [open, setOpen] = React.useState(false);
 
