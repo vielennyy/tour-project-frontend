@@ -137,6 +137,10 @@ export interface UserContextTypes {
   id: string
 }
 
+export interface PopupContextTypes {
+  isOpen: boolean;
+}
+
 export interface UserObject {
   created_at?: string | undefined;
   email?: string | undefined;

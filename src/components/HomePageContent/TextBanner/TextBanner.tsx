@@ -14,7 +14,7 @@ export const TextBanner = ():JSX.Element => {
         <Typography sx={{
           textAlign: 'center',
           marginTop: 3
-        }} variant="body1">Ми надаємо бузліч можливостей для планування мандрівки:</Typography>
+        }} variant="body1">Ми надаємо безліч можливостей для планування мандрівки:</Typography>
         <Box sx={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
@@ -80,7 +80,7 @@ export const TextBanner = ():JSX.Element => {
             <Typography sx={{
               textAlign: 'center',
               marginTop: 2
-            }} variant="body2">Ресторани, кафе та інші місця, де ти можеш скуштувати кулінарні шедеври від кращіх шефів</Typography>
+            }} variant="body2">Ресторани, кафе та інші місця, де ти можеш скуштувати кулінарні шедеври від кращих шефів</Typography>
           </Box>
           <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <svg width="118" height="117" viewBox="0 0 118 117" fill="none" xmlns="http://www.w3.org/2000/svg">

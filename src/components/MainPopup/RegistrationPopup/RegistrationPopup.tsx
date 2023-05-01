@@ -8,16 +8,18 @@ import {
   Button,
   TextField,
   Link } from "@mui/material";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
 import {RegisterTypes} from "../../TypesAndInterfaces";
 
+export const RegistrationPopup = ({backToLoginPopup}:any):JSX.Element =>  {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-export const RegistrationPopup = ():JSX.Element =>  {
-  const [isOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState({});
-
-  const registration = async () => {
+  const registration = async (values:RegisterTypes) => {
     const response = await fetch(`https://cktour.club/api/v1/users`,
       {
         method: "POST",
@@ -26,45 +28,48 @@ export const RegistrationPopup = ():JSX.Element =>  {
         },
         body: JSON.stringify(values)
       })
+    if(response.status === 201) {
+      setSuccess(prevState => true);
+      setError(false)
+      setTimeout(() => {
+        backToLoginPopup();
+      }, 4000)
+    } else {
+      setError(true)
+    }
   }
 
-  useEffect(() => {
-    registration();
-  }, [values])
-
   const validationSchema = yup.object({
+    name: yup
+      // @ts-ignore
+      .string('Enter your name')
+      .min(2, 'Name should be of minimum 2 characters length')
+      .required("Поле обов'язкове для заповнення"),
+
     email: yup
       // @ts-ignore
       .string('Enter your email')
       .email('Enter a valid email')
-      .required('Email is required'),
+      .required("Поле обов'язкове для заповнення"),
     password: yup
 
       // @ts-ignore
       .string("Enter your password")
       .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
+      .required("Поле обов'язкове для заповнення"),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: 'Tourist',
-      email: 'tourist1@test.com',
-      password: 'User123!',
+      name: '',
+      email: '',
+      password: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values: RegisterTypes) => {
-      setValues(() => ({
-        name: values.name,
-        email: values.email,
-        password: values.password
-      }))
-      // setTimeout(() => {
-      //   registration()
-      // }, 500)
+      registration(values)
     }
   });
-  console.log(values)
   return (
     <Box sx={{
       padding: '30px',
@@ -77,32 +82,6 @@ export const RegistrationPopup = ():JSX.Element =>  {
         marginTop: 2
       }}>
         <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-          {/*<Box sx={{*/}
-          {/*  display: 'flex',*/}
-          {/*  marginTop: 3,*/}
-          {/*  gap: '10px'*/}
-          {/*}}>*/}
-          {/*  <TextField*/}
-          {/*    fullWidth*/}
-          {/*    id="name"*/}
-          {/*    name="name"*/}
-          {/*    label="Ім'я"*/}
-          {/*    value={formik.values.name}*/}
-          {/*    onChange={formik.handleChange}*/}
-          {/*    error={formik.touched.email && Boolean(formik.errors.email)}*/}
-          {/*    helperText={formik.touched.email && formik.errors.email}*/}
-          {/*  />*/}
-          {/*  <TextField*/}
-          {/*    fullWidth*/}
-          {/*    id="surname"*/}
-          {/*    name="surname"*/}
-          {/*    label="Призвіще"*/}
-          {/*    value={formik.values.surname}*/}
-          {/*    onChange={formik.handleChange}*/}
-          {/*    error={formik.touched.password && Boolean(formik.errors.password)}*/}
-          {/*    helperText={formik.touched.password && formik.errors.password}*/}
-          {/*  />*/}
-          {/*</Box>*/}
           <TextField
             fullWidth
             id="name"
@@ -110,8 +89,8 @@ export const RegistrationPopup = ():JSX.Element =>  {
             label="Ім'я та призвіще"
             value={formik.values.name}
             onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
           />
           <TextField
             fullWidth
@@ -124,18 +103,47 @@ export const RegistrationPopup = ():JSX.Element =>  {
             helperText={formik.touched.email && formik.errors.email}
             sx={{marginTop: "25px"}}
           />
-          <TextField
-            fullWidth
-            id="password"
-            name="password"
-            label="Пароль"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            sx={{marginTop: '15px'}}
-          />
+          <Box sx={{
+            width: '100%',
+            position: 'relative'
+          }}>
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Пароль"
+              type={showPassword ? 'text' : 'password'}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              sx={{marginTop: '25px'}}
+            />
+            <Button fullWidth type="button" sx={{
+              width: 20,
+              height: 20,
+              minWidth: 25,
+              position: 'absolute',
+              top: '47px',
+              right: '14px'
+            }}
+                    onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <RemoveRedEyeIcon/> : <VisibilityOffIcon/>}
+            </Button>
+          </Box>
+          {error ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+              Неправильна почта чи пароль
+            </Typography> :
+            null
+          }
+          {success ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+              Ви успішно зарееструвалися!
+            </Typography> :
+            null
+          }
           <Button color="primary" variant="contained" fullWidth type="submit" sx={{
             width: 200,
             height: 40,
@@ -149,59 +157,3 @@ export const RegistrationPopup = ():JSX.Element =>  {
     </Box>
   );
 }
-// onClick={registration}
-
-// <Box sx={{
-//   display: 'flex',
-//   justifyContent: 'space-between',
-//   marginTop: '50px'
-// }}>
-//   <TextField
-//     required={true}
-//     label="Ім'я"
-//     id="outlined-size-normal"
-//     placeholder={"Ім'я"}
-//     type="text"
-//     sx={{width: '160px'}}/>
-//   <TextField
-//     required={true}
-//     label="Призвіще"
-//     id="outlined-size-normal"
-//     placeholder={"Призвіще"}
-//     type="text"
-//     sx={{width: '160px'}}/>
-// </Box>
-// <Box>
-//   <TextField
-//     hiddenLabel={true}
-//     required={true}
-//     label="Електронна почта"
-//     id="outlined-size-normal"
-//     placeholder={'E-mail'}
-//     fullWidth
-//     type="email"
-//     sx={{marginTop: "35px"}}/>
-//   <TextField
-//     required={true}
-//     label="Пароль"
-//     id="outlined-size-normal"
-//     placeholder={"Пароль"}
-//     fullWidth
-//     type="password"
-//     sx={{marginTop: '35px'}}/>
-// </Box>
-// <Box sx={{
-//   display: 'flex',
-//   alignItems: 'center',
-//   marginTop: 2
-// }}>
-//   <Button variant="contained" sx={{
-//     background: '#FF3939',
-//     width: 200,
-//     height: 40,
-//     margin: "0 auto",
-//     color: '#ffffff',
-//     marginTop: "20px",
-//     borderRadius: '10px'
-//   }}>Реєстрація</Button>
-// </Box>

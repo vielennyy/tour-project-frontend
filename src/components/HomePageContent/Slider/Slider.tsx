@@ -32,7 +32,7 @@ export const Slider = ():JSX.Element => {
           alignItems: 'center',
           marginTop: 2
         }}>
-          <Link to={'/accommodations'}>
+          <Link to={'/attractions'}>
             <Typography variant="body2">
               Переглянути все
             </Typography>

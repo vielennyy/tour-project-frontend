@@ -69,29 +69,14 @@ export const AccommodationComments = ():JSX.Element => {
           :
           <Typography>Немає жодного коментаря</Typography>
         }
-        {/*<Comment/>*/}
-        {/*<Comment/>*/}
-        {/*<Comment/>*/}
-        {/*<Comment/>*/}
       </Box>
-      <Box sx={{
-        marginTop: 4,
-        display: 'flex'
-      }}>
-        <Button sx={{
-          background: '#EF5151',
-          padding: '18px',
-          borderRadius: '7px',
-          width: 280,
-          maxHeight: 60,
-        }}
-                variant="contained">
-          <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-            Читати всі відгуки
-          </Typography>
-        </Button>
-        <AddComment/>
-      </Box>
+      {localStorage.getItem('token') ? <AddComment/> : null}
+      {/*<Box sx={{*/}
+      {/*  marginTop: 4,*/}
+      {/*  display: 'flex'*/}
+      {/*}}>*/}
+      {/*  <AddComment/>*/}
+      {/*</Box>*/}
     </Box>
   )
 }
@@ -108,5 +93,18 @@ export const AccommodationComments = ():JSX.Element => {
 //         variant="contained">
 //   <Typography sx={{ margin: '0 20px', color: '#EF5151', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
 //     Написати відгук
+//   </Typography>
+// </Button>
+
+// <Button sx={{
+//   background: '#EF5151',
+//   padding: '18px',
+//   borderRadius: '7px',
+//   width: 280,
+//   maxHeight: 60,
+// }}
+//         variant="contained">
+//   <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
+//     Читати всі відгуки
 //   </Typography>
 // </Button>

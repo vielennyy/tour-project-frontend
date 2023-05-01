@@ -71,7 +71,7 @@ export const ViewModal = ({id}: UserId):JSX.Element =>  {
                 <Typography variant='body2'>Роль: {user.role}</Typography>
                 <Typography variant='body2'>Пошта: {user.email}</Typography>
                 <Typography variant='body2'>Створений: {moment(user.created_at).format("dddd, MMM DD HH:mm a")}</Typography>
-                <Typography variant='body2'>Останне редагування: {moment(user.updated_at).format("dddd, MMM DD HH:mm a")}</Typography>
+                <Typography variant='body2'>Останнє редагування: {moment(user.updated_at).format("dddd, MMM DD HH:mm a")}</Typography>
               </Box> :
               null
             }

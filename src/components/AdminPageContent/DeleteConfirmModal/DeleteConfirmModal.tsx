@@ -4,11 +4,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
+import {useState} from "react";
 
 interface UserId {
   id: string | undefined;
   fetchUrl: string | undefined;
+  fetchData: () => void;
 }
 
 interface ConfirmProps {
@@ -16,6 +18,7 @@ interface ConfirmProps {
 }
 
 export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
+  const [success, setSuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,7 +33,14 @@ export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
           'Content-Type': 'application/json'
         }
       });
-    setOpen(false);
+    console.log(fetching)
+    if(fetching.status === 200) {
+      setSuccess(true)
+      setTimeout(() => {
+        setOpen(false);
+        props.fetchData()
+      }, 2000);
+    }
   }
 
   return (
@@ -53,6 +63,12 @@ export const DeleteConfirmModal = ({props}: ConfirmProps):JSX.Element => {
             Відхилити
           </Button>
         </DialogActions>
+        {success ?
+          <Typography sx={{fontSize: 16, fontWeight: 500, marginLeft: 2, marginBottom: 1, color: 'green'}}>
+            Успішно!
+          </Typography> :
+          null
+        }
       </Dialog>
     </Box>
   );

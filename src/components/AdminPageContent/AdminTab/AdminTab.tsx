@@ -23,20 +23,21 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
   const [admins, setAdmins] = useState<[]>([]);
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
-  const fetchingUsers = async () => {
+
+  const fetchData = async () => {
     isLoading(true)
-    const fetching = await fetch('https://cktour.club/api/v1/users?role=admin',
-      {
-        method: "GET",
-        headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
-      });
-    const json = await fetching.json();
-    isLoading(false);
-    return setAdmins(json);
+      const fetching = await fetch('https://cktour.club/api/v1/users?role=admin',
+        {
+          method: "GET",
+          headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
+        });
+      const json = await fetching.json();
+      isLoading(false);
+      return setAdmins(json);
   }
 
   useEffect(() => {
-    fetchingUsers()
+    fetchData()
   }, [])
 
   return (
@@ -67,7 +68,7 @@ export const AdminTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{name}</TableCell>
                     <TableCell align="right">{email}</TableCell>
                     <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
-                    <TableCell align="right" sx={{display: 'flex'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
+                    <TableCell align="right" sx={{display: 'flex'}}><DeleteConfirmModal props={{id, fetchUrl, fetchData}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}
             </TableBody>

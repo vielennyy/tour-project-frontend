@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState} from "react";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -10,8 +10,9 @@ import {Box,
 
 import { ForgotPassword } from "../../TypesAndInterfaces";
 
-export const ResetPopup = ():JSX.Element => {
-  const [success, setSuccess] = React.useState(false);
+export const ResetPopup = ({backToLoginPopup}:any):JSX.Element => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const forgotPassword = async (values:ForgotPassword) => {
     const response = await fetch(`https://cktour.club/api/v1/password/forgot`,
@@ -23,7 +24,13 @@ export const ResetPopup = ():JSX.Element => {
         body: JSON.stringify(values)
       })
     if(response.status === 200) {
-      setSuccess(prevState => true)
+      setSuccess(prevState => true);
+      setError(false)
+      setTimeout(() => {
+        backToLoginPopup();
+      }, 3000)
+    } else {
+      setError(true)
     }
   }
 
@@ -32,7 +39,7 @@ export const ResetPopup = ():JSX.Element => {
       // @ts-ignore
       .string('Enter your email')
       .email('Enter a valid email')
-      .required('Email is required')
+      .required("Поле обов'язкове для заповнення")
   });
 
   const formik = useFormik({
@@ -41,7 +48,7 @@ export const ResetPopup = ():JSX.Element => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: ForgotPassword) => {
-      forgotPassword(values)
+      forgotPassword(values);
     }
   });
 
@@ -77,6 +84,12 @@ export const ResetPopup = ():JSX.Element => {
           {success ?
             <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
               Інструкції з відновлення паролю будуть відпралені на вашу пошту.
+            </Typography> :
+            null
+          }
+          {error ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+              Почта введенна не коректно
             </Typography> :
             null
           }
