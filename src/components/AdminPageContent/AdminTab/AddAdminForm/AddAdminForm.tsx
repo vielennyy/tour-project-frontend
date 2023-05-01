@@ -2,16 +2,21 @@ import React, {useEffect, useState} from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import {Box,
+import {
+  Box,
   Button,
   TextField,
   Dialog,
-  DialogTitle} from '@mui/material';
+  DialogTitle, Typography
+} from '@mui/material';
 
 import {UserToken} from "../../../TypesAndInterfaces";
+import {RegisterTypes} from "../../../TypesAndInterfaces";
+import CloseIcon from '@mui/icons-material/Close';
 
 export const AddAdminForm = ({token}:UserToken):JSX.Element => {
-  const [values, setValues] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -22,8 +27,8 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
     setOpen(false);
   };
 
-  const onAdminAdded = async () => {
-    const fetching = await fetch('https://cktour.club/api/v1/admins/create_admin',
+  const adminRegistration = async (values:RegisterTypes) => {
+    const response = await fetch('https://cktour.club/api/v1/admins/create_admin',
       {
         method: "POST",
         headers: {
@@ -32,41 +37,47 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
         },
         body: JSON.stringify(values)
       });
+    if(response.status === 201) {
+      setSuccess(prevState => true);
+      setError(false)
+      setTimeout(() => {
+        handleClose();
+      }, 3000)
+    } else {
+      setError(true)
+    }
   }
 
-  useEffect(() => {
-    onAdminAdded();
-    setTimeout(() => {
-      handleClose();
-    }, 1000)
-  }, [values])
 
   const validationSchema = yup.object({
+    name: yup
+      // @ts-ignore
+      .string('Enter your name')
+      .min(2, 'Name should be of minimum 2 characters length')
+      .required("Поле обов'язкове для заповнення"),
+
     email: yup
       // @ts-ignore
       .string('Enter your email')
       .email('Enter a valid email')
-      .required('Email is required'),
+      .required("Поле обов'язкове для заповнення"),
     password: yup
 
       // @ts-ignore
       .string("Enter your password")
       .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
+      .required("Поле обов'язкове для заповнення"),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: 'admin',
-      email: 'admin@test.com',
-      password: 'User123!',
+      name: '',
+      email: '',
+      password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      setValues(values)
-      // setTimeout(() => {
-      //   onAdminAdded()
-      // }, 500)
+    onSubmit: (values: RegisterTypes) => {
+      adminRegistration(values)
     }
   });
 
@@ -76,7 +87,15 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
         Додати нового Адміністратора
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Новий адміністратор</DialogTitle>
+        <Box sx={{
+          padding: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <Typography>Новий Адміністратор</Typography>
+          <CloseIcon onClick={handleClose} sx={{cursor: 'pointer'}}/>
+        </Box>
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
@@ -92,8 +111,8 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
               label="Ім'я"
               value={formik.values.name}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
             <TextField
               fullWidth
@@ -118,6 +137,18 @@ export const AddAdminForm = ({token}:UserToken):JSX.Element => {
               helperText={formik.touched.password && formik.errors.password}
               sx={{marginTop: '15px'}}
             />
+            {error ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+                Неправильна почта чи пароль
+              </Typography> :
+              null
+            }
+            {success ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+                Реєстрація успішна.
+              </Typography> :
+              null
+            }
             <Button color="primary" variant="contained" fullWidth type="submit" sx={{
               width: 200,
               height: 40,

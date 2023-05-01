@@ -24,7 +24,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
 
-  const fetchingUsers = async () => {
+  const fetchData = async () => {
     isLoading(true)
     const fetching = await fetch('https://cktour.club/api/v1/users?role=tourist',
         {
@@ -35,8 +35,9 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
     isLoading(false);
     return setTourist(json);
   }
+
   useEffect(() => {
-    fetchingUsers();
+    fetchData();
   }, [])
 
   return (
@@ -68,7 +69,7 @@ export const UserTab = ({token}:UserToken):JSX.Element =>  {
                     <TableCell align="right">{email}</TableCell>
                     <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
-                    <TableCell align="right" sx={{display: 'flex', borderBottom: 'none'}}><DeleteConfirmModal props={{id, fetchUrl}}/><ViewModal id={id}/></TableCell>
+                    <TableCell align="right" sx={{display: 'flex', borderBottom: 'none'}}><DeleteConfirmModal props={{id, fetchUrl, fetchData}}/><ViewModal id={id}/></TableCell>
                   </TableRow>
               ))}
             </TableBody>

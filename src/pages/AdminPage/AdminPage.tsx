@@ -12,7 +12,7 @@ export const AdminPage = ():JSX.Element => {
   const [token, setToken] = useState(undefined);
   const [isAuthorize, setIsAuthorize] = useState(false);
 
-  const login = async () => {
+  const adminLogin = async (values: LoginTypes) => {
     const response = await fetch(`https://cktour.club/api/v1/auth/login`,
       {
         method: "POST",
@@ -28,10 +28,6 @@ export const AdminPage = ():JSX.Element => {
     setToken(res.token)
     localStorage.setItem('adminToken', res.token);
   }
-
-  useEffect(() => {
-    login();
-  }, [values])
 
   const validationSchema = yup.object({
     email: yup
@@ -54,9 +50,7 @@ export const AdminPage = ():JSX.Element => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: LoginTypes) => {
-      setTimeout(() => {
-          setValues(values);
-        }, 500)
+      adminLogin(values)
     }
   });
 

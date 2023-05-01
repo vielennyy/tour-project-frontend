@@ -14,7 +14,6 @@ export const MainCards = ():JSX.Element => {
   const [searchParams] = useSearchParams();
   moment.locale('uk');
 
-  console.log(searchParams.get('search'))
   const fetchingAttractions = async () => {
     const fetching = await fetch('https://cktour.club/api/v1/attractions',
       {

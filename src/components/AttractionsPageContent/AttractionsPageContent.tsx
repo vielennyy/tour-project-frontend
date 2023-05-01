@@ -1,18 +1,13 @@
 import * as React from "react";
-import { useSearchParams } from "react-router-dom";
 
-import {Box, Button, Container, Typography} from "@mui/material";
-
+import {Box,
+  Container} from "@mui/material";
 
 import { SearchBar } from "./SearchBar";
 import { MainCards } from "./MainCards";
-import { SecondaryCards } from "./SecondaryCards";
-
 
 export const AttractionsPageContent = ():JSX.Element => {
-  const [searchParams] = useSearchParams();
 
-  console.log(searchParams.get('search'))
   return(
     <Box sx={{
       position: 'relative'
@@ -32,7 +27,6 @@ export const AttractionsPageContent = ():JSX.Element => {
       }}>
         <SearchBar/>
         <MainCards/>
-        {/*<SecondaryCards/>*/}
         <Box sx={{
           display: 'flex',
           justifyContent: 'center'

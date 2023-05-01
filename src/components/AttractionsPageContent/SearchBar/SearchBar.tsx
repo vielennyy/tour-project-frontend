@@ -1,10 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useSearchParams } from 'react-router-dom';
 
 import {Box, Button, Typography, Breadcrumbs} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
 export const SearchBar = ():JSX.Element => {
+  const [searchResultList, setSearchResultList] = useState<[]>([]);
   const [searchParams] = useSearchParams();
+
+  const searchAttractions = async () => {
+    const fetching = await fetch(`https://cktour.club/api/v1/attractions?search=${searchParams.get('search')}`,
+      {
+        method: "GET"
+      });
+    const json = await fetching.json();
+    return setSearchResultList(json);
+  }
+
+  useEffect(() => {
+    searchAttractions()
+  }, [])
+
+  console.log(searchResultList);
 
   const breadcrumbs = [
     <Link to={'/'}>
@@ -67,7 +84,9 @@ export const SearchBar = ():JSX.Element => {
         </Button>
       </Box>
       <Typography variant='h3' sx={{textAlign: 'center', marginTop: 2}}>
-        {searchParams.get('search') ? `Цікаві місця в ${searchParams.get('search')}` : 'Цікаві місця'}
+        {searchParams.get('search') && searchResultList.length > 0 ? `Цікаві місця в ${searchParams.get('search')}` :
+          searchParams.get('search') && searchResultList.length === 0 ? 'За даним запитом нічого не знайдено' :
+          'Цікаві місця'}
       </Typography>
     </Box>
   )

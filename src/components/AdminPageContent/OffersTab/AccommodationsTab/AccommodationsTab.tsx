@@ -27,7 +27,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
 
-  const fetchingAccommodations = async () => {
+  const fetchData = async () => {
     isLoading(true)
     const fetching = await fetch('https://cktour.club/api/v1/accommodations',
         {
@@ -40,7 +40,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
   }
 
   useEffect(() => {
-    fetchingAccommodations()
+    fetchData()
   }, [])
 
   return (
@@ -87,7 +87,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
                           <RemoveRedEyeIcon/>
                         </Link>
                       </Button>
-                      <DeleteConfirmModal props={{id, fetchUrl}}/>
+                      <DeleteConfirmModal props={{id, fetchUrl, fetchData}}/>
                     </TableCell>
                   </TableRow>
               ))}

@@ -1,15 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import {
   Box,
   Dialog,
   DialogContent,
   Button,
-  Typography, Link
+  Typography
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-
 
 import {RegistrationPopup} from "./RegistrationPopup";
 import {LoginPopup} from "./LoginPopup";
@@ -17,10 +16,9 @@ import {ResetPopup} from "./ResetPopup";
 
 export const MainPopup = ():JSX.Element =>  {
   const [open, setOpen] = useState(false);
-  const [currentPopup, setCurrentPopup] = useState('loginPopup')
   const [loginPopup, setLoginPopup] = useState(true);
   const [registerPopup, setRegisterPopup] = useState(false);
-  const [resetPopup, setResetPopup] = useState(false)
+  const [resetPopup, setResetPopup] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,6 +27,16 @@ export const MainPopup = ():JSX.Element =>  {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if(open === false) {
+      setTimeout(() => {
+        setLoginPopup(true);
+        setRegisterPopup(false);
+        setResetPopup(false);
+      }, 500)
+    }
+  },[open])
 
   const handleRegisterOpen = () => {
     setLoginPopup(false);
@@ -47,7 +55,6 @@ export const MainPopup = ():JSX.Element =>  {
     setRegisterPopup(false);
     setResetPopup(true);
   }
-
 
   return (
     <Box>
@@ -80,9 +87,9 @@ export const MainPopup = ():JSX.Element =>  {
           </Button>
           <DialogContent sx={{padding: 0}}>
             {loginPopup ? <LoginPopup /> :
-              registerPopup ? <RegistrationPopup/> :
-              resetPopup ? <ResetPopup/> :
-              null
+              registerPopup ? <RegistrationPopup backToLoginPopup={handleLoginOpen}/> :
+                resetPopup ? <ResetPopup backToLoginPopup={handleLoginOpen}/> :
+                  null
             }
 
           </DialogContent>
@@ -100,12 +107,12 @@ export const MainPopup = ():JSX.Element =>  {
                   Не має акаунту? Реєстрація
                 </Button> :
                 registerPopup ?
-                <Button  sx={{fontSize: 10, color: "#000000"}} onClick={handleLoginOpen}>
-                  Вже маєш акаунт? Вхід
-                </Button> :
-                <Button  sx={{fontSize: 10, color: "#000000", padding: '20px 0 14px 0'}} onClick={handleLoginOpen}>
-                  <KeyboardBackspaceIcon fontSize={'small'}/>Назад до входу
-                </Button>
+                  <Button  sx={{fontSize: 10, color: "#000000"}} onClick={handleLoginOpen}>
+                    Вже маєш акаунт? Вхід
+                  </Button> :
+                  <Button  sx={{fontSize: 10, color: "#000000", padding: '20px 0 14px 0'}} onClick={handleLoginOpen}>
+                    <KeyboardBackspaceIcon fontSize={'small'}/>Назад до входу
+                  </Button>
               }
             </Box>
             <Box>

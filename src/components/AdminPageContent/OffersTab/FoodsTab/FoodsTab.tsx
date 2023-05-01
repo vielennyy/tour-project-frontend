@@ -27,7 +27,7 @@ export const FoodsTab = ({token}:UserToken):JSX.Element =>  {
   const [loading, isLoading] = useState(false);
   moment.locale('uk');
 
-  const fetchingCatering = async () => {
+  const fetchData = async () => {
     isLoading(true)
     const fetching = await fetch('https://cktour.club/api/v1/caterings',
       {
@@ -41,7 +41,7 @@ export const FoodsTab = ({token}:UserToken):JSX.Element =>  {
   }
 
   useEffect(() => {
-    fetchingCatering()
+    fetchData()
   }, [])
 
   return (
@@ -88,7 +88,7 @@ export const FoodsTab = ({token}:UserToken):JSX.Element =>  {
                         <RemoveRedEyeIcon/>
                       </Link>
                     </Button>
-                    <DeleteConfirmModal props={{id, fetchUrl}}/>
+                    <DeleteConfirmModal props={{id, fetchUrl, fetchData}}/>
                   </TableCell>
                 </TableRow>
               ))}

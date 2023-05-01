@@ -16,7 +16,7 @@ interface SearchString {
 }
 
 export const Banner = ():JSX.Element => {
-  const [searchValue, setSearchValues] = useState<SearchString | undefined>();
+  const [searchValue, setSearchValues] = useState<SearchString>();
   // const search = async () => {
   //   const fetching = await fetch(`https://cktour.club/api/v1/attractions?search=долина`,
   //     {
@@ -37,8 +37,9 @@ export const Banner = ():JSX.Element => {
 
   const handleChange = (event:any) => {
     setSearchValues(event.target.value)
+    console.log(event.target.value)
   }
-  console.log(searchValue)
+
   return (
     <Box sx={{position: 'relative', height: '880px', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
       <img src={bg} style={{

@@ -43,14 +43,15 @@ export const AddComment = ():JSX.Element => {
   });
 
   return(
-  <Box>
+  <Box sx={{
+    marginTop: 4
+  }}>
     <Button onClick={handleClickOpen} sx={{
         background: '#FFFFFF',
         padding: '18px',
         borderRadius: '7px',
         width: 280,
         maxHeight: 60,
-        marginLeft: 4,
         border: '1px solid #EF5151'
     }}>
        <Typography sx={{ margin: '0 20px', color: '#EF5151', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
