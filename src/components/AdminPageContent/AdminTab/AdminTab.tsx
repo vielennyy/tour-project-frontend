@@ -37,7 +37,7 @@ export const AdminTab = ():JSX.Element =>  {
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(admins)
   return (
     <Box>
       <AddAdminForm props={fetchData}/>
