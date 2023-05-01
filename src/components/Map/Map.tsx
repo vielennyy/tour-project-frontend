@@ -39,31 +39,38 @@ const API_KEY:string = process.env.REACT_APP_API_KEY as string;
     // disableDoubleClickZoom: false,
     fullscreenControl: false,
     // language: 'uk',
-    minZoom: 8,
-    maxZoom: 15,
+    minZoom:10,
+    maxZoom: 20,
     styles: defaultTheme,
   }
 
   interface myComponentProps{
-    props: MapWindowSize
+    size: MapWindowSize
+    center: PlaceCoordinates,
+    zoom: number,
 }
 
-export const Map = ({props}:myComponentProps) => {
+export const Map = (props:myComponentProps) => {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: API_KEY,
         language: 'uk'
       })
-    
+      const center = props.center
       const [map, setMap] = React.useState<google.maps.Map | null>(null);
       const [zoom, setZoom] = useState(props.zoom);
 
     
       const onLoad = React.useCallback(function callback(map: google.maps.Map) {
         // This is just an example of getting and using the map instance!!! don't just blindly copy!
-        const bounds = new window.google.maps.LatLngBounds(cherkassy);
-        map.fitBounds(bounds);
+        // const bounds = new window.google.maps.LatLngBounds();
+        // bounds.extend(new window.google.maps.LatLng(49.95010347463873, 32.14496496924874))
+        // bounds.extend(new window.google.maps.LatLng(50.070137508481, 31.44687743946905))
+        // bounds.extend(new window.google.maps.LatLng(49.258652627349306, 30.977594527194963))
+        // bounds.extend(new window.google.maps.LatLng(48.95142650603749, 30.963586068944238))
+        // bounds.extend(new window.google.maps.LatLng(49.075462869908115, 32.67962063211506))
+        // map.fitBounds(bounds);
     
         setMap(map)
       }, [])
@@ -126,8 +133,8 @@ export const Map = ({props}:myComponentProps) => {
     return (isLoaded ? (
         <Box sx={{overflow: 'hidden'}}>
           <GoogleMap
-            mapContainerStyle={props}
-            center={cherkassy}
+            mapContainerStyle={props.size}
+            center={center}
             zoom={zoom}
             
             onLoad={onLoad}

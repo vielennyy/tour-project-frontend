@@ -54,7 +54,6 @@ updated_at: string;
 export interface MapWindowSize {
     width: string,
     height: string,
-    zoom: number,
 }
 
 export interface Accommodation {

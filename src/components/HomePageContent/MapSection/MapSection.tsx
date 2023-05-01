@@ -4,12 +4,15 @@ import {Box, Container, Typography, Button} from '@mui/material';
 import React from "react";
 import { Map } from '../../../components/Map'
 
-import map from '../../../assets/image/map.jpg';
 const containerStyle = {
   width: '600px',
   height: '400px',
-  zoom: -2,
 }
+const cherkassy = {
+  lat: 49.44428388879221,
+  lng: 32.05884117728714,
+}
+
 export const MapSection = ():JSX.Element => {
   return(
     <Container sx={{
@@ -44,7 +47,7 @@ export const MapSection = ():JSX.Element => {
         </Button>
       </Box>
       <Box>
-        <Map props={containerStyle}></Map>
+        <Map size={containerStyle} center={cherkassy} zoom={8}></Map>
         {/* <img src={map} alt={map} style={{width: '100%'}}/> */}
       </Box>
     </Container>
