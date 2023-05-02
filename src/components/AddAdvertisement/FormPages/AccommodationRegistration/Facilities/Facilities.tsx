@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react'
-import { Box, Typography, FormControl, TextField, Button, Input, Grid, Checkbox } from '@mui/material'
+import { useState } from 'react'
+import { Box, Typography, FormControl, Button, Checkbox } from '@mui/material'
 import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
 import cardpayment from '../../../../../assets/icons/accommodation/cardpayment.svg'
 import parking from '../../../../../assets/icons/accommodation/parking.svg'
@@ -8,11 +8,12 @@ import wifi from '../../../../../assets/icons/accommodation/wifi.svg'
 import pet from '../../../../../assets/icons/accommodation/pet.svg'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
 
 interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,
-    setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
+    showFacilities: boolean,
+    setFinished: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 interface FormData {
@@ -27,7 +28,7 @@ interface FormData {
     pets: boolean
 }
 
-export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
+export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProps) => {
     const [show, setShow] = useState(true)
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const userToken = localStorage.getItem('token')
@@ -44,6 +45,13 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
         breakfast: false,
         pets: false
         });
+
+    // const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setFormState({
+    //         ...formState,
+    //         [event.target.name]: event.target.value,
+    //         });
+    // }
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -62,7 +70,6 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
         // formData.append('checkout_end', formState.checkout_end)
         // formData.append('wi_fi', formState.wi_fi.toString())
         // formData.append('breakfast', formState.breakfast)
-
               if(mainInfo?.data.accommodation.id !== undefined) {
                 console.log(formState)
                 fetch(`https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/facilities`, {
@@ -72,24 +79,17 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                     Authorization: "Bearer " + userToken
                 },
                 body: JSON.stringify(formState),
-            })
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => console.error('Error:', error));
-                } else {
-                    console.log("Error: accommodation id is undefined");
-                
-                // console.log(formState)
-                // fetch(`https://cktour.club/api/v1/accommodations`, {
-                //     method: "GET",
-                //     headers: {
-                //         Authorization: "Bearer " + localStorage.getItem('token')
-                //     },
-                //     // body: JSON.stringify(formState),
-                //     })
-                //     .then(response => response.json())
-                //     .then(json => console.log(json)); 
-              }
+                })
+                .then(response => {
+                    if(response.ok) {
+                        response.json()
+                        setFinished(true)
+                    }})
+                .then(json => console.log(json))
+                .catch(error => console.error('Error:', error));
+            } else {
+                console.log("Error: accommodation id is undefined");
+            }
         }
 
 
@@ -99,13 +99,13 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
             background: '#FAFAFA',
             boxShadow: '0px 4px 15px rgba(146, 146, 146, 0.25)',
             borderRadius: '15px',
-            padding: '20px',
-            margin: '30px auto'
+            padding: '20px 60px',
+            margin: '30px auto',
         }}
         >
-            {/* {mainInfo!== undefined ? */}
+            {showFacilities ?
             <>
-                <Typography fontSize={24} fontWeight={500} margin={'20px'}>Додайте зручності вашого житла</Typography>
+                <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'35px 5px'}>Додайте зручності вашого житла</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
                     <Box sx={{display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
@@ -229,13 +229,14 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                             />
                             </Box>} />
                         </Box>
-                    <Typography fontSize={24} fontWeight={500} margin={'20px'}>Заселення та від’їзд</Typography>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'50px 0px'}>Заселення та від’їзд</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                
+                                {/* <TimePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -245,13 +246,29 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkin_start: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                    <TimeField label="" format="HH:mm" onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        // console.log(time)
+                                        // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                        if (time !== 'Invalid Date') {
+                                            console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                            // setFormState({
+                                            //     ...formState,
+                                            //     checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false })
+                                            // });
+                                        }
+                                    }
+                                    }/>
                             </LocalizationProvider>
                         </Box>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -261,16 +278,23 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkin_end: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                    <TimeField label="" format="HH:mm" onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        if(time !== 'Invalid Date')
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkin_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                        })
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                 defaultValue={today}
                                 label="Choose a date"
                                 value={selectedDate}
@@ -280,13 +304,20 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                             return { ...prevState, checkout_start: newValue.toISOString() };
                                     })
                                 }}
-                                />
+                                /> */}
+                                <TimeField label="" format="HH:mm" name='checkout_start' onChange={(newValue: any)=>{
+                                    const time = newValue['$d']
+                                    if(time !== 'Invalid Date')
+                                        setFormState(prevState => {
+                                            return { ...prevState, checkout_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                    })
+                                }}/>
                             </LocalizationProvider>
                         </Box>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -296,18 +327,25 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkout_end: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                <TimeField label="" format="HH:mm" name='checkout_end' onChange={(newValue:any)=>{
+                                    const time = newValue['$d']
+                                        if(time !== 'Invalid Date')
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkout_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                        })
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                 </FormControl>
                 </form>
 
             </>
-            {/* // :
-            // <Typography fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
-            // } */}
+            :
+            <Typography fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
+            }
         </Box>
     )
 }

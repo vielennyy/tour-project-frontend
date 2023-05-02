@@ -4,28 +4,37 @@ import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
 
 interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,
-    setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
-}
-interface data {
-    accommodation: {
-        id?: number;
-        name: string;
-        description: string;
-        kind: string;
-        person: string;
-        phone: string;
-        email: string;
-        reg_code: string;
-        address_owner: string;
-        status: string;
-        created_at: string;
-        updated_at: string;
-        user_id: number;
-    }
-    image_urls: []
+    // setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
+    // showMainInfo: boolean,
+    // setShowMainInfo: React.Dispatch<React.SetStateAction<boolean>>,
+    showGeolocation: boolean,
+    setShowGeolocation: React.Dispatch<React.SetStateAction<boolean>>,
+    // showFacilities: boolean,
+    setShowFacilities: React.Dispatch<React.SetStateAction<boolean>>,
+    // isFinished: boolean,
+    // setFinished: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
+// interface data {
+//     accommodation: {
+//         id?: number;
+//         name: string;
+//         description: string;
+//         kind: string;
+//         person: string;
+//         phone: string;
+//         email: string;
+//         reg_code: string;
+//         address_owner: string;
+//         status: string;
+//         created_at: string;
+//         updated_at: string;
+//         user_id: number;
+//     }
+//     image_urls: []
+// }
+
+export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setShowFacilities}:ComponentProps) => {
     const [show, setShow] = useState(true)
     // const id = mainInfo.accommodation.id
     // console.log(id)
@@ -84,7 +93,13 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
               },
               body: JSON.stringify(data),
             })
-              .then(response => response.json())
+              .then(response => {
+                if(response.ok) {
+                    response.json()
+                    setShowFacilities(true)
+                    setShowGeolocation(false)
+                }
+                })
               .then(json => console.log(json));
           } else {
             console.log("Error: accommodation id is undefined");
@@ -96,48 +111,48 @@ export const Geolocation = ({mainInfo, setMainInfo}:ComponentProps) => {
             background: '#FAFAFA',
             boxShadow: '0px 4px 15px rgba(146, 146, 146, 0.25)',
             borderRadius: '15px',
-            padding: '20px',
-            margin: '30px auto'
+            padding: '20px 60px',
+            margin: '30px auto',
         }}
         >
-            {/* {mainInfo!== undefined ? */}
+            {showGeolocation ?
             <>
-                <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
+                <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'35px 5px'}>Розташування</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
-                    <Typography fontSize={18} marginBottom={'5px'}>Населений пункт</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Населений пункт</Typography>
                     <TextField name='locality'  id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Вулиця</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Вулиця</Typography>
                     <TextField name='street' id="outlined-basic" required onChange={handleFormChange}/>
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Номер</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Номер</Typography>
                             <TextField name='suite' id="outlined-basic" onChange={handleFormChange}/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
                             <TextField name='zip_code' id="outlined-basic" onChange={handleFormChange}/>
                         </Box>
                     </Box>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Введіть координати вашого житла</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Введіть координати вашого житла</Typography>
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Широта</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Широта</Typography>
                             <TextField name='latitude' id="outlined-basic" onChange={handleFormChange}/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
-                            <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Довгота</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Довгота</Typography>
                             <TextField name='longitude' id="outlined-basic" onChange={handleFormChange}/>
                         </Box>
                     </Box>
-                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                 </FormControl>
                 </form>
 
             </>
-           {/* :
-            <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
-            } */}
+           :
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500}>Розташування</Typography>
+        }
         </Box>
     )
 }

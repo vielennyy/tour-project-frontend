@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react'
 import { Box, Typography, FormControl, TextField, Button } from '@mui/material'
-import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
+import { MainAccommodationInfoProps, AccommodationFormValues } from 'src/components/TypesAndInterfaces'
 import house from '../../../../../assets/icons/accommodation/home.svg'
 import apartment from '../../../../../assets/icons/accommodation/apartment.svg'
 import hostel from '../../../../../assets/icons/accommodation/hostel.svg'
@@ -8,31 +8,21 @@ import hotel from '../../../../../assets/icons/accommodation/hotel.svg'
 import other from '../../../../../assets/icons/accommodation/other.svg'
 
 interface ComponentProps {
-    mainInfo: MainAccommodationInfoProps|undefined,
+    // mainInfo: MainAccommodationInfoProps|undefined,
     setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
+    setShowMainInfo: React.Dispatch<React.SetStateAction<boolean>>,
+    showMainInfo: boolean,
+    setShowGeolocation: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-interface FormDataValues {
-    name: string,
-    description: string,
-    address_owner: string,
-    phone: string,
-    email: string,
-    kind: string,
-    user_id: number,
-    reg_code: string,
-    person: string,
-    images: File[]
-};
-
-export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
+export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeolocation}:ComponentProps) => {
     const [show, setShow] = useState(true)
     const typeAccommodationImages = [house, hotel, apartment, hostel, other];
     const [clickedIndex, setClickedIndex] = useState(-1);
     const [type, setType] = useState('Інше')
     const userToken = localStorage.getItem('token')
 
-    const [formState, setFormState] = useState<FormDataValues>({
+    const [formState, setFormState] = useState<AccommodationFormValues>({
         name: "",
         description: "",
         address_owner: "",
@@ -128,11 +118,19 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
                 },
                 body: formData})
                 // JSON.stringify(formState)})
-            .then(response => response.json())
+            .then(response => {
+                if(response.ok) {
+                    // setShowMainInfo(false)
+                    setShowGeolocation(true)
+                    
+                }
+                return response.json()
+            })
             .then(json => setMainInfo(json))
             .catch(error => console.error('Error:', error));
-        // setShow(false)
+        setShowMainInfo(false)
     };
+    
 
     return(
         <Box sx={{
@@ -140,13 +138,13 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
             background: '#FAFAFA',
             boxShadow: '0px 4px 15px rgba(146, 146, 146, 0.25)',
             borderRadius: '15px',
-            padding: '20px',
-            margin: '30px auto'
+            padding: '20px 60px',
+            margin: '30px auto',
         }}
         >
-            {show ?
+            {showMainInfo ?
             <>
-                <Typography fontSize={24} fontWeight={500}>Оберіть тип житла, який ви реєструєте:</Typography>
+                <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'35px 5px'}>Оберіть тип житла, який ви реєструєте:</Typography>
                 <Box sx={{display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
                     {typeAccommodationImages.map((image, index) => (
                         <Box
@@ -172,30 +170,32 @@ export const MainInfo = ({mainInfo, setMainInfo}:ComponentProps) => {
                     ))}
                 </Box>
                 <form lang="uk" onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
-                <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
-                    <Typography fontSize={18} marginBottom={'5px'}>Назва вашого житла</Typography>
+                <FormControl sx={{display: 'flex', flexDirection: 'column', margin: '50px 0px'}}>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Назва вашого житла</Typography>
                     <TextField name='name'  id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний телефон</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний телефон</Typography>
                     <TextField name='phone' id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний e-mail</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний e-mail</Typography>
                     <TextField name='email' id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Додайте опис вашого житла</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Додайте опис вашого житла</Typography>
                     <TextField name='description' id="outlined-basic" required onChange={handleFormChange} multiline/>
-                    <Typography fontSize={24} fontWeight={500}>Додайте інформацію власника</Typography>
-                    <Typography fontSize={18} marginBottom={'5px'}>Повне ім’я юридичної особи</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'30px 5px'}>Додайте інформацію власника</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Повне ім’я юридичної особи</Typography>
                     <TextField name='person'  id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Код ЄДРПОУ/ІПН</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Код ЄДРПОУ/ІПН</Typography>
                     <TextField name='reg_code' id="outlined-basic" required onChange={handleFormChange}/>
-                    <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Адреса юридичної особи</Typography>
-                    <TextField name='address_owner' id="outlined-basic" required onChange={handleFormChange}/>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Адреса юридичної особи</Typography>
+                    <TextField name='address_owner' id="outlined-basic" sx={{marginBottom: ''}} required onChange={handleFormChange}/>
+                    <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'30px 5px'}>Додайте фотографії вашого об’єкту</Typography>
+
                     <input type="file" onChange={(e)=>{convertFile(e.target.files)}} multiple/>
                     {/* <input type="file" onChange={handleFileLoad} multiple/> */}
-                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    <Button variant="contained" type='submit' sx={{width: '200px', marginTop: '50px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                 </FormControl>
                 </form>
             </>
             :
-            <Typography fontSize={24} fontWeight={500}>Основна інформація</Typography>
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500}>Основна інформація</Typography>
             }
         </Box>
     )

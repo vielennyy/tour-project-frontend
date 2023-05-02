@@ -22,17 +22,6 @@ export const MainPage = () => {
                     fontSize:'20px', 
                     marginTop:'30px', 
                     marginBottom:'100px'}}
-                onClick={()=>{
-                    fetch(`https://cktour.club/api/v1/users/${localStorage.getItem('id')}`, {
-                        method: "PUT",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: "Bearer " + localStorage.getItem('token')
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(json => console.log(json))
-                }}    
                     > Додати пропозицію</Button>
             <Typography fontSize={20} fontWeight={400} zIndex={3} color={'#fff'} sx={{maxWidth:'480px', textAlign: 'center', margin: '0 auto'}}>Після додавання пропозиції ваш акаунт перейде в статус партнера. Дізнатися більше</Typography>
             </Box>
