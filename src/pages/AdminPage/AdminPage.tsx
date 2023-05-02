@@ -8,6 +8,7 @@ import {AdminPageContent} from "../../components/AdminPageContent";
 import {LoginTypes} from "../../components/TypesAndInterfaces";
 
 export const AdminPage = ():JSX.Element => {
+  const [error, setError] = useState(false);
   const [values, setValues] = useState({});
   const [token, setToken] = useState(undefined);
   const [isAuthorize, setIsAuthorize] = useState(false);
@@ -21,12 +22,15 @@ export const AdminPage = ():JSX.Element => {
         },
         body: JSON.stringify(values)
       })
-    if(response.status === 200) {
+    if(response.ok) {
       setIsAuthorize(true);
+      const res = await response.json();
+      setToken(res.token)
+      localStorage.setItem('adminToken', res.token);
+      window.location.reload();
+    } else {
+      setError(true);
     }
-    const res = await response.json();
-    setToken(res.token)
-    localStorage.setItem('adminToken', res.token);
   }
 
   const validationSchema = yup.object({
@@ -56,7 +60,7 @@ export const AdminPage = ():JSX.Element => {
 
   return (
     <Box>
-      {isAuthorize ?
+      {localStorage.getItem('adminToken') ?
         <AdminPageContent token={token}/> :
         <Box sx={{
           width: 500,
@@ -90,6 +94,12 @@ export const AdminPage = ():JSX.Element => {
             <Button color="primary" variant="contained" fullWidth type="submit">
               Submit
             </Button>
+            {error ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+                Неправильний логін чи пароль
+              </Typography> :
+              null
+            }
           </form>
         </Box>
       }

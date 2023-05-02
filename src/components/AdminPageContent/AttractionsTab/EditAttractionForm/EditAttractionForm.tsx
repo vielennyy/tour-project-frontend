@@ -13,6 +13,9 @@ import { useFormik } from 'formik';
 interface Values {
   title: string;
   description: string;
+  latitude: string;
+  longitude: string;
+  image: any;
 }
 
 interface ValuesProps {
@@ -20,13 +23,45 @@ interface ValuesProps {
     title: string;
     description: string;
     id: string;
+    image_url: string;
+    geolocations: any;
   }
 }
 
+interface GeolocationObject {
+  locality: string,
+  latitude: number|undefined,
+  longitude: number|undefined,
+  street: string,
+  suite: string,
+  zip_code: string
+}
+
 export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
+  let geolocationObject:GeolocationObject = {
+    locality: "string",
+    latitude: 0,
+    longitude: 0,
+    street: "string",
+    suite: "string",
+    zip_code: "string"
+  };
+
+  let latitudeValue;
+  let longitudeValue;
+
+  if(props.geolocations.length > 0 ) {
+    const {latitude, longitude} = props.geolocations[0];
+    geolocationObject = props.geolocations[0];
+    latitudeValue = latitude;
+    longitudeValue = longitude;
+  }
+
   const initialValues = {
     title: props.title,
     description: props.description,
+    latitude: latitudeValue,
+    longitude: longitudeValue
   }
   const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
   const [open, setOpen] = React.useState(false);
@@ -38,6 +73,7 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
   const handleClose = () => {
     setOpen(false);
   };
+
   const onAttractionAdded = (values: Values) => {
     const formData = new FormData();
     formData.append('title', values.title);
@@ -52,6 +88,24 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
         },
         body: formData
       }).then(() => handleClose());
+
+    geolocationUpdate(values)
+  }
+
+  const geolocationUpdate = (values: Values) => {
+    const geolocationBody = {...geolocationObject,
+      latitude: values.latitude,
+      longitude: values.longitude
+    }
+    fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(geolocationBody)
+      })
   }
 
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
@@ -93,13 +147,36 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
           <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
             <TextField
               fullWidth
-              id="name"
-              name="name"
+              id="title"
+              name="title"
+              type="text"
               label="Заголовок"
               value={formik.values.title}
               onChange={formik.handleChange}
             />
             <TextField
+              fullWidth
+              id="latitude"
+              name="latitude"
+              type="text"
+              label="Широта"
+              value={formik.values.latitude}
+              onChange={formik.handleChange}
+              sx={{marginTop: "25px"}}
+            />
+            <TextField
+              fullWidth
+              id="longitude"
+              name="longitude"
+              type="text"
+              label="Довгота"
+              value={formik.values.longitude}
+              onChange={formik.handleChange}
+              sx={{marginTop: "25px"}}
+            />
+            <TextField
+              multiline
+              rows={4}
               fullWidth
               id="description"
               name="description"
@@ -115,7 +192,7 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
               padding: '25px 0 0 0 '
             }}>
               <input
-                id="image"
+                id="file"
                 name="image"
                 type="file"
                 onChange={(event: ChangeEvent<HTMLInputElement>) => handleFileLoad(event)}

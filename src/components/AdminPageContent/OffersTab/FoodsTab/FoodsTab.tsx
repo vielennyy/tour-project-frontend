@@ -32,7 +32,7 @@ export const FoodsTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/caterings',
       {
         method: "GET",
-        headers: { Authorization: 'Bearer ' +  token }
+        headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
       });
 
     const json = await fetching.json();

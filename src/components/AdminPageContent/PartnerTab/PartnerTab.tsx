@@ -45,7 +45,7 @@ export const PartnerTab = ():JSX.Element =>  {
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
-              <TableCell align="right">Назва</TableCell>
+              <TableCell align="right">Ім'я</TableCell>
               <TableCell align="right">Email</TableCell>
               <TableCell align="right">Телефон</TableCell>
               <TableCell align="right">ЕДРПОУ</TableCell>

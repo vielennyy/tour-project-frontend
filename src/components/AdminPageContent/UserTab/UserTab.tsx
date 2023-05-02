@@ -45,7 +45,7 @@ export const UserTab = ():JSX.Element =>  {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell align="right">Нік</TableCell>
+                <TableCell align="right">Ім'я</TableCell>
                 <TableCell align="right">Email</TableCell>
                 <TableCell align="right">Створено</TableCell>
                 <TableCell align="right">Змінено</TableCell>

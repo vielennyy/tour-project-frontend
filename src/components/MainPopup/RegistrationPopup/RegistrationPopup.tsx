@@ -28,12 +28,12 @@ export const RegistrationPopup = ({backToLoginPopup}:any):JSX.Element =>  {
         },
         body: JSON.stringify(values)
       })
-    if(response.status === 201) {
-      setSuccess(prevState => true);
+    if(response.ok) {
+      setSuccess(true);
       setError(false)
       setTimeout(() => {
         backToLoginPopup();
-      }, 4000)
+      }, 3000)
     } else {
       setError(true)
     }
@@ -67,7 +67,7 @@ export const RegistrationPopup = ({backToLoginPopup}:any):JSX.Element =>  {
     },
     validationSchema: validationSchema,
     onSubmit: (values: RegisterTypes) => {
-      registration(values)
+      registration(values);
     }
   });
   return (

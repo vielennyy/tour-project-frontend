@@ -11,6 +11,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { useFormik } from 'formik';
 
+interface FetchDataType {
+  props: () => void;
+}
 
 interface Values {
   name: string;
@@ -21,7 +24,9 @@ const initialValues = {
   name: '',
   description: '',
 }
-export const AddAttractionsForm = ():JSX.Element => {
+export const AddAttractionsForm = ({props}:FetchDataType):JSX.Element => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
   const [open, setOpen] = React.useState(false);
 
@@ -32,21 +37,35 @@ export const AddAttractionsForm = ():JSX.Element => {
   const handleClose = () => {
     setOpen(false);
   };
-  const onAttractionAdded = (values: Values) => {
+
+  const onAttractionAdded = async (values: Values) => {
     const formData = new FormData();
     console.log(values, file);
     formData.append('title', values.name);
     formData.append('description', values.description);
     formData.append('image', file);
 
-    fetch('https://cktour.club/api/v1/attractions',
+    const response = await fetch('https://cktour.club/api/v1/attractions',
       {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
+          Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
         },
         body: formData
-      }).then(() => handleClose());
+      });
+    if(response.ok) {
+      setSuccess(true);
+      setError(false)
+      setTimeout(() => {
+        setSuccess(false);
+        formik.resetForm();
+        handleClose();
+        props();
+      }, 3000)
+    } else {
+      setError(true)
+    }
+
   }
 
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +94,7 @@ export const AddAttractionsForm = ():JSX.Element => {
           justifyContent: 'space-between',
           padding: 2
         }}>
-          <Typography variant='h6'>Редагувати атракцію</Typography>
+          <Typography variant='h6'>Додати атракцію</Typography>
           <CloseIcon  onClick={handleClose} sx={{cursor: 'pointer'}}/>
         </Box>
         <Box sx={{
@@ -95,6 +114,8 @@ export const AddAttractionsForm = ():JSX.Element => {
               onChange={formik.handleChange}
             />
             <TextField
+              multiline
+              rows={4}
               fullWidth
               id="description"
               name="description"
@@ -116,6 +137,18 @@ export const AddAttractionsForm = ():JSX.Element => {
                 onChange={(event: ChangeEvent<HTMLInputElement>) => handleFileLoad(event)}
               />
             </Box>
+            {error ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+                Заповніть всі поля коректно
+              </Typography> :
+              null
+            }
+            {success ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+                Атракція додана успішно.
+              </Typography> :
+              null
+            }
             <Button color="primary" variant="contained" fullWidth type="submit" sx={{
               width: 200,
               height: 40,

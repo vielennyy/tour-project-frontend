@@ -40,10 +40,12 @@ export const AddAdminForm = ({props}:FetchDataType):JSX.Element => {
         },
         body: JSON.stringify(values)
       });
-    if(response.status === 201) {
-      setSuccess(prevState => true);
+    if(response.ok) {
+      setSuccess(true);
       setError(false)
       setTimeout(() => {
+        setSuccess(false);
+        formik.resetForm();
         handleClose();
         props();
       }, 3000)
@@ -122,7 +124,7 @@ export const AddAdminForm = ({props}:FetchDataType):JSX.Element => {
               fullWidth
               id="email"
               name="email"
-              label="Електронна пошта"
+              label="Електронна почта"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}

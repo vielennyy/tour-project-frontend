@@ -41,10 +41,10 @@ export const AttractionsTab = ():JSX.Element =>  {
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(attractions)
   return (
     <Box>
-      <AddAttractionsForm/>
+      <AddAttractionsForm props={fetchData}/>
       {loading ?
         <Box sx={{marginTop: 2}}><CircularProgress/></Box> :
         <TableContainer>
@@ -62,7 +62,7 @@ export const AttractionsTab = ():JSX.Element =>  {
               </TableRow>
             </TableHead>
             <TableBody>
-              {attractions.map(({id, title, description,geolocations, created_at, updated_at}) => (
+              {attractions.map(({id, title, description, geolocations, created_at, updated_at, image_url}) => (
                   <TableRow
                       key={id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -82,7 +82,7 @@ export const AttractionsTab = ():JSX.Element =>  {
                           <RemoveRedEyeIcon/>
                         </Link>
                       </Button>
-                      <EditAttractionForm props={{title, description, id}}/>
+                      <EditAttractionForm props={{title, description, id, image_url, geolocations}}/>
                       <DeleteConfirmModal props={{id, fetchUrl, fetchData}}/>
                     </TableCell>
                   </TableRow>

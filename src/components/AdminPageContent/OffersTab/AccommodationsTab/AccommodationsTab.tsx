@@ -32,7 +32,7 @@ export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
     const fetching = await fetch('https://cktour.club/api/v1/accommodations',
         {
           method: "GET",
-          headers: { Authorization: 'Bearer ' +  token }
+          headers: { Authorization: 'Bearer ' +  localStorage.getItem('adminToken') }
         });
     const json = await fetching.json();
     isLoading(false);
