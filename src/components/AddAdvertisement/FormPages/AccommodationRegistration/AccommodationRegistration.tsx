@@ -21,13 +21,12 @@ interface displayCardsProps {
 
 export const AccommodationRegistration = () => {
     const [user, setUser] = useState<User>()
-
+    const [showMainInfo, setShowMainInfo] = useState<boolean>(user?.role==="partner")
     const [mainInfo, setMainInfo] = useState<MainAccommodationInfoProps>()
-    const [showMainInfo, setShowMainInfo] = useState<boolean>(user?.role==='partner')
     const [showGeolocation, setShowGeolocation] = useState(false)
     const [showFacilities, setShowFacilities] = useState(false)
     const [isFinished, setFinished] = useState(false)
-
+    console.log(user?.role==="partner")
     console.log(showMainInfo)
     
     const props = {
@@ -56,10 +55,11 @@ export const AccommodationRegistration = () => {
 
     useEffect(() => {
         getUser()
-        setShowMainInfo(user?.role==='partner')
-    }, []);
+        setShowMainInfo(user?.role === 'partner')
+    }, [user]);
 
-
+    // setShowMainInfo(user?.role==='partner')
+    // console.log(mainInfo)
     // useEffect(() => {
     //     fetch(`https://cktour.club/api/v1/users/${localStorage.getItem('id')}`, {
     //         method: "GET",
