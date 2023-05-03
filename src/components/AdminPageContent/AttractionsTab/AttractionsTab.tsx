@@ -19,6 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { DeleteConfirmModal } from "../DeleteConfirmModal";
 import { AddAttractionsForm } from "./AddAttractionsForm";
 import { EditAttractionForm } from "./EditAttractionForm";
+import { AddGeolocationForm } from "./AddGeolocationForm";
 
 export const AttractionsTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/attractions/';
@@ -82,7 +83,11 @@ export const AttractionsTab = ():JSX.Element =>  {
                           <RemoveRedEyeIcon/>
                         </Link>
                       </Button>
-                      <EditAttractionForm props={{title, description, id, image_url, geolocations}}/>
+                      {geolocations[0] ?
+                        null :
+                        <AddGeolocationForm props={{id, fetchData}}/>
+                      }
+                      <EditAttractionForm props={{title, description, id, image_url, geolocations, fetchData}}/>
                       <DeleteConfirmModal props={{id, fetchUrl, fetchData}}/>
                     </TableCell>
                   </TableRow>

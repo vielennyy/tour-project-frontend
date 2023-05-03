@@ -35,7 +35,7 @@ export const PartnerTab = ():JSX.Element =>  {
   useEffect(() => {
     fetchData()
   }, [])
-
+  console.log(partners)
   return (
     <Box>
       {loading ?
@@ -47,8 +47,6 @@ export const PartnerTab = ():JSX.Element =>  {
               <TableCell>Id</TableCell>
               <TableCell align="right">Ім'я</TableCell>
               <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Телефон</TableCell>
-              <TableCell align="right">ЕДРПОУ</TableCell>
               <TableCell align="right">Створено</TableCell>
               <TableCell align="right">Змінено</TableCell>
               <TableCell align="right">Опції</TableCell>
@@ -65,8 +63,6 @@ export const PartnerTab = ():JSX.Element =>  {
                   </TableCell>
                   <TableCell align="right">{name}</TableCell>
                   <TableCell align="right">{email}</TableCell>
-                  <TableCell align="right">971234455</TableCell>
-                  <TableCell align="right">123456</TableCell>
                   <TableCell align="right">{moment(created_at).format("MMMM DD HH:mm ")}</TableCell>
                   <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                   <TableCell align="right" sx={{display: 'flex'}}><DeleteConfirmModal props={{id, fetchUrl, fetchData}}/><ViewModal id={id}/></TableCell>

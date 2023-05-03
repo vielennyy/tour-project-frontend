@@ -25,19 +25,25 @@ interface ValuesProps {
     id: string;
     image_url: string;
     geolocations: any;
+    fetchData: () => void;
   }
 }
 
 interface GeolocationObject {
   locality: string,
-  latitude: number|undefined,
-  longitude: number|undefined,
+  latitude: number,
+  longitude: number,
   street: string,
   suite: string,
   zip_code: string
 }
 
 export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
+  const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
+  const [open, setOpen] = React.useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
   let geolocationObject:GeolocationObject = {
     locality: "string",
     latitude: 0,
@@ -63,8 +69,6 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
     latitude: latitudeValue,
     longitude: longitudeValue
   }
-  const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
-  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -74,38 +78,52 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
     setOpen(false);
   };
 
-  const onAttractionAdded = (values: Values) => {
+  const onAttractionAdded = async (values: Values) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('image', file);
 
-    fetch(`https://cktour.club/api/v1/attractions/${props.id}`,
+    const fetching = await fetch(`https://cktour.club/api/v1/attractions/${props.id}`,
       {
         method: "PUT",
         headers: {
           Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
         },
         body: formData
-      }).then(() => handleClose());
+      })
 
-    geolocationUpdate(values)
+    if(fetching.ok){
+      geolocationUpdate(values)
+    }
   }
 
-  const geolocationUpdate = (values: Values) => {
+  const geolocationUpdate = async (values: Values) => {
     const geolocationBody = {...geolocationObject,
       latitude: values.latitude,
       longitude: values.longitude
     }
-    fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations`,
+    console.log('2', geolocationBody)
+    const fetching = await fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations/${props.geolocations[0].id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
-          Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
-          'Content-Type': 'application/json'
+          Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
         },
         body: JSON.stringify(geolocationBody)
       })
+    if(fetching.ok) {
+      setSuccess(true);
+      setError(false)
+      setTimeout(() => {
+        setSuccess(false);
+        formik.resetForm();
+        handleClose();
+        props.fetchData();
+      }, 3000)
+    } else {
+      setError(true)
+    }
   }
 
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
@@ -119,6 +137,7 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
       image: file
     },
     onSubmit: (values:Values) => {
+      console.log('1', values)
       onAttractionAdded(values);
     }
   });
@@ -154,26 +173,31 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
               value={formik.values.title}
               onChange={formik.handleChange}
             />
-            <TextField
-              fullWidth
-              id="latitude"
-              name="latitude"
-              type="text"
-              label="Широта"
-              value={formik.values.latitude}
-              onChange={formik.handleChange}
-              sx={{marginTop: "25px"}}
-            />
-            <TextField
-              fullWidth
-              id="longitude"
-              name="longitude"
-              type="text"
-              label="Довгота"
-              value={formik.values.longitude}
-              onChange={formik.handleChange}
-              sx={{marginTop: "25px"}}
-            />
+            {props.geolocations.length > 0 ?
+              <Box>
+                <TextField
+                  fullWidth
+                  id="latitude"
+                  name="latitude"
+                  type="number"
+                  label="Широта"
+                  value={formik.values.latitude}
+                  onChange={formik.handleChange}
+                  sx={{marginTop: "25px"}}
+                />
+                <TextField
+                  fullWidth
+                  id="longitude"
+                  name="longitude"
+                  type="number"
+                  label="Довгота"
+                  value={formik.values.longitude}
+                  onChange={formik.handleChange}
+                  sx={{marginTop: "25px"}}
+                />
+              </Box> :
+              null
+            }
             <TextField
               multiline
               rows={4}
@@ -198,6 +222,18 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
                 onChange={(event: ChangeEvent<HTMLInputElement>) => handleFileLoad(event)}
               />
             </Box>
+            {error ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+                Заповніть всі поля коректно
+              </Typography> :
+              null
+            }
+            {success ?
+              <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+                Атракція оновлена успішно
+              </Typography> :
+              null
+            }
             <Button color="primary" variant="contained" fullWidth type="submit" sx={{
               width: 200,
               height: 40,
