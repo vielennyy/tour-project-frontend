@@ -49,7 +49,7 @@ export const AccommodationSlider = ({image_urls}:any):JSX.Element => {
         maxHeight: 400
       }}>
 
-        {image_urls.map((img:string) =>
+        {image_urls.slice(0, 4).map((img:string) =>
             <img src={img} alt={slide1} style={{height: 187, width: 247, borderRadius: '15px', objectFit: 'cover'}}/>
         )}
       </Box>

@@ -27,6 +27,8 @@ export const AccommodationPageContent = ():JSX.Element => {
   useEffect(() => {
     fetchingAccommodation()
   }, [])
+
+  console.log(accommodation)
   return(
     <Container sx={{
       width: '1440',

@@ -6,8 +6,13 @@ import {Box, Typography} from '@mui/material';
 import { AccommodationCard } from "../AccommodationCard";
 import { Accommodation } from "../../TypesAndInterfaces";
 
-export const AccommodationsList = ():JSX.Element => {
+interface SearchProps {
+  props: []
+}
+
+export const AccommodationsList = ({props}:SearchProps):JSX.Element => {
   const [accommodationsList, setAccommodationsLest] = useState<[]>([]);
+
   const fetchingAccommodations = async () => {
     const fetching = await fetch('https://cktour.club/api/v1/accommodations',
       {
@@ -23,6 +28,7 @@ export const AccommodationsList = ():JSX.Element => {
   useEffect(() => {
     fetchingAccommodations()
   }, [])
+
   return (
     <Box sx={{
       display: 'grid',
@@ -30,13 +36,15 @@ export const AccommodationsList = ():JSX.Element => {
       gap: '30px',
       margin: '40px 0'
     }}>
-      {accommodationsList.length > 0 ?
+      {props.length > 0 ?
+        props.map((searchAccommodation:Accommodation) =>
+          <Link to={`/accommodations/${searchAccommodation.id}`} key={searchAccommodation.id}>
+            <AccommodationCard accommodation={searchAccommodation}/>
+          </Link>) :
         accommodationsList.map((accommodation:Accommodation) =>
           <Link to={`/accommodations/${accommodation.id}`} key={accommodation.id}>
             <AccommodationCard accommodation={accommodation}/>
           </Link>)
-      :
-      <Typography>Готелей не знайдено</Typography>
       }
     </Box>
   )
