@@ -1,24 +1,46 @@
+import {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
+
 import {Box, Button, Typography} from "@mui/material";
 
-import luks from '../../../../assets/image/accommodations/luks.png';
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 import { BookingPopup } from "../../BookingPopup";
+import { ShowDetailsModal } from "./ShowDetailsModal";
 
 import {Room} from "../../../TypesAndInterfaces";
+
+interface RoomTypes {
+  room: Room
+  image_urls: any
+}
 
 interface RoomProps {
   room: Room
 }
 
 export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
+  const [currentRoom, setCurrentRoom] = useState<RoomTypes>();
+  const {id} = useParams();
+
+  const fetchingRoom = async () => {
+    const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${id}/rooms/${room.id}`,
+      {
+        method: "GET"
+      });
+    const json = await  fetching.json();
+    return setCurrentRoom(json.data);
+  }
+
+  useEffect(() => {
+    fetchingRoom()
+  }, [])
+
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
       borderRadius: '15px'
     }}>
       <Box>
-        <img src={luks} alt='luks' style={{width: '100%'}}/>
+        <img src={currentRoom?.image_urls[0]} alt='luks' style={{width: '100%', height: '200px', objectFit: 'cover', borderTopLeftRadius: '15px', borderTopRightRadius: '15px'}}/>
       </Box>
       <Box sx={{
         padding: 2
@@ -28,10 +50,10 @@ export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
           justifyContent: 'space-between'
         }}>
           <Typography variant='h5'>
-            {room.name}
+            {currentRoom?.room.name}
           </Typography>
           <Typography variant='h5'>
-            {`$${room.price_per_night}`}
+            {`${currentRoom?.room.price_per_night} грн`}
           </Typography>
         </Box>
         <Box sx={{
@@ -44,7 +66,7 @@ export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
             color: '#777777',
             fontSize: 14
           }}>
-            До {room.places} чоловік
+            До {currentRoom?.room.places} чоловік
           </Typography>
           <Typography variant='h6' sx={{
             color: '#777777',
@@ -67,16 +89,19 @@ export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
           }}>
             <BookingPopup props={room.id}/>
           </Button>
-          <Box sx={{
-            display: 'flex'
-          }}>
-            <Typography variant='h6'>
-              Деталі
-            </Typography>
-            <ArrowForwardIcon color={"primary"}/>
-          </Box>
+          <ShowDetailsModal props={currentRoom}/>
         </Box>
       </Box>
     </Box>
   )
 }
+
+// <Box sx={{
+//   display: 'flex'
+// }}>
+//   <Typography variant='h6'>
+//     Деталі
+//   </Typography>
+//   <ArrowForwardIcon color={"primary"}/>
+//   <ShowDetailsModal/>
+// </Box>

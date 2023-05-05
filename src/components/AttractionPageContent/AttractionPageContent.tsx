@@ -35,9 +35,9 @@ export const AttractionPageContent = ():JSX.Element => {
     }}>
       {attraction ? <AttractionHeader attraction={attraction}/> : null}
       {attraction ? <AttractionDescr attraction={attraction}/> : null}
-      <AttractionTours/>
-      <AttractionHotels/>
-      <AttractionSlider/>
+      {/*<AttractionTours/>*/}
+      {/*<AttractionHotels/>*/}
+      {/*<AttractionSlider/>*/}
     </Container>
   )
 }

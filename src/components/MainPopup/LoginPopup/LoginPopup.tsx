@@ -41,14 +41,14 @@ export const LoginPopup = ():JSX.Element =>  {
   const validationSchema = yup.object({
     email: yup
       // @ts-ignore
-      .string('Enter your email')
-      .email('Enter a valid email')
+      .string('Введіть електронну пошту')
+      .email('Введіть валідну (дійсну) електронну пошту')
       .required("Поле обов'язкове для заповнення"),
     password: yup
 
       // @ts-ignore
-      .string("Enter your password")
-      .min(8, 'Password should be of minimum 8 characters length')
+      .string("Введіть пароль")
+      .min(8, 'Пароль повинен містити мінімум 8 символів')
       .required("Поле обов'язкове для заповнення"),
   });
 

@@ -42,20 +42,20 @@ export const RegistrationPopup = ({backToLoginPopup}:any):JSX.Element =>  {
   const validationSchema = yup.object({
     name: yup
       // @ts-ignore
-      .string('Enter your name')
-      .min(2, 'Name should be of minimum 2 characters length')
+      .string("Введіть ім'я")
+      .min(2, "Ім'я має містити мінімум 2 символа")
       .required("Поле обов'язкове для заповнення"),
 
     email: yup
       // @ts-ignore
-      .string('Enter your email')
-      .email('Enter a valid email')
+      .string('Введіть електронну пошту')
+      .email('Введіть валідну (дійсну) електронну пошту')
       .required("Поле обов'язкове для заповнення"),
     password: yup
 
       // @ts-ignore
-      .string("Enter your password")
-      .min(8, 'Password should be of minimum 8 characters length')
+      .string("Введіть пароль")
+      .min(8, 'Пароль повинен містити мінімум 8 символів')
       .required("Поле обов'язкове для заповнення"),
   });
 

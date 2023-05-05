@@ -93,38 +93,47 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
         body: formData
       })
 
-    if(fetching.ok){
-      geolocationUpdate(values)
-    }
+      if(fetching.ok) {
+        setSuccess(true);
+        setError(false)
+        setTimeout(() => {
+          setSuccess(false);
+          formik.resetForm();
+          handleClose();
+          props.fetchData();
+        }, 3000)
+      } else {
+        setError(true)
+      }
   }
 
-  const geolocationUpdate = async (values: Values) => {
-    const geolocationBody = {...geolocationObject,
-      latitude: values.latitude,
-      longitude: values.longitude
-    }
-    console.log('2', geolocationBody)
-    const fetching = await fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations/${props.geolocations[0].id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
-        },
-        body: JSON.stringify(geolocationBody)
-      })
-    if(fetching.ok) {
-      setSuccess(true);
-      setError(false)
-      setTimeout(() => {
-        setSuccess(false);
-        formik.resetForm();
-        handleClose();
-        props.fetchData();
-      }, 3000)
-    } else {
-      setError(true)
-    }
-  }
+  // const geolocationUpdate = async (values: Values) => {
+  //   const geolocationBody = {...geolocationObject,
+  //     latitude: values.latitude,
+  //     longitude: values.longitude
+  //   }
+  //   console.log('2', geolocationBody)
+  //   const fetching = await fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations/${props.geolocations[0].id}`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
+  //       },
+  //       body: JSON.stringify(geolocationBody)
+  //     })
+  //   if(fetching.ok) {
+  //     setSuccess(true);
+  //     setError(false)
+  //     setTimeout(() => {
+  //       setSuccess(false);
+  //       formik.resetForm();
+  //       handleClose();
+  //       props.fetchData();
+  //     }, 3000)
+  //   } else {
+  //     setError(true)
+  //   }
+  // }
 
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
     // @ts-ignore
@@ -173,31 +182,31 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
               value={formik.values.title}
               onChange={formik.handleChange}
             />
-            {props.geolocations.length > 0 ?
-              <Box>
-                <TextField
-                  fullWidth
-                  id="latitude"
-                  name="latitude"
-                  type="number"
-                  label="Широта"
-                  value={formik.values.latitude}
-                  onChange={formik.handleChange}
-                  sx={{marginTop: "25px"}}
-                />
-                <TextField
-                  fullWidth
-                  id="longitude"
-                  name="longitude"
-                  type="number"
-                  label="Довгота"
-                  value={formik.values.longitude}
-                  onChange={formik.handleChange}
-                  sx={{marginTop: "25px"}}
-                />
-              </Box> :
-              null
-            }
+            {/*{props.geolocations.length > 0 ?*/}
+            {/*  <Box>*/}
+            {/*    <TextField*/}
+            {/*      fullWidth*/}
+            {/*      id="latitude"*/}
+            {/*      name="latitude"*/}
+            {/*      type="number"*/}
+            {/*      label="Широта"*/}
+            {/*      value={formik.values.latitude}*/}
+            {/*      onChange={formik.handleChange}*/}
+            {/*      sx={{marginTop: "25px"}}*/}
+            {/*    />*/}
+            {/*    <TextField*/}
+            {/*      fullWidth*/}
+            {/*      id="longitude"*/}
+            {/*      name="longitude"*/}
+            {/*      type="number"*/}
+            {/*      label="Довгота"*/}
+            {/*      value={formik.values.longitude}*/}
+            {/*      onChange={formik.handleChange}*/}
+            {/*      sx={{marginTop: "25px"}}*/}
+            {/*    />*/}
+            {/*  </Box> :*/}
+            {/*  null*/}
+            {/*}*/}
             <TextField
               multiline
               rows={4}

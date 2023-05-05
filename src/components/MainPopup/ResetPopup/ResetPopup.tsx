@@ -37,9 +37,9 @@ export const ResetPopup = ({backToLoginPopup}:any):JSX.Element => {
   const validationSchema = yup.object({
     email: yup
       // @ts-ignore
-      .string('Enter your email')
-      .email('Enter a valid email')
-      .required("Поле обов'язкове для заповнення")
+      .string('Введіть електронну пошту')
+      .email('Введіть валідну (дійсну) електронну пошту')
+      .required("Поле обов'язкове для заповнення"),
   });
 
   const formik = useFormik({
