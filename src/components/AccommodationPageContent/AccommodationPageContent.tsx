@@ -15,6 +15,7 @@ export const AccommodationPageContent = ():JSX.Element => {
   const [accommodation, setAccomodation] = useState<AccommodationData>();
   const {id} = useParams();
 
+  console.log(accommodation)
   const fetchingAccommodation = async () => {
     const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${id}`,
       {

@@ -18,6 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { ChangeStatusModal } from "../ChangeStatusModal";
 import { DeleteConfirmModal } from "../../DeleteConfirmModal";
+import { PreviewModal} from "../PreviewModal";
 
 export const AccommodationsTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/accommodations/';
@@ -37,6 +38,7 @@ export const AccommodationsTab = ():JSX.Element =>  {
     return setAccommodations(json.data);
   }
 
+  console.log(accommodations)
   useEffect(() => {
     fetchData()
   }, [])
@@ -80,11 +82,12 @@ export const AccommodationsTab = ():JSX.Element =>  {
                     <TableCell align="right">{moment(updated_at).format("MMMM DD HH:mm ")}</TableCell>
                     <TableCell align="right">
                       <ChangeStatusModal props={accommodations[index]}/>
-                      <Button variant="outlined">
-                        <Link to={`/accommodations/${id}`} target='_blank' style={{width: '24px', height: '24px', color: '#EF5151'}}>
-                          <RemoveRedEyeIcon/>
-                        </Link>
-                      </Button>
+                      {/*<Button variant="outlined">*/}
+                      {/*  <Link to={`/accommodations/${id}`} target='_blank' style={{width: '24px', height: '24px', color: '#EF5151'}}>*/}
+                      {/*    <RemoveRedEyeIcon/>*/}
+                      {/*  </Link>*/}
+                      {/*</Button>*/}
+                      <PreviewModal props={accommodations[index]}/>
                       <DeleteConfirmModal props={{id, fetchUrl, fetchData}}/>
                     </TableCell>
                   </TableRow>

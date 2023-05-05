@@ -119,7 +119,8 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
             </Typography>
             <Button onClick={handleClose} sx={{
               minWidth: 20,
-              color: "inherit"
+              color: "inherit",
+              padding: 0
             }}>
               <CloseIcon/>
             </Button>
