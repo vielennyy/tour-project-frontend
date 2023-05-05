@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useParams} from "react-router-dom";
 
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 
 import { Comment } from "./Comment";
 import { AddComment } from "../../AddComment";
@@ -22,7 +22,7 @@ export const AccommodationComments = ():JSX.Element => {
         },
       });
     const json = await fetching.json();
-    return setCommentList(json);
+    return setCommentList(json.data);
   }
 
   useEffect(() => {
@@ -64,19 +64,13 @@ export const AccommodationComments = ():JSX.Element => {
       }}>
         {commentList.length > 0 ?
           commentList.map((comment: CommentType) =>
-          <Comment key={comment.id} comment={comment}/>
+            <Comment key={comment.id} comment={comment}/>
           )
           :
           <Typography>Немає жодного коментаря</Typography>
         }
       </Box>
       {localStorage.getItem('token') ? <AddComment/> : null}
-      {/*<Box sx={{*/}
-      {/*  marginTop: 4,*/}
-      {/*  display: 'flex'*/}
-      {/*}}>*/}
-      {/*  <AddComment/>*/}
-      {/*</Box>*/}
     </Box>
   )
 }

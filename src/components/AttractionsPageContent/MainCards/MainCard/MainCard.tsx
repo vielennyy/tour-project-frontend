@@ -1,6 +1,5 @@
 import {Box, Typography} from "@mui/material";
 
-import card from '../../../../assets/image/attractions/card.png';
 import rating from '../../../../assets/image/accommodations/Rating.png';
 import location from '../../../../assets/image/accommodations/Location_icon.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -41,7 +40,7 @@ export const MainCard = ({attraction}:AttractionProps):JSX.Element => {
         </Box>
       </Box>
       <Typography variant='body2'>
-        {attraction.description.length > 100 ? `${attraction.description.slice(0, 100)}...` : attraction.description}
+        {attraction.description.length > 90 ? `${attraction.description.slice(0, 90)}...` : attraction.description}
       </Typography>
       <Box sx={{
         display: 'flex',

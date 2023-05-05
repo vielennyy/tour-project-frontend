@@ -2,6 +2,7 @@ import {Box, Typography} from "@mui/material";
 
 import location_icon from "../../../assets/image/accommodations/Location_icon.png";
 import map from "../../../assets/image/accommodations/map.png";
+
 export const AccommodationMap = ():JSX.Element => {
   return (
     <Box>

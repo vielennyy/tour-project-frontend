@@ -19,9 +19,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { ChangeStatusModal } from "../ChangeStatusModal";
 import { DeleteConfirmModal } from "../../DeleteConfirmModal";
 
-import {UserToken} from "../../../TypesAndInterfaces";
-
-export const AccommodationsTab = ({token}:UserToken):JSX.Element =>  {
+export const AccommodationsTab = ():JSX.Element =>  {
   const fetchUrl = 'https://cktour.club/api/v1/accommodations/';
   const [accommodations, setAccommodations] = useState<[]>([]);
   const [loading, isLoading] = useState(false);

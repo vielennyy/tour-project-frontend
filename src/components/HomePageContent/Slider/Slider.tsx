@@ -1,20 +1,38 @@
-import { Link } from 'react-router-dom';
+import {useEffect, useState} from "react";
+import moment from "moment";
+
+import {Link} from 'react-router-dom';
 
 import {Box,
   Typography,
   Container} from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y, Autoplay   } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 
-import card from '../../../assets/image/Card.png';
-import card1 from '../../../assets/image/Card1.png';
-import card2 from '../../../assets/image/Card2.png';
-import card3 from '../../../assets/image/Card3.png';
+import { Attraction } from "../../TypesAndInterfaces";
+
 export const Slider = ():JSX.Element => {
+  const [attractions, setAttractions] = useState<[]>([]);
+  moment.locale('uk');
+
+  const fetchingAttractions = async () => {
+    const fetching = await fetch('https://cktour.club/api/v1/attractions',
+      {
+        method: "GET"
+      });
+    const json = await fetching.json();
+    return setAttractions(json);
+  }
+
+  useEffect(() => {
+    fetchingAttractions()
+  }, [])
+
   return(
     <Container sx={{
       width: '1440',
@@ -52,72 +70,30 @@ export const Slider = ():JSX.Element => {
           loop={true}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          // style={{padding: '0 50px'}}
         >
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card1} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card2} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card3} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card1} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card2} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box sx={{
-              width: 280,
-              borderRadius: '10px',
-            }}>
-              <img src={card3} style={{width: '100%'}} alt={card}/>
-            </Box>
-          </SwiperSlide>
+          {
+            attractions.map((attraction:Attraction) =>
+              <SwiperSlide>
+                <Link to={`/attractions/${attraction.id}`} key={attraction.id}>
+                  <Box sx={{
+                    width: 280,
+                    height: 335,
+                    borderRadius: '15px',
+                    position: 'relative'
+                  }}>
+                    <img src={attraction.image_url} style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '15px'}} alt='Slider-item'/>
+                    <Typography variant='body1' sx={{
+                      position: 'absolute',
+                      bottom: 15,
+                      left: 15,
+                      color: '#FFFFFF'
+                    }}>
+                      {attraction.title}
+                    </Typography>
+                  </Box>
+                </Link>
+              </SwiperSlide>)
+          }
         </Swiper>
       </Box>
     </Container>

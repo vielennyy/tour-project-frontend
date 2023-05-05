@@ -4,7 +4,6 @@ import * as yup from 'yup';
 
 import { Box,
   Typography,
-  Link,
   TextField,
   Button } from '@mui/material';
 
@@ -29,7 +28,7 @@ export const LoginPopup = ():JSX.Element =>  {
       })
 
     const res = await response.json();
-    if(response.status === 200) {
+    if(response.ok) {
       localStorage.setItem('token', res.token)
       localStorage.setItem('id', res.user_id)
       window.location.reload();
@@ -41,14 +40,14 @@ export const LoginPopup = ():JSX.Element =>  {
   const validationSchema = yup.object({
     email: yup
       // @ts-ignore
-      .string('Enter your email')
-      .email('Enter a valid email')
+      .string('Введіть електронну пошту')
+      .email('Введіть валідну (дійсну) електронну пошту')
       .required("Поле обов'язкове для заповнення"),
     password: yup
 
       // @ts-ignore
-      .string("Enter your password")
-      .min(8, 'Password should be of minimum 8 characters length')
+      .string("Введіть пароль")
+      .min(8, 'Пароль повинен містити мінімум 8 символів')
       .required("Поле обов'язкове для заповнення"),
   });
 
@@ -135,45 +134,3 @@ export const LoginPopup = ():JSX.Element =>  {
     </Box>
   );
 }
-
-// email: 'tourist@test.com',
-//   password: 'User123!',
-//
-// <TextField
-//   hiddenLabel={true}
-//   required={true}
-//   label="Електронна почта"
-//   id="outlined-size-normal"
-//   placeholder={'E-mail'}
-//   fullWidth
-//   type="email"
-//   sx={{marginTop: "50px"}}/>
-// <Box sx={{
-//   marginTop: "15px",
-//   display: "flex",
-//   justifyContent: "flex-end"
-// }}>
-//   <Link
-//     component="button"
-//     variant="body2">
-//     <ResetPopup/>
-//   </Link>
-// </Box>
-// <TextField
-//   required={true}
-//   label="Пароль"
-//   id="outlined-size-normal"
-//   placeholder={"Пароль"}
-//   fullWidth
-//   type="password"
-//   sx={{marginTop: '15px'}}/>
-// <Button variant="contained" sx={{
-//   background: '#FF3939',
-//   width: 200,
-//   height: 40,
-//   margin: "0 auto",
-//   color: '#ffffff',
-//   marginTop: "20px",
-//   borderRadius: '10px'
-// }}>Вхід
-// </Button>

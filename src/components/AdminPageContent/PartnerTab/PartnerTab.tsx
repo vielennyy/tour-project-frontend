@@ -35,7 +35,7 @@ export const PartnerTab = ():JSX.Element =>  {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(partners)
+
   return (
     <Box>
       {loading ?

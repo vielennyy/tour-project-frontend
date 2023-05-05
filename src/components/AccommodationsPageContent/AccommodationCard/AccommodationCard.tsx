@@ -14,19 +14,6 @@ interface AccommodationProps {
 export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Element => {
   const [rate, setRate] = useState()
 
-  // const fetchingRate = async () => {
-  //   const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
-  //     {
-  //       method: "GET"
-  //     });
-  //   const json = await  fetching.json();
-  //   return setRate(json);
-  // }
-  //
-  // useEffect(() => {
-  //   fetchingRate()
-  // }, [])
-
   useEffect( () => {
     fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
       {
@@ -36,7 +23,6 @@ export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Elemen
       .then(result => setRate(result))
   }, [])
 
-  console.log(rate)
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',

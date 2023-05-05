@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import { Link, useSearchParams } from 'react-router-dom';
 
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 
 import { MainCard } from "./MainCard";
 import { Attraction } from "../../TypesAndInterfaces";
@@ -58,12 +58,3 @@ export const MainCards = ():JSX.Element => {
     </Box>
   )
 }
-
-// {attractions.length > 0 ?
-//   attractions.map((attraction:Attraction) =>
-//     <Link to={`/attractions/${attraction.id}`} key={attraction.id}>
-//       <MainCard attraction={attraction}/>
-//     </Link>)
-//   :
-//   <Typography>Атракцій не знайдено</Typography>
-// }

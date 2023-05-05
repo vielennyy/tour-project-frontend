@@ -17,11 +17,10 @@ interface PublishCommentProps {
 
 export const PublishCommentModal = ({props}:PublishCommentProps):JSX.Element => {
   const [open, setOpen] = React.useState(false);
-  // const type = `${props.commentable_type}s`;
+
   const handleClickOpen = () => {
     setOpen(true);
   };
-  // console.log(type)
   const onCommentUpdate = async () => {
     const fetching = await fetch(`https://cktour.club/api/v1/${props.commentable_type.toLowerCase()}s/${props.commentable_id}/comments/${props.id}`,
       {

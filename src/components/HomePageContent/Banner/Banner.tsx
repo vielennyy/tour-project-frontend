@@ -1,8 +1,6 @@
 import React, { useState} from "react";
 import { Link } from 'react-router-dom';
 
-import { useFormik } from 'formik';
-
 import {
   Box, Button,
   Typography,
@@ -17,27 +15,9 @@ interface SearchString {
 
 export const Banner = ():JSX.Element => {
   const [searchValue, setSearchValues] = useState<SearchString>();
-  // const search = async () => {
-  //   const fetching = await fetch(`https://cktour.club/api/v1/attractions?search=долина`,
-  //     {
-  //       method: "GET"
-  //     });
-  //   const json = await fetching.json();
-  //   console.log(json)
-  // }
-  //
-  // const formik = useFormik({
-  //   initialValues: {
-  //     value: ''
-  //   },
-  //   onSubmit: (values:SearchString) => {
-  //     setSearchValues(prevState => values);
-  //   }
-  // });
 
   const handleChange = (event:any) => {
     setSearchValues(event.target.value)
-    console.log(event.target.value)
   }
 
   return (
@@ -105,36 +85,4 @@ export const Banner = ():JSX.Element => {
     </Box>
   )
 }
-
-// <form onSubmit={formik.handleSubmit} style={{ display: 'flex', justifyContent: 'space-between', width: '100%',height: '100%', padding: '10px' }}>
-//   <input
-//     id="value"
-//     name="value"
-//     placeholder="Куди їдемо?"
-//     value={formik.values.value}
-//     onChange={formik.handleChange}
-//     style={{
-//       border: 'none',
-//       width: 300,
-//       marginLeft: '30px',
-//       fontSize: 16,
-//       padding: '0 0 0 15px',
-//     }}
-//   />
-//   <button type="submit" style={{background: '#EF5151',
-//     padding: '0 30px',
-//     borderRadius: '7px',
-//     border: 'none'}}>
-//     {searchValue ?
-//       <Link to={`/attractions?search=${searchValue}`}>
-//         <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-//           Пошук
-//         </Typography>
-//       </Link> :
-//       <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
-//         Пошук
-//       </Typography>
-//     }
-//   </button>
-// </form>
 

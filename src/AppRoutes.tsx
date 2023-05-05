@@ -17,6 +17,7 @@ import { AccommodationRegistration } from "./components/AddAdvertisement/FormPag
 import { EditAccommodation } from "./components/UserPageContent/AdvertismentCard";
 import { CreateRoom } from "./components/CreateRoom";
 import { EditPassword } from "./components/UserPageContent/EditPassword";
+import { NotFound } from "./pages/NotFound";
 
 const AppRoutes = [
   {
@@ -102,6 +103,10 @@ const AppRoutes = [
   {
     path: '/registration/accommodation/room',
     element: <AccommodationRegistration/>
+  },
+  {
+    path: '/not-found',
+    element: <NotFound/>
   },
 ];
 

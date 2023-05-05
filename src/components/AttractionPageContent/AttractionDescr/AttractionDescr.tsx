@@ -7,7 +7,7 @@ interface AttractionProps {
   attraction: Attraction
 }
 export const AttractionDescr = ({attraction}:AttractionProps):JSX.Element => {
-  console.log(attraction)
+
   return (
     <Box sx={{
       marginTop: 2,
