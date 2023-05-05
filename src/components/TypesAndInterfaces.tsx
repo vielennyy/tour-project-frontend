@@ -253,12 +253,17 @@ export interface RoomAmenities {
 }
 
 export interface CommentType {
-  body: string;
-  commentable_id: number;
-  commentable_type: string;
-  created_at: string;
-  id: number;
-  status: string;
-  updated_at: string;
-  user_id: number;
+  id: string;
+  type: string;
+  attributes: {
+    body: string;
+    commentable_id: number;
+    commentable_type: string;
+    created_at: string;
+    id: number;
+    status: string;
+    name: string;
+    updated_at: string;
+    user_id: number;
+  }
 }

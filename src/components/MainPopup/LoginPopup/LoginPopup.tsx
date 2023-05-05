@@ -29,7 +29,7 @@ export const LoginPopup = ():JSX.Element =>  {
       })
 
     const res = await response.json();
-    if(response.status === 200) {
+    if(response.ok) {
       localStorage.setItem('token', res.token)
       localStorage.setItem('id', res.user_id)
       window.location.reload();

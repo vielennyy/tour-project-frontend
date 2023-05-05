@@ -22,7 +22,7 @@ export const AccommodationComments = ():JSX.Element => {
         },
       });
     const json = await fetching.json();
-    return setCommentList(json);
+    return setCommentList(json.data);
   }
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const AccommodationComments = ():JSX.Element => {
       }}>
         {commentList.length > 0 ?
           commentList.map((comment: CommentType) =>
-          <Comment key={comment.id} comment={comment}/>
+            <Comment key={comment.id} comment={comment}/>
           )
           :
           <Typography>Немає жодного коментаря</Typography>

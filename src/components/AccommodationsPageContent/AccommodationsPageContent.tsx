@@ -13,6 +13,7 @@ interface SearchString {
 
 export const AccommodationsPageContent = ():JSX.Element => {
   const [searchValue, setSearchValues] = useState<SearchString>();
+  const [result, setResult] = useState<SearchString>();
   const [searchAccommodationList, setSearchAccommodationList] = useState<[]>([])
 
   const handleChange = (event:any) => {
@@ -38,6 +39,9 @@ export const AccommodationsPageContent = ():JSX.Element => {
         method: "GET"
       });
     const json = await fetching.json();
+    if(fetching.ok) {
+      setResult(searchValue);
+    }
     return setSearchAccommodationList(json.data);
   }
 
@@ -105,7 +109,7 @@ export const AccommodationsPageContent = ():JSX.Element => {
               </Button>
             </Box>
             <Typography variant='h3' sx={{textAlign: 'center', marginTop: 2}}>
-              Рекомендації
+              {result && searchAccommodationList.length > 0 ? `Результат пошку '${result}'` : 'Рекомендації'}
             </Typography>
           </Box>
           <AccommodationsList props={searchAccommodationList}/>

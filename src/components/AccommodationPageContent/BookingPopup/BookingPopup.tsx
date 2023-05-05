@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
-import { useFormik } from 'formik';
+import { useFormik, useField } from 'formik';
 import { useParams} from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 import {
   Box,
@@ -9,11 +10,10 @@ import {
   Button,
   Typography, TextField, Link
 } from '@mui/material';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import CloseIcon from '@mui/icons-material/Close';
+
+import "react-datepicker/dist/react-datepicker.css";
 
 interface FormValues {
   name: string;
@@ -28,7 +28,12 @@ interface RoomId {
 
 export const BookingPopup = ({props}:RoomId):JSX.Element => {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const {id} = useParams();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -37,32 +42,47 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
     setOpen(false);
   };
 
-  const onBooking = (values: FormValues) => {
-    const formData = new FormData();
-    formData.append('full_name', values.name);
-    formData.append('phone', values.phone);
-    formData.append('note', values.note);
-    formData.append('number_of_peoples', values.number);
-    formData.append('check_in', '2023-05-10');
-    formData.append('check_out', '2023-05-15');
-    formData.append('room_id', props);
+  const onBooking = async (values: FormValues) => {
+    const body = {
+      "number_of_peoples": values.number,
+      "check_in": startDate.toISOString().slice(0, 10),
+      "check_out": endDate.toISOString().slice(0, 10),
+      "note": values.note,
+      "phone": values.phone,
+      "full_name": values.name,
+      "room_id": 0
+    }
 
-    fetch(`https://cktour.club/api/v1/accommodations/${id}/rooms/${props}/bookings`,
+    const response = await fetch(`https://cktour.club/api/v1/accommodations/${id}/rooms/${props}/bookings`,
       {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ' +  localStorage.getItem('token')
+          Authorization: 'Bearer ' +  localStorage.getItem('token'),
+          'Content-Type': 'application/json'
         },
-        body: formData
-      }).then(() => handleClose());
+        body: JSON.stringify(body)
+      })
+
+    if(response.ok) {
+      setSuccess(true);
+      setError(false)
+      setTimeout(() => {
+        setSuccess(false);
+        formik.resetForm();
+        handleClose();
+      }, 3000)
+    } else {
+      setError(true)
+    }
   }
 
-  const handleStartDay = (event:any) => {
-    const start = event['$d'].toISOString().slice(0, 10);
-  }
-  const handleEndDay = (event:any) => {
-    const end = event['$d'].toISOString().slice(0, 10);
-  }
+  // const handleStartDay = (event:any) => {
+  //   const start = event['$d'].toISOString().slice(0, 10);
+  //   setStart(start)
+  // }
+  // const handleEndDay = (event:any) => {
+  //   const end = event['$d'].toISOString().slice(0, 10);
+  // }
 
   const formik = useFormik({
     initialValues: {
@@ -111,13 +131,35 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
               <CloseIcon/>
             </Button>
           </Box>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DatePicker', 'DatePicker']} sx={{
+          {/*<LocalizationProvider dateAdapter={AdapterDayjs}>*/}
+          {/*  <DemoContainer components={['DatePicker', 'DatePicker']} sx={{*/}
+          {/*  }}>*/}
+          {/*    <DatePicker label={'Дата заселення'} views={['day']} onChange={handleStartDay}/>*/}
+          {/*    <DatePicker label={'Дата від’їзду'} views={['day']} onChange={handleEndDay}/>*/}
+          {/*  </DemoContainer>*/}
+          {/*</LocalizationProvider>*/}
+          <Box sx={{
+            display: 'flex'
+          }}>
+            <Box sx={{
+              marginRight: 1
             }}>
-              <DatePicker label={'Дата заселення'} views={['day']} onChange={handleStartDay}/>
-              <DatePicker label={'Дата від’їзду'} views={['day']} onChange={handleEndDay}/>
-            </DemoContainer>
-          </LocalizationProvider>
+              <Typography variant="body2" sx={{marginTop: 2}}>
+                Дата заїзду
+              </Typography>
+              <DatePicker selected={startDate} onChange={(date: Date) => {
+                setStartDate(date);
+              }} />
+            </Box>
+            <Box>
+              <Typography variant="body2" sx={{marginTop: 2}}>
+                Дата виїзду
+              </Typography>
+              <DatePicker selected={endDate} onChange={(date: Date) => {
+                setEndDate(date);
+              }} />
+            </Box>
+          </Box>
           <DialogContent sx={{padding: 0}}>
             <Typography variant="h4" sx={{marginTop: 2}}>
               Введіть свої дані
@@ -163,6 +205,18 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
                 onChange={formik.handleChange}
                 sx={{marginTop: '15px'}}
               />
+              {error ?
+                <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+                  Відбулася помилка
+                </Typography> :
+                null
+              }
+              {success ?
+                <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+                  Бронювання пройшло успішно
+                </Typography> :
+                null
+              }
               <Button color="primary" variant="contained" fullWidth type="submit" sx={{
                 width: 200,
                 height: 40,

@@ -44,7 +44,7 @@ export const ResetPopup = ({backToLoginPopup}:any):JSX.Element => {
 
   const formik = useFormik({
     initialValues: {
-      email: 'tourist@test.com',
+      email: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values: ForgotPassword) => {
