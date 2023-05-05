@@ -13,8 +13,6 @@ import { useFormik } from 'formik';
 interface Values {
   title: string;
   description: string;
-  latitude: string;
-  longitude: string;
   image: any;
 }
 
@@ -29,45 +27,15 @@ interface ValuesProps {
   }
 }
 
-interface GeolocationObject {
-  locality: string,
-  latitude: number,
-  longitude: number,
-  street: string,
-  suite: string,
-  zip_code: string
-}
-
 export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
   const [file, setFile] = useState<File>(new File(['file'], "image.png", {type: 'image/png'}));
   const [open, setOpen] = React.useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  let geolocationObject:GeolocationObject = {
-    locality: "string",
-    latitude: 0,
-    longitude: 0,
-    street: "string",
-    suite: "string",
-    zip_code: "string"
-  };
-
-  let latitudeValue;
-  let longitudeValue;
-
-  if(props.geolocations.length > 0 ) {
-    const {latitude, longitude} = props.geolocations[0];
-    geolocationObject = props.geolocations[0];
-    latitudeValue = latitude;
-    longitudeValue = longitude;
-  }
-
   const initialValues = {
     title: props.title,
     description: props.description,
-    latitude: latitudeValue,
-    longitude: longitudeValue
   }
 
   const handleClickOpen = () => {
@@ -107,34 +75,6 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
       }
   }
 
-  // const geolocationUpdate = async (values: Values) => {
-  //   const geolocationBody = {...geolocationObject,
-  //     latitude: values.latitude,
-  //     longitude: values.longitude
-  //   }
-  //   console.log('2', geolocationBody)
-  //   const fetching = await fetch(`https://cktour.club/api/v1/attractions/${props.id}/geolocations/${props.geolocations[0].id}`,
-  //     {
-  //       method: "PUT",
-  //       headers: {
-  //         Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
-  //       },
-  //       body: JSON.stringify(geolocationBody)
-  //     })
-  //   if(fetching.ok) {
-  //     setSuccess(true);
-  //     setError(false)
-  //     setTimeout(() => {
-  //       setSuccess(false);
-  //       formik.resetForm();
-  //       handleClose();
-  //       props.fetchData();
-  //     }, 3000)
-  //   } else {
-  //     setError(true)
-  //   }
-  // }
-
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
     // @ts-ignore
     const uploadedFile = (event.target as HTMLInputElement).files[0];
@@ -146,7 +86,6 @@ export const EditAttractionForm = ({props}:ValuesProps):JSX.Element => {
       image: file
     },
     onSubmit: (values:Values) => {
-      console.log('1', values)
       onAttractionAdded(values);
     }
   });

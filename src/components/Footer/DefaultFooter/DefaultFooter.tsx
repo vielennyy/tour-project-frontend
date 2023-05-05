@@ -75,24 +75,24 @@ export const DefaultFooter = ():JSX.Element => {
             marginTop: '14px'
           }}>
             <Box>
-              <Link to={'/'}>
+              <Link to={'/not-found'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400, marginBottom: 1}}>
                   Про нас
                 </Typography>
               </Link>
-              <Link to={'/'}>
+              <Link to={'/not-found'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400}}>
                   Контакти
                 </Typography>
               </Link>
             </Box>
             <Box>
-              <Link to={'/'}>
+              <Link to={'/not-found'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400, marginBottom: 1}}>
                   Умови користування
                 </Typography>
               </Link>
-              <Link to={'/'}>
+              <Link to={'/not-found'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400}}>
                   Допомога
                 </Typography>

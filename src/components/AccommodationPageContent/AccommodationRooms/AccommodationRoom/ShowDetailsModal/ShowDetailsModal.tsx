@@ -5,8 +5,7 @@ import {Typography,
   Box,
   Button,
   Dialog,
-  DialogContent,
-  DialogContentText,
+  DialogContent
 } from "@mui/material";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";

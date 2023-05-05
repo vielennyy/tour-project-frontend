@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { useFormik } from 'formik';
-import * as yup from "yup";
 
 import {Box,
   Button,
@@ -75,7 +74,6 @@ export const AddGeolocationForm = ({props}:ValuesProps):JSX.Element => {
     },
     onSubmit: (values:GeolocationObject) => {
       addGeolocation(values);
-      console.log(values)
     }
   });
 

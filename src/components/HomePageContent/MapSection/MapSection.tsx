@@ -46,8 +46,7 @@ export const MapSection = ():JSX.Element => {
         </Button>
       </Box>
       <Box>
-        <Map size={containerStyle} center={cherkassy} zoom={8}></Map>
-        {/* <img src={map} alt={map} style={{width: '100%'}}/> */}
+      <Map size={containerStyle} center={cherkassy} zoom={8}></Map>
       </Box>
     </Container>
   )

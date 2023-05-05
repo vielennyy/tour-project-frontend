@@ -1,6 +1,5 @@
 import {Box, Typography} from "@mui/material";
 
-import card from '../../../../assets/image/attractions/card.png';
 import rating from '../../../../assets/image/accommodations/Rating.png';
 import location from '../../../../assets/image/accommodations/Location_icon.png';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

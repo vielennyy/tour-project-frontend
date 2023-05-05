@@ -12,9 +12,8 @@ import {
   Menu,
   Container,
   Button,
-  MenuItem,
-  Input  } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+  MenuItem
+} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -24,22 +23,6 @@ import logo from '../../../assets/icons/Logo.svg';
 
 export const DefaultNavBar = ():JSX.Element => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  // const [currentUser, setCurrentUser] = useState<string | undefined>();
-  const {user} = useContext(UserContext);
-
-  // const fetchingCurrentUsers = async () => {
-  //   const fetching = await fetch(`https://cktour.club/api/v1/users/${user.id}`,
-  //     {
-  //       method: "GET",
-  //       headers: { Authorization: 'Bearer ' +  user.token }
-  //     });
-  //   const json = await fetching.json();
-  //   return setCurrentUser(json.name);
-  // }
-  //
-  // useEffect(() => {
-  //   fetchingCurrentUsers()
-  // }, [user])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -178,26 +161,6 @@ export const DefaultNavBar = ():JSX.Element => {
                 Мапа
               </Typography>
             </Link>
-            {/*<Box sx={{*/}
-            {/*  width: '170px',*/}
-            {/*  height: '30px',*/}
-            {/*  position: 'relative'*/}
-            {/*}}>*/}
-            {/*  <Input sx={{*/}
-            {/*    backgroundColor: '#EEEEEE',*/}
-            {/*    padding: '0 5px 0 30px',*/}
-            {/*    width: '100%',*/}
-            {/*    height: '100%'*/}
-            {/*  }}*/}
-            {/*    placeholder={'Куди їдемо?'}*/}
-            {/*  />*/}
-            {/*  <SearchIcon sx={{*/}
-            {/*    position: 'absolute',*/}
-            {/*    top: '4px',*/}
-            {/*    left: '5px',*/}
-            {/*    color: '#888888'*/}
-            {/*  }}/>*/}
-            {/*</Box>*/}
           </Box>
           {localStorage.getItem('token') ?
           <Box sx={{

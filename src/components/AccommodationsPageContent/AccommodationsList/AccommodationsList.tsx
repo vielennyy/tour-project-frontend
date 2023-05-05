@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Link } from 'react-router-dom';
 
-import {Box, Typography} from '@mui/material';
+import {Box} from '@mui/material';
 
 import { AccommodationCard } from "../AccommodationCard";
 import { Accommodation } from "../../TypesAndInterfaces";

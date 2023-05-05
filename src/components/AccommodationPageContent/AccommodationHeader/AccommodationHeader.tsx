@@ -60,13 +60,6 @@ export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Elem
           <Typography variant='h5' sx={{marginLeft: 2}}>
             {rate}
           </Typography>
-          {/*<Typography variant='h6' sx={{*/}
-          {/*  marginLeft: 2,*/}
-          {/*  color: '#777777',*/}
-          {/*  fontSize: 14*/}
-          {/*}}>*/}
-          {/*  (12 відгуків)*/}
-          {/*</Typography>*/}
         </Box>
         <Box sx={{
           display: 'flex',
