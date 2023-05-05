@@ -36,7 +36,7 @@ export const Banner = ():JSX.Element => {
         color: '#FFFFFF',
         width: '800px',
         textAlign: 'center'
-      }} variant="h1">Подорож Україною - відкриття краси і культури</Typography>
+      }} variant="h1">Подорож Україною — відкриття краси і культури</Typography>
       <Box sx={{
           position: 'relative',
           zIndex: 2,

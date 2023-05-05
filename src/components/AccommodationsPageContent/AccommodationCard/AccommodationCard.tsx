@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 
-import {Box, Button, Typography} from '@mui/material';
+import {Box,
+  Button,
+  Typography} from '@mui/material';
 
-import picture from '../../../assets/image/accommodations/third.png';
 import star from '../../../assets/image/accommodations/Star.png';
 
 import { Accommodation } from "../../TypesAndInterfaces";
@@ -13,7 +14,7 @@ interface AccommodationProps {
 
 export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Element => {
   const [rate, setRate] = useState()
-
+  console.log(accommodation.images[0])
   useEffect( () => {
     fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}/rates`,
       {
@@ -29,7 +30,7 @@ export const AccommodationCard = ({accommodation}:AccommodationProps):JSX.Elemen
       borderRadius: '15px'
     }}>
       <Box>
-        <img src={picture} alt='hotel' style={{width: '100%'}}/>
+        <img src={accommodation.images[0]} alt='hotel' style={{width: '100%', height: '200px', objectFit: 'cover', borderTopLeftRadius: '15px', borderTopRightRadius: '15px'}}/>
       </Box>
       <Box sx={{
         padding: 2

@@ -5,7 +5,7 @@ import {Room} from "../../TypesAndInterfaces";
 import React from "react";
 
 export const AccommodationRooms = ({rooms}:any):JSX.Element => {
-
+  console.log(rooms)
   return (
     <Box sx={{
       marginTop: 8
