@@ -19,7 +19,7 @@ export const AttractionDescr = ({attraction}:AttractionProps):JSX.Element => {
         <Typography variant='body2' sx={{marginTop: 2}}>
           {attraction.description}
         </Typography>
-        <Button sx={{
+        {/* <Button sx={{
           background: '#EF5151',
           padding: '18px',
           borderRadius: '7px',
@@ -31,7 +31,7 @@ export const AttractionDescr = ({attraction}:AttractionProps):JSX.Element => {
           <Typography sx={{ margin: '0 20px', color: '#FFFFFF', fontSize: 18, fontWeight: 700, textTransform: 'none'}}>
             Переглянути на мапі
           </Typography>
-        </Button>
+        </Button> */}
       </Box>
       <Box>
         <img src={attraction.image_url} alt='img' style={{width: '100%', height: '100%', borderRadius: '15px'}}/>

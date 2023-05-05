@@ -3,17 +3,17 @@ import { useState } from 'react'
 
 import location_icon from "../../../assets/image/accommodations/Location_icon.png";
 import map from "../../../assets/image/accommodations/map.png";
-import { Accommodation, Geolocations } from "src/components/TypesAndInterfaces";
+import { Accommodation, Attraction, Geolocations } from "src/components/TypesAndInterfaces";
 import { Map } from "src/components/Map";
 
 interface myComponentProps {
-  accommodation: Accommodation;
+  attraction: Attraction;
 }
 
-export const AccommodationMap = (props:myComponentProps):JSX.Element => {
+export const AttractionMap = (props:myComponentProps):JSX.Element => {
   const [geolocation, setGeolocation] = useState<Geolocations>()
 
-  fetch(`https://cktour.club/api/v1/accommodations/${props.accommodation.id}/geolocations`, {
+  fetch(`https://cktour.club/api/v1/attractions/${props.attraction.id}/geolocations`, {
             method: "GET",
             headers: { Authorization: 'Bearer ' +  localStorage.getItem('token') }
           })
@@ -37,7 +37,7 @@ export const AccommodationMap = (props:myComponentProps):JSX.Element => {
         justifyContent: 'space-between'
       }}>
         <Typography variant='h4'>
-          Розташування готелю
+          Розташування атракції
         </Typography>
         <Box sx={{
           display: 'flex',

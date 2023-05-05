@@ -4,6 +4,7 @@ import { Container } from "@mui/material";
 
 import { AttractionHeader } from "./AttractionHeader";
 import { AttractionDescr } from "./AttractionDescr";
+import { AttractionMap } from "./AttractionMap";
 import { AttractionTours } from "./AttractionTours";
 import { AttractionHotels } from "./AttractionHotels";
 import { AttractionSlider } from "./AttractionSlider";
@@ -35,6 +36,7 @@ export const AttractionPageContent = ():JSX.Element => {
     }}>
       {attraction ? <AttractionHeader attraction={attraction}/> : null}
       {attraction ? <AttractionDescr attraction={attraction}/> : null}
+      {attraction ? <AttractionMap attraction={attraction}/> : null}
       {/*<AttractionTours/>*/}
       {/*<AttractionHotels/>*/}
       {/*<AttractionSlider/>*/}

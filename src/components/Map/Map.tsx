@@ -167,8 +167,8 @@ export const Map = (props:myComponentProps) => {
         <Box sx={{overflow: 'hidden'}}>
           <GoogleMap
             mapContainerStyle={props.size}
-            center={center}
-            zoom={zoom}
+            center={props.center}
+            zoom={props.zoom}
             
             onLoad={onLoad}
             onUnmount={onUnmount}

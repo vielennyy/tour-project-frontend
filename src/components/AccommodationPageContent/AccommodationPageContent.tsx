@@ -39,7 +39,7 @@ export const AccommodationPageContent = ():JSX.Element => {
       {accommodation ? <AccommodationDescr accommodation={accommodation?.accommodation}/> : null}
       {accommodation ? <AccommodationRooms rooms={accommodation?.room}/> : null}
       <AccommodationComments/>
-      <AccommodationMap/>
+      {accommodation ? <AccommodationMap accommodation={accommodation?.accommodation}/> : null}
     </Container>
   )
 }
