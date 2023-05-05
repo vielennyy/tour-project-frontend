@@ -241,7 +241,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <TextField 
                         name='reg_code' 
                         id="outlined-basic" 
-                        placeholder='18000'
+                        placeholder='00000000'
                         required 
                         onChange={handleFormChange} 
                         helperText={isValidRegCode ? '' : 'Має скаладатись із 8-10 цифр'}

@@ -188,10 +188,16 @@ export const Sidebar = () => {
         <OrdersCard/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <h1>Caterings</h1>
+        <>
+        <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>Мої бронювання</Typography>
+        <Typography>У Вас поки що немає бронювань</Typography>
+        </>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <h1>Tours</h1>
+        <>
+          <Typography fontSize={28} fontWeight={500} sx={{marginBottom: '35px'}}>Мої бронювання</Typography>
+          <Typography>У Вас поки що немає бронювань</Typography>
+        </>      
       </TabPanel>
       <TabPanel value={value} index={5}>
             {/* <AdvertisementCard/> */}

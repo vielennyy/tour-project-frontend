@@ -82,8 +82,7 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
             console.log(error)
             setFinished(false)
         }
-        // }
-        }
+    }
 
 
     return(

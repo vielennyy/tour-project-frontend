@@ -249,7 +249,7 @@ export interface AccommodationRoomResponce {
     created_at: string;
     updated_at: string;
     note?: string;
-    confirmation: "pending" | "approved" | "declined";
+    confirmation: "pending" | "approved" | "cancelled";
     full_name: string;
     phone: string;
   }
