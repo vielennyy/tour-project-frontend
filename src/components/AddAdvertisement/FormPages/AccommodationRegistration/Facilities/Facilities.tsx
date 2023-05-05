@@ -29,10 +29,13 @@ interface FormData {
 }
 
 export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProps) => {
-    const [show, setShow] = useState(true)
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const userToken = localStorage.getItem('token')
-    const today = new Date();
+    // const [checkinStart, setCheckinStart] = useState(true)
+    // const [checkinEnd, setCheckinEnd] = useState(true)
+    // const [checkoutStart, setCheckoutStart] = useState(true)
+    // const [checkoutEnd, setCheckoutEnd] = useState(true)
+    const [error, setError] = useState<string|null>(null)
+
 
     const [formState, setFormState] = useState<FormData>({
         checkin_start: '',
@@ -46,50 +49,40 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
         pets: false
         });
 
-    // const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setFormState({
-    //         ...formState,
-    //         [event.target.name]: event.target.value,
-    //         });
-    // }
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // if (startDate && endDate && departureStartTime && departureEndTime) {
-        //     setFormState({
-        //         ...formState,
-        //         checkin_start: startDate.toISOString(),
-        //         checkin_end: endDate.toISOString(),
-        //         checkout_start: departureStartTime.toISOString(),
-        //         checkout_end: departureEndTime.toISOString(),
-        //       })
-        // const formData = new FormData()
-        // formData.append('checkin_start', formState.checkin_start)
-        // formData.append('checkin_end', formState.checkin_end)
-        // formData.append('checkout_start', formState.checkout_start)
-        // formData.append('checkout_end', formState.checkout_end)
-        // formData.append('wi_fi', formState.wi_fi.toString())
-        // formData.append('breakfast', formState.breakfast)
-              if(mainInfo?.data.accommodation.id !== undefined) {
-                console.log(formState)
-                fetch(`https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/facilities`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + userToken
-                },
-                body: JSON.stringify(formState),
-                })
-                .then(response => {
-                    if(response.ok) {
-                        response.json()
-                        setFinished(true)
-                    }})
-                .then(json => console.log(json))
-                .catch(error => console.error('Error:', error));
-            } else {
-                console.log("Error: accommodation id is undefined");
-            }
+        console.log(error)
+        
+        if(mainInfo?.data.accommodation.id !== undefined && error === null) {
+            console.log(formState)
+            fetch(`https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/facilities`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + userToken
+            },
+            body: JSON.stringify(formState),
+            })
+            .then(response => {
+                if(response.ok) {
+                    response.json()
+                    console.log(response)
+                    setFinished(true)
+                    setError(null)
+                } else {
+                    setFinished(false)
+                    setError(response.statusText)
+                }
+            })
+            .then(json => console.log(json))
+            .catch(error => console.error('Error:', error));
+        } else {
+            console.log("Error: accommodation id is undefined");
+            console.log(error)
+            setFinished(false)
+        }
+        // }
         }
 
 
@@ -247,19 +240,24 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
                                         })
                                     }}
                                     /> */}
-                                    <TimeField label="" format="HH:mm" onChange={(newValue:any)=>{
+                                    <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
                                         const time = newValue['$d']
-                                        // console.log(time)
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        console.log(time)
+                                        // console.log(!regex.test(time))
                                         // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
-                                        if (time !== 'Invalid Date') {
-                                            console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                        if (regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            
+                                            // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                            // setCheckinStart(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
                                                 return { ...prevState, checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
                                             })
-                                            // setFormState({
-                                            //     ...formState,
-                                            //     checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false })
-                                            // });
+                                        } else {
+                                            console.log('invalid date')
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckinStart(false)
                                         }
                                     }
                                     }/>
@@ -279,12 +277,19 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
                                         })
                                     }}
                                     /> */}
-                                    <TimeField label="" format="HH:mm" onChange={(newValue:any)=>{
+                                    <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
                                         const time = newValue['$d']
-                                        if(time !== 'Invalid Date')
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            // setCheckinEnd(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
                                                 return { ...prevState, checkin_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
-                                        })
+                                            })
+                                        } else {
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutStart(false)
+                                        }
                                     }}/>
                             </LocalizationProvider>
                         </Box>
@@ -305,12 +310,19 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
                                     })
                                 }}
                                 /> */}
-                                <TimeField label="" format="HH:mm" name='checkout_start' onChange={(newValue: any)=>{
+                                <TimeField label="" format="HH:mm" required name='checkout_start' onChange={(newValue: any)=>{
                                     const time = newValue['$d']
-                                    if(time !== 'Invalid Date')
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                    if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                        // setCheckoutStart(true)
+                                        setError(prevState => null)
                                         setFormState(prevState => {
                                             return { ...prevState, checkout_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
-                                    })
+                                        })
+                                    } else {
+                                        setError(prevState => 'Неправильно вказаний час')
+                                        // setCheckoutStart(false)
+                                    }
                                 }}/>
                             </LocalizationProvider>
                         </Box>
@@ -328,23 +340,32 @@ export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProp
                                         })
                                     }}
                                     /> */}
-                                <TimeField label="" format="HH:mm" name='checkout_end' onChange={(newValue:any)=>{
+                                <TimeField label="" format="HH:mm" required name='checkout_end' onChange={(newValue:any)=>{
                                     const time = newValue['$d']
-                                        if(time !== 'Invalid Date')
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))){
+                                            // setCheckoutEnd(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
                                                 return { ...prevState, checkout_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
-                                        })
+                                            })
+                                        } else {
+                                            console.log(time)
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutEnd(false)
+                                        }
                                     }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
                     <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
-                </FormControl>
+                    {!error ? <></> : <Typography fontFamily={'Gilroy'} fontSize={16} color='#EF5151' margin={'20px 0px'}>{error}</Typography>}
+                </FormControl> 
                 </form>
 
             </>
             :
-            <Typography fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
             }
         </Box>
     )

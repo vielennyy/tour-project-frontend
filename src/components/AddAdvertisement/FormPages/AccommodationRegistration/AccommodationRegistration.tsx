@@ -21,13 +21,13 @@ interface displayCardsProps {
 
 export const AccommodationRegistration = () => {
     const [user, setUser] = useState<User>()
-    const [showMainInfo, setShowMainInfo] = useState<boolean>(user?.role==="partner")
+    const [showMainInfo, setShowMainInfo] = useState<boolean>(true)
     const [mainInfo, setMainInfo] = useState<MainAccommodationInfoProps>()
     const [showGeolocation, setShowGeolocation] = useState(false)
     const [showFacilities, setShowFacilities] = useState(false)
     const [isFinished, setFinished] = useState(false)
-    console.log(user?.role==="partner")
-    console.log(showMainInfo)
+    // console.log(user?.role==="partner")
+    // console.log(showMainInfo)
     
     const props = {
         mainInfo: mainInfo,
@@ -49,13 +49,13 @@ export const AccommodationRegistration = () => {
                 headers: { Authorization: 'Bearer ' +  localStorage.getItem('token') }
             });
         const json = await response.json();
-        console.log(json)
+        // console.log(json)
         return setUser(json)
     }
 
     useEffect(() => {
         getUser()
-        setShowMainInfo(user?.role === 'partner')
+        // setShowMainInfo(user?.role === 'partner')
     }, [user]);
 
     // setShowMainInfo(user?.role==='partner')
@@ -69,7 +69,7 @@ export const AccommodationRegistration = () => {
     //         .then(json => setUser(json));
     //   }, []);
 
-    console.log(user)
+    // console.log(user)
 
     return(
         <>

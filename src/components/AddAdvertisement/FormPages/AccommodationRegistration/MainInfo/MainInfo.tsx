@@ -16,11 +16,16 @@ interface ComponentProps {
 }
 
 export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeolocation}:ComponentProps) => {
-    const [show, setShow] = useState(true)
     const typeAccommodationImages = [house, hotel, apartment, hostel, other];
     const [clickedIndex, setClickedIndex] = useState(-1);
     const [type, setType] = useState('Інше')
     const userToken = localStorage.getItem('token')
+    const [isValidEmail, setIsValidEmail] = useState<boolean>(true)
+    const [isValidRegCode, setIsValidRegCode] = useState<boolean>(true)
+    const [isValidPhone, setIsValidPhone] = useState<boolean>(true)
+    const [isValidDescription, setIsValidDescription] = useState<boolean>(true)
+    const [error, setError] = useState<string|null>(null)
+
 
     const [formState, setFormState] = useState<AccommodationFormValues>({
         name: "",
@@ -54,6 +59,20 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
     };
 
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === 'description') {
+            setIsValidDescription(event.target.value.length <= 2000)
+        }
+        if(event.target.name === 'reg_code') {
+            setIsValidRegCode(/^\d{8,10}$/.test(event.target.value))
+        }
+        if(event.target.name === 'phone') {
+            let number = event.target.value.slice(2)
+            // && /^067|^068|^096|^097|^098|^063|^073|^093|^050|^066|^095|^099/.test(number)
+            setIsValidPhone(event.target.value.length === 10 )
+        }
+        if(event.target.name === 'email') {
+            setIsValidEmail(/@/.test(event.target.value))
+        }
         setFormState({
         ...formState,
         kind: type,
@@ -95,7 +114,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
         formData.append('name', name);
         formData.append('description', description);
         formData.append('address_owner', address_owner);
-        formData.append('phone', phone);
+        formData.append('phone', phone.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3"));
         formData.append('email', email);
         formData.append('kind', kind);
         formData.append('user_id', user_id.toString());
@@ -106,29 +125,28 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                 formData.append('images[]', images[i]);
             }
         }
-        // console.log(images)
+
         console.log(formState)
         fetch(`https://cktour.club/api/v1/accommodations`, {
                 method: "POST",
                 headers: {
-                    // 'Content-Type': 'application/json',
-                    // 'Content-Type': 'multipart/form-data',
-                    // 'accept': '*/*',
                     Authorization: "Bearer " + userToken
                 },
                 body: formData})
-                // JSON.stringify(formState)})
             .then(response => {
+                console.log(response)
                 if(response.ok) {
-                    // setShowMainInfo(false)
+                    setShowMainInfo(false)
                     setShowGeolocation(true)
-                    
+                    setError(null)
+                } else {
+                    setError(response.statusText)
                 }
                 return response.json()
             })
             .then(json => setMainInfo(json))
             .catch(error => console.error('Error:', error));
-        setShowMainInfo(false)
+        // setShowMainInfo(false)
     };
     
 
@@ -172,25 +190,71 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                 <form lang="uk" onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column', margin: '50px 0px'}}>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Назва вашого житла</Typography>
-                    <TextField name='name'  id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField 
+                        name='name'  
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний телефон</Typography>
-                    <TextField name='phone' id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField 
+                        name='phone' 
+                        id="outlined-basic" 
+                        required 
+                        placeholder='0980980980'
+                        onChange={handleFormChange} 
+                        helperText={isValidPhone ? '' : 'Телефон має бути у форматі 000 000 0000 без пробусків'}
+                        error={!isValidPhone}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Контактний e-mail</Typography>
-                    <TextField name='email' id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField 
+                        name='email' 
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange} 
+                        helperText={isValidEmail ? '' : 'Невалідний емейл'}
+                        error={!isValidEmail}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Додайте опис вашого житла</Typography>
-                    <TextField name='description' id="outlined-basic" required onChange={handleFormChange} multiline/>
+                    <TextField 
+                        name='description' 
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange} 
+                        multiline 
+                        helperText={isValidDescription ? '' : 'Опис має містити менше 2000 символів'}
+                        error={!isValidDescription}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'30px 5px'}>Додайте інформацію власника</Typography>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Повне ім’я юридичної особи</Typography>
-                    <TextField name='person'  id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField 
+                        name='person'  
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Код ЄДРПОУ/ІПН</Typography>
-                    <TextField name='reg_code' id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField 
+                        name='reg_code' 
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange} 
+                        helperText={isValidRegCode ? '' : 'Має скаладатись із 8-10 цифр'}
+                        error={!isValidRegCode}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Адреса юридичної особи</Typography>
-                    <TextField name='address_owner' id="outlined-basic" sx={{marginBottom: ''}} required onChange={handleFormChange}/>
+                    <TextField 
+                        name='address_owner' 
+                        id="outlined-basic" 
+                        required 
+                        onChange={handleFormChange}
+                    />
                     <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'30px 5px'}>Додайте фотографії вашого об’єкту</Typography>
 
                     <input type="file" onChange={(e)=>{convertFile(e.target.files)}} multiple/>
                     {/* <input type="file" onChange={handleFileLoad} multiple/> */}
                     <Button variant="contained" type='submit' sx={{width: '200px', marginTop: '50px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    {error ? <Typography fontFamily={'Gilroy'} fontSize={16} color='#EF5151' margin={'20px 0px'}>{error}</Typography>:<></>}
                 </FormControl>
                 </form>
             </>

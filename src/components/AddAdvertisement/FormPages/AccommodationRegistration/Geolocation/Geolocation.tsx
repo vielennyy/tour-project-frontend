@@ -35,11 +35,11 @@ interface ComponentProps {
 // }
 
 export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setShowFacilities}:ComponentProps) => {
-    const [show, setShow] = useState(true)
+    const [error, setError] = useState<string|null>(null)
     // const id = mainInfo.accommodation.id
     // console.log(id)
-    console.log(mainInfo)
-    console.log(mainInfo?.data.accommodation)
+    // console.log(mainInfo)
+    // console.log(mainInfo?.data.accommodation)
     interface FormData {
         locality: string,
         latitude: number|undefined,
@@ -96,13 +96,16 @@ export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setS
               .then(response => {
                 if(response.ok) {
                     response.json()
+                    setError(null)
                     setShowFacilities(true)
                     setShowGeolocation(false)
+                } else {
+                    setError(response.statusText)
                 }
                 })
               .then(json => console.log(json));
           } else {
-            console.log("Error: accommodation id is undefined");
+            setError("Error: accommodation id is undefined");
           }
     };
     return(
@@ -127,25 +130,26 @@ export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setS
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Номер</Typography>
-                            <TextField name='suite' id="outlined-basic" onChange={handleFormChange}/>
+                            <TextField name='suite' id="outlined-basic" onChange={handleFormChange} required/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
-                            <TextField name='zip_code' id="outlined-basic" onChange={handleFormChange}/>
+                            <TextField name='zip_code' id="outlined-basic" onChange={handleFormChange} required/>
                         </Box>
                     </Box>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Введіть координати вашого житла</Typography>
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Широта</Typography>
-                            <TextField name='latitude' id="outlined-basic" onChange={handleFormChange}/>
+                            <TextField name='latitude' id="outlined-basic" onChange={handleFormChange} required/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Довгота</Typography>
-                            <TextField name='longitude' id="outlined-basic" onChange={handleFormChange}/>
+                            <TextField name='longitude' id="outlined-basic" onChange={handleFormChange} required/>
                         </Box>
                     </Box>
                     <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    {error ? <Typography fontFamily={'Gilroy'} fontSize={16} color='#EF5151' margin={'20px 0px'}>{error} </Typography>:<></>}
                 </FormControl>
                 </form>
 
