@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import { CateringCard } from "../CateringCard";
+import { CardSecond} from "../CardSecond";
+import {CardThird} from "../CardThird";
 
 
 export const CateringList = ():JSX.Element => {
@@ -17,11 +19,8 @@ export const CateringList = ():JSX.Element => {
       <Link key='1' to={`/catering/${1}`}>
         <CateringCard/>
       </Link>
-      <CateringCard/>
-      <CateringCard/>
-      <CateringCard/>
-      <CateringCard/>
-      <CateringCard/>
+      <CardSecond/>
+      <CardThird/>
     </Box>
   )
 }
