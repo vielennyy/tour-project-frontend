@@ -7,8 +7,12 @@ import { Map } from '../../../components/Map'
 const containerStyle = {
   width: '600px',
   height: '400px',
-  zoom: -2,
 }
+const cherkassy = {
+  lat: 49.44428388879221,
+  lng: 32.05884117728714,
+}
+
 export const MapSection = ():JSX.Element => {
   return(
     <Container sx={{
@@ -42,7 +46,7 @@ export const MapSection = ():JSX.Element => {
         </Button>
       </Box>
       <Box>
-        <Map props={containerStyle}></Map>
+      <Map size={containerStyle} center={cherkassy} zoom={8}></Map>
       </Box>
     </Container>
   )

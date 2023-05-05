@@ -77,10 +77,10 @@ export const OrderItem = ({props}:myComponentProps) => {
                 />
                 <Box sx={{display:'flex', flexDirection: 'row', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex', flexDirection: 'column'}}>
-                        <Typography fontSize={20} color='#222222' sx={{ display: 'flex', marginBottom: '10px', alignItems: 'center', fontSize: 20, color: '#222222' }}>
+                        {/* <Typography fontSize={20} color='#222222' sx={{ display: 'flex', marginBottom: '10px', alignItems: 'center', fontSize: 20, color: '#222222' }}>
                             <SvgIcon sx={{marginTop:'0px'}}><LocationIcon/></SvgIcon>
                             Умань
-                        </Typography>
+                        </Typography> */}
                         <Chip label="Заброньовано" icon={<></>} variant="outlined" sx={{borderRadius: '6px'}}/>
                     </Box>
                 <Button variant="contained"  sx={{width: '300px', position: 'absolute', bottom: 0, right: 0, textTransform:'none', fontSize:'20px'}}>Залишити коментар</Button>

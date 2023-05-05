@@ -51,10 +51,23 @@ export interface Attraction {
   updated_at: string;
 }
 
+export interface Geolocations {
+    id: number;
+    geolocationable_id: number;
+    geolocationable_type: string;
+    latitude: string;
+    longitude: string;
+    street: string;
+    suite: string | null;
+    locality: string;
+    zip_code: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface MapWindowSize {
-  width: string,
-  height: string,
-  zoom: number,
+    width: string,
+    height: string,
 }
 
 export interface Accommodation {

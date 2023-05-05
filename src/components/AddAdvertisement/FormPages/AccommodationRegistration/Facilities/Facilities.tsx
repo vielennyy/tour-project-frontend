@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react'
-import { Box, Typography, FormControl, TextField, Button, Input, Grid, Checkbox } from '@mui/material'
+import { useState } from 'react'
+import { Box, Typography, FormControl, Button, Checkbox } from '@mui/material'
 import { MainAccommodationInfoProps } from 'src/components/TypesAndInterfaces'
 import cardpayment from '../../../../../assets/icons/accommodation/cardpayment.svg'
 import parking from '../../../../../assets/icons/accommodation/parking.svg'
@@ -8,11 +8,12 @@ import wifi from '../../../../../assets/icons/accommodation/wifi.svg'
 import pet from '../../../../../assets/icons/accommodation/pet.svg'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
 
 interface ComponentProps {
     mainInfo: MainAccommodationInfoProps|undefined,
-    setMainInfo: React.Dispatch<React.SetStateAction<MainAccommodationInfoProps|undefined>>,
+    showFacilities: boolean,
+    setFinished: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 interface FormData {
@@ -27,11 +28,14 @@ interface FormData {
     pets: boolean
 }
 
-export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
-    const [show, setShow] = useState(true)
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+export const Facilities = ({mainInfo, showFacilities, setFinished}:ComponentProps) => {
     const userToken = localStorage.getItem('token')
-    const today = new Date();
+    // const [checkinStart, setCheckinStart] = useState(true)
+    // const [checkinEnd, setCheckinEnd] = useState(true)
+    // const [checkoutStart, setCheckoutStart] = useState(true)
+    // const [checkoutEnd, setCheckoutEnd] = useState(true)
+    const [error, setError] = useState<string|null>(null)
+
 
     const [formState, setFormState] = useState<FormData>({
         checkin_start: '',
@@ -44,52 +48,41 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
         breakfast: false,
         pets: false
         });
+
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // if (startDate && endDate && departureStartTime && departureEndTime) {
-        //     setFormState({
-        //         ...formState,
-        //         checkin_start: startDate.toISOString(),
-        //         checkin_end: endDate.toISOString(),
-        //         checkout_start: departureStartTime.toISOString(),
-        //         checkout_end: departureEndTime.toISOString(),
-        //       })
-        // const formData = new FormData()
-        // formData.append('checkin_start', formState.checkin_start)
-        // formData.append('checkin_end', formState.checkin_end)
-        // formData.append('checkout_start', formState.checkout_start)
-        // formData.append('checkout_end', formState.checkout_end)
-        // formData.append('wi_fi', formState.wi_fi.toString())
-        // formData.append('breakfast', formState.breakfast)
-
-              if(mainInfo?.data.accommodation.id !== undefined) {
-                console.log(formState)
-                fetch(`https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/facilities`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + userToken
-                },
-                body: JSON.stringify(formState),
+        console.log(error)
+        
+        if(mainInfo?.data.accommodation.id !== undefined && error === null) {
+            console.log(formState)
+            fetch(`https://cktour.club/api/v1/accommodations/${mainInfo.data.accommodation.id}/facilities`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: "Bearer " + userToken
+            },
+            body: JSON.stringify(formState),
             })
-            .then(response => response.json())
+            .then(response => {
+                if(response.ok) {
+                    response.json()
+                    console.log(response)
+                    setFinished(true)
+                    setError(null)
+                } else {
+                    setFinished(false)
+                    setError(response.statusText)
+                }
+            })
             .then(json => console.log(json))
             .catch(error => console.error('Error:', error));
-                } else {
-                    console.log("Error: accommodation id is undefined");
-                
-                // console.log(formState)
-                // fetch(`https://cktour.club/api/v1/accommodations`, {
-                //     method: "GET",
-                //     headers: {
-                //         Authorization: "Bearer " + localStorage.getItem('token')
-                //     },
-                //     // body: JSON.stringify(formState),
-                //     })
-                //     .then(response => response.json())
-                //     .then(json => console.log(json)); 
-              }
+        } else {
+            console.log("Error: accommodation id is undefined");
+            console.log(error)
+            setFinished(false)
+        }
+        // }
         }
 
 
@@ -99,13 +92,13 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
             background: '#FAFAFA',
             boxShadow: '0px 4px 15px rgba(146, 146, 146, 0.25)',
             borderRadius: '15px',
-            padding: '20px',
-            margin: '30px auto'
+            padding: '20px 60px',
+            margin: '30px auto',
         }}
         >
-            {/* {mainInfo!== undefined ? */}
+            {showFacilities ?
             <>
-                <Typography fontSize={24} fontWeight={500} margin={'20px'}>Додайте зручності вашого житла</Typography>
+                <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'35px 5px'}>Додайте зручності вашого житла</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
                     <Box sx={{display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
@@ -229,13 +222,14 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                             />
                             </Box>} />
                         </Box>
-                    <Typography fontSize={24} fontWeight={500} margin={'20px'}>Заселення та від’їзд</Typography>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'50px 0px'}>Заселення та від’їзд</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                
+                                {/* <TimePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -245,13 +239,34 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkin_start: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                    <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        console.log(time)
+                                        // console.log(!regex.test(time))
+                                        // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                        if (regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            
+                                            // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                            // setCheckinStart(true)
+                                            setError(prevState => null)
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            console.log('invalid date')
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckinStart(false)
+                                        }
+                                    }
+                                    }/>
                             </LocalizationProvider>
                         </Box>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -261,16 +276,30 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkin_end: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                    <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            // setCheckinEnd(true)
+                                            setError(prevState => null)
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkin_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutStart(false)
+                                        }
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                 defaultValue={today}
                                 label="Choose a date"
                                 value={selectedDate}
@@ -280,13 +309,27 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                             return { ...prevState, checkout_start: newValue.toISOString() };
                                     })
                                 }}
-                                />
+                                /> */}
+                                <TimeField label="" format="HH:mm" required name='checkout_start' onChange={(newValue: any)=>{
+                                    const time = newValue['$d']
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                    if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                        // setCheckoutStart(true)
+                                        setError(prevState => null)
+                                        setFormState(prevState => {
+                                            return { ...prevState, checkout_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                        })
+                                    } else {
+                                        setError(prevState => 'Неправильно вказаний час')
+                                        // setCheckoutStart(false)
+                                    }
+                                }}/>
                             </LocalizationProvider>
                         </Box>
                         <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
+                                {/* <DatePicker 
                                     defaultValue={today}
                                     label="Choose a date"
                                     value={selectedDate}
@@ -296,18 +339,34 @@ export const Facilities = ({mainInfo, setMainInfo}:ComponentProps) => {
                                                 return { ...prevState, checkout_end: newValue.toISOString() };
                                         })
                                     }}
-                                    />
+                                    /> */}
+                                <TimeField label="" format="HH:mm" required name='checkout_end' onChange={(newValue:any)=>{
+                                    const time = newValue['$d']
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))){
+                                            // setCheckoutEnd(true)
+                                            setError(prevState => null)
+                                            setFormState(prevState => {
+                                                return { ...prevState, checkout_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            console.log(time)
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutEnd(false)
+                                        }
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
-                </FormControl>
+                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    {!error ? <></> : <Typography fontFamily={'Gilroy'} fontSize={16} color='#EF5151' margin={'20px 0px'}>{error}</Typography>}
+                </FormControl> 
                 </form>
 
             </>
-            {/* // :
-            // <Typography fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
-            // } */}
+            :
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
+            }
         </Box>
     )
 }

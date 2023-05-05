@@ -1,9 +1,9 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { AttractionMarker } from './LocationMarker/AttractionMarker';
+import { AttractionMarker, AccommodationMarker } from './LocationMarker';
 import { defaultTheme } from './Theme';
 import { Box } from '@mui/material'
-import { Accommodation, Attraction,  MapWindowSize,  PlaceCoordinates} from '../TypesAndInterfaces';
+import { Accommodation, Attraction,  Geolocations,  MapWindowSize,  PlaceCoordinates} from '../TypesAndInterfaces';
 import { useState, useEffect } from 'react';
 
 const API_KEY:string = process.env.REACT_APP_API_KEY as string;
@@ -39,31 +39,38 @@ const API_KEY:string = process.env.REACT_APP_API_KEY as string;
     // disableDoubleClickZoom: false,
     fullscreenControl: false,
     // language: 'uk',
-    minZoom: 8,
-    maxZoom: 15,
+    minZoom:10,
+    maxZoom: 20,
     styles: defaultTheme,
   }
 
   interface myComponentProps{
-    props: MapWindowSize
+    size: MapWindowSize
+    center: PlaceCoordinates,
+    zoom: number,
 }
 
-export const Map = ({props}:myComponentProps) => {
+export const Map = (props:myComponentProps) => {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: API_KEY,
         language: 'uk'
       })
-    
+      const center = props.center
       const [map, setMap] = React.useState<google.maps.Map | null>(null);
       const [zoom, setZoom] = useState(props.zoom);
 
     
       const onLoad = React.useCallback(function callback(map: google.maps.Map) {
         // This is just an example of getting and using the map instance!!! don't just blindly copy!
-        const bounds = new window.google.maps.LatLngBounds(cherkassy);
-        map.fitBounds(bounds);
+        // const bounds = new window.google.maps.LatLngBounds();
+        // bounds.extend(new window.google.maps.LatLng(49.95010347463873, 32.14496496924874))
+        // bounds.extend(new window.google.maps.LatLng(50.070137508481, 31.44687743946905))
+        // bounds.extend(new window.google.maps.LatLng(49.258652627349306, 30.977594527194963))
+        // bounds.extend(new window.google.maps.LatLng(48.95142650603749, 30.963586068944238))
+        // bounds.extend(new window.google.maps.LatLng(49.075462869908115, 32.67962063211506))
+        // map.fitBounds(bounds);
     
         setMap(map)
       }, [])
@@ -78,31 +85,64 @@ export const Map = ({props}:myComponentProps) => {
           .then(json => setData(json));
       }
 
-      const [attractions, setAttractions] = useState<Attraction[]>([]);
+      // const [attractions, setAttractions] = useState<Attraction[]>([]);
+      
+      // useEffect(() => {
+      //   fetch('https://cktour.club/api/v1/attractions')
+      //     .then(response => response.json())
+      //     .then(json => setAttractions(json));
+      // }, []);
+
+      // console.log(attractions)
+      
+      // const attractionsCoordinatesList: PlaceCoordinates[] = [];
+
+      // attractions.forEach((attraction) => {
+      //   const geolocations = attraction.geolocations;
+      //   console.log(geolocations)
+      //   if (geolocations && geolocations.length > 0) {
+      //     const latitude = geolocations[0].latitude;
+      //     const longitude = geolocations[0].longitude;
+      //     if (latitude && longitude) {
+      //       attractionsCoordinatesList.push({ lat: +latitude, lng: +longitude });
+      //       console.log(attractionsCoordinatesList)
+      //     }
+      //   }
+      // });
+
+
+    const [geolocations, setGeolocations] = useState<Geolocations[]>([]);
       
       useEffect(() => {
-        fetch('https://cktour.club/api/v1/attractions')
+        fetch('https://cktour.club/api/v1/geolocations')
           .then(response => response.json())
-          .then(json => setAttractions(json));
+          .then(json => setGeolocations(json));
       }, []);
 
-      console.log(attractions)
+      console.log(geolocations)
       
       const attractionsCoordinatesList: PlaceCoordinates[] = [];
+      const accommodationsCoordinatesList: PlaceCoordinates[] = [];
+      const cateringsCoordinatesList: PlaceCoordinates[] = [];
 
-      attractions.forEach((attraction) => {
-        const geolocations = attraction.geolocations;
-        console.log(geolocations)
-        if (geolocations && geolocations.length > 0) {
-          const latitude = geolocations[0].latitude;
-          const longitude = geolocations[0].longitude;
-          if (latitude && longitude) {
-            attractionsCoordinatesList.push({ lat: +latitude, lng: +longitude });
-            console.log(attractionsCoordinatesList)
+
+      geolocations.forEach((geolocation) => {
+          const latitude = +geolocation.latitude;
+          const longitude = +geolocation.longitude;
+          const type = geolocation.geolocationable_type;
+          switch(type) {
+            case 'Accommodation':
+              accommodationsCoordinatesList.push({ lat: latitude, lng: longitude });
+              break;
+            case 'Attraction':
+              attractionsCoordinatesList.push({ lat: latitude, lng: longitude });
+              break;
+            case 'Catering':
+              cateringsCoordinatesList.push({ lat: latitude, lng: longitude }); 
+              break;
           }
         }
-      });
-
+      );
       // const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
 
       // useEffect(() => {
@@ -126,8 +166,8 @@ export const Map = ({props}:myComponentProps) => {
     return (isLoaded ? (
         <Box sx={{overflow: 'hidden'}}>
           <GoogleMap
-            mapContainerStyle={props}
-            center={cherkassy}
+            mapContainerStyle={props.size}
+            center={center}
             zoom={zoom}
             
             onLoad={onLoad}
@@ -136,10 +176,14 @@ export const Map = ({props}:myComponentProps) => {
           >
             {attractionsCoordinatesList.map(attraction => <AttractionMarker
             key={`${attraction.lat}-${attraction.lng}`}
-          position={attraction}
-          setZoom={setZoom}
-        />)}
-              
+            position={attraction}
+            setZoom={setZoom}
+            />)}
+            {accommodationsCoordinatesList.map(accommodation => <AccommodationMarker
+            key={`${accommodation.lat}-${accommodation.lng}`}
+            position={accommodation}
+            setZoom={setZoom}
+            />)}  
             { /* Child components, such as markers, info windows, etc. */ }
             <></>
           </GoogleMap>
