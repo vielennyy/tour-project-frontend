@@ -48,12 +48,14 @@ interface FormData {
 
 interface ComponentProps {
     accommodation: Accommodation,
+    mainInfo: MainAccommodationInfoProps|undefined,
     showMainInfo: boolean,
     setShowMainInfo: React.Dispatch<React.SetStateAction<boolean>>,
     showGeolocationInfo: boolean,
     setShowGeolocationInfo: React.Dispatch<React.SetStateAction<boolean>>,
     showFacilitiesInfo: boolean,
     setShowFacilitiesInfo: React.Dispatch<React.SetStateAction<boolean>>,
+    setFinished: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const Facilities = (props:ComponentProps) => {

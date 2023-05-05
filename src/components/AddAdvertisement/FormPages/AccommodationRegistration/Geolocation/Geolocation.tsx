@@ -36,6 +36,7 @@ interface ComponentProps {
 
 export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setShowFacilities}:ComponentProps) => {
     const [error, setError] = useState<string|null>(null)
+    const [validZipcode, setValidZipcode] = useState(true)
     // const id = mainInfo.accommodation.id
     // console.log(id)
     // console.log(mainInfo)
@@ -58,6 +59,9 @@ export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setS
         })
     
       const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === 'zip_code') {
+            setValidZipcode(/\d/.test(event.target.value) && event.target.value.length === 5)
+        }
         if(event.target.name === 'latitude' || event.target.name === 'longitude') {
             setFormState({
                 ...formState,
@@ -124,28 +128,35 @@ export const Geolocation = ({mainInfo, showGeolocation, setShowGeolocation, setS
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Населений пункт</Typography>
-                    <TextField name='locality'  id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField name='locality'  id="outlined-basic" placeholder='Черкаси' required onChange={handleFormChange}/>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Вулиця</Typography>
-                    <TextField name='street' id="outlined-basic" required onChange={handleFormChange}/>
+                    <TextField name='street' id="outlined-basic" required placeholder='Назва вулиці' onChange={handleFormChange}/>
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Номер</Typography>
-                            <TextField name='suite' id="outlined-basic" onChange={handleFormChange} required/>
+                            <TextField name='suite' id="outlined-basic" placeholder='Номер' onChange={handleFormChange} required/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
-                            <TextField name='zip_code' id="outlined-basic" onChange={handleFormChange} required/>
+                            <TextField 
+                                name='zip_code' 
+                                id="outlined-basic" 
+                                placeholder='18000' 
+                                onChange={handleFormChange}
+                                helperText={validZipcode ? '':'Має містити 5 цифр'} 
+                                error={!validZipcode}
+                                required/>
                         </Box>
                     </Box>
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Введіть координати вашого житла</Typography>
                     <Box sx={{display:'flex', justifyContent:'space-between'}}>
                         <Box sx={{display:'flex', flexDirection:'column', width:'60%'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Широта</Typography>
-                            <TextField name='latitude' id="outlined-basic" onChange={handleFormChange} required/>
+                            <TextField name='latitude' id="outlined-basic" placeholder='42,243567' onChange={handleFormChange} required/>
                         </Box>
                         <Box sx={{display:'flex', flexDirection:'column'}}>
                             <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Довгота</Typography>
-                            <TextField name='longitude' id="outlined-basic" onChange={handleFormChange} required/>
+                            <TextField name='longitude' id="outlined-basic" placeholder='42,243567' onChange={handleFormChange} required/>
                         </Box>
                     </Box>
                     <Button variant="contained" type='submit' sx={{width: '200px', margin: '50px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>

@@ -23,7 +23,7 @@ export const AccommodationRegistration = () => {
     const [user, setUser] = useState<User>()
     const [showMainInfo, setShowMainInfo] = useState<boolean>(true)
     const [mainInfo, setMainInfo] = useState<MainAccommodationInfoProps>()
-    const [showGeolocation, setShowGeolocation] = useState(false)
+    const [showGeolocation, setShowGeolocation] = useState(true)
     const [showFacilities, setShowFacilities] = useState(false)
     const [isFinished, setFinished] = useState(false)
     // console.log(user?.role==="partner")

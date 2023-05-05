@@ -193,6 +193,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <TextField 
                         name='name'  
                         id="outlined-basic" 
+                        placeholder='Готель "Назва"'
                         required 
                         onChange={handleFormChange}
                     />
@@ -210,6 +211,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <TextField 
                         name='email' 
                         id="outlined-basic" 
+                        placeholder='myemail@gmail.com'
                         required 
                         onChange={handleFormChange} 
                         helperText={isValidEmail ? '' : 'Невалідний емейл'}
@@ -219,6 +221,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <TextField 
                         name='description' 
                         id="outlined-basic" 
+                        placeholder='Опис вашого помешкання ...'
                         required 
                         onChange={handleFormChange} 
                         multiline 
@@ -229,7 +232,8 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Повне ім’я юридичної особи</Typography>
                     <TextField 
                         name='person'  
-                        id="outlined-basic" 
+                        id="outlined-basic"
+                        placeholder='ПІП' 
                         required 
                         onChange={handleFormChange}
                     />
@@ -237,6 +241,7 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <TextField 
                         name='reg_code' 
                         id="outlined-basic" 
+                        placeholder='18000'
                         required 
                         onChange={handleFormChange} 
                         helperText={isValidRegCode ? '' : 'Має скаладатись із 8-10 цифр'}
@@ -245,13 +250,14 @@ export const MainInfo = ({setMainInfo, showMainInfo, setShowMainInfo, setShowGeo
                     <Typography fontFamily={'Gilroy'} fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Адреса юридичної особи</Typography>
                     <TextField 
                         name='address_owner' 
-                        id="outlined-basic" 
+                        id="outlined-basic"
+                        placeholder='вулиця номер' 
                         required 
                         onChange={handleFormChange}
                     />
                     <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'30px 5px'}>Додайте фотографії вашого об’єкту</Typography>
 
-                    <input type="file" onChange={(e)=>{convertFile(e.target.files)}} multiple/>
+                    <input type="file" accept="image/jpeg,image/jpg,image/gif,image/png" onChange={(e)=>{convertFile(e.target.files)}} multiple/>
                     {/* <input type="file" onChange={handleFileLoad} multiple/> */}
                     <Button variant="contained" type='submit' sx={{width: '200px', marginTop: '50px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                     {error ? <Typography fontFamily={'Gilroy'} fontSize={16} color='#EF5151' margin={'20px 0px'}>{error}</Typography>:<></>}

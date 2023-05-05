@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { Link, useParams } from 'react-router-dom';
 
-import { Box, Typography, Breadcrumbs} from "@mui/material";
+import { Box, Typography, Breadcrumbs, Rating} from "@mui/material";
 import rating from "../../../assets/image/accommodations/Rating.png";
 import location_icon from "../../../assets/image/accommodations/Location_icon.png";
 
 import { Accommodation } from "../../TypesAndInterfaces";
+import { RaitingPopup } from "../RaitingPopup";
 
 interface AccommodationProps {
   accommodation: Accommodation;
@@ -14,6 +15,7 @@ interface AccommodationProps {
 export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Element => {
   const [rate, setRate] = useState()
   const {id} = useParams();
+  const [open, setOpen] = useState(false)
 
   useEffect( () => {
     fetch(`https://cktour.club/api/v1/accommodations/${id}/rates`,
@@ -56,10 +58,15 @@ export const AccommodationHeader = ({accommodation}:AccommodationProps):JSX.Elem
           display: 'flex',
           alignItems: 'end'
         }}>
-          <img src={rating} alt='rating' style={{height: '25px'}}/>
+          {/* <img src={rating} alt='rating' style={{height: '25px'}}/> */}
+          <Rating name="read-only" value={Number(rate)} readOnly />
           <Typography variant='h5' sx={{marginLeft: 2}}>
             {rate}
           </Typography>
+          <Typography variant='h5' sx={{marginLeft: 2, cursor: 'pointer'}} onClick={()=>{setOpen(true)}}>
+            Оцінити
+          </Typography>
+          <RaitingPopup accommodation={accommodation} open={open} setOpen={setOpen}/>
           {/*<Typography variant='h6' sx={{*/}
           {/*  marginLeft: 2,*/}
           {/*  color: '#777777',*/}
