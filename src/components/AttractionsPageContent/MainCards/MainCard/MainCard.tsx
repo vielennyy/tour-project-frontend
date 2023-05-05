@@ -41,7 +41,7 @@ export const MainCard = ({attraction}:AttractionProps):JSX.Element => {
         </Box>
       </Box>
       <Typography variant='body2'>
-        {attraction.description.length > 100 ? `${attraction.description.slice(0, 100)}...` : attraction.description}
+        {attraction.description.length > 90 ? `${attraction.description.slice(0, 90)}...` : attraction.description}
       </Typography>
       <Box sx={{
         display: 'flex',

@@ -9,6 +9,8 @@ interface CommentType {
 }
 
 export const AddComment = ():JSX.Element => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -20,10 +22,7 @@ export const AddComment = ():JSX.Element => {
   };
 
   const onCommentAdd = async (body:CommentType) => {
-    console.log(body)
-    // const formData = new FormData();
-    // formData.append('body', body);
-    const res = await fetch(`https://cktour.club/api/v1/accommodations/5/comments`,
+    const response = await fetch(`https://cktour.club/api/v1/accommodations/5/comments`,
       {
         method: "POST",
         headers: {
@@ -31,7 +30,18 @@ export const AddComment = ():JSX.Element => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-      }).then(() => handleClose());
+      })
+    if(response.ok) {
+      setSuccess(true);
+      setError(false)
+      setTimeout(() => {
+        setSuccess(false);
+        formik.resetForm();
+        handleClose();
+      }, 3000)
+    } else {
+      setError(true)
+    }
   }
   const formik = useFormik({
     initialValues: {
@@ -83,6 +93,8 @@ export const AddComment = ():JSX.Element => {
         </Box>
         <form onSubmit={formik.handleSubmit} style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
           <TextField
+            multiline
+            rows={4}
             fullWidth
             id="body"
             name="body"
@@ -91,6 +103,18 @@ export const AddComment = ():JSX.Element => {
             onChange={formik.handleChange}
             sx={{marginTop: "25px", fontSize: 14, }}
           />
+          {error ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: '#EF5151'}}>
+              Виникла помилка
+            </Typography> :
+            null
+          }
+          {success ?
+            <Typography sx={{fontSize: 16, fontWeight: 500, marginTop: 2, color: 'green'}}>
+              Комментарій успішно додано
+            </Typography> :
+            null
+          }
           <Button color="primary" variant="contained" fullWidth type="submit" sx={{
             width: 200,
             height: 40,

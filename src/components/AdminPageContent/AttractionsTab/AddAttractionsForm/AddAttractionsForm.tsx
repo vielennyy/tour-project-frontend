@@ -40,7 +40,6 @@ export const AddAttractionsForm = ({props}:FetchDataType):JSX.Element => {
 
   const onAttractionAdded = async (values: Values) => {
     const formData = new FormData();
-    console.log(values, file);
     formData.append('title', values.name);
     formData.append('description', values.description);
     formData.append('image', file);
@@ -65,7 +64,6 @@ export const AddAttractionsForm = ({props}:FetchDataType):JSX.Element => {
     } else {
       setError(true)
     }
-
   }
 
   const handleFileLoad = (event:ChangeEvent<HTMLInputElement>) => {
