@@ -25,7 +25,6 @@ export const Comment = ({comment}:CommentProps):JSX.Element => {
           color: '#777777',
           fontSize: 16
         }}>
-          {/*3 квітня 2023*/}
           {moment(comment.attributes.created_at).format("DD MMMM YYYY HH:mm ")}
         </Typography>
       </Box>

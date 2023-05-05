@@ -42,7 +42,7 @@ export const AttractionsTab = ():JSX.Element =>  {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(attractions)
+
   return (
     <Box>
       <AddAttractionsForm props={fetchData}/>

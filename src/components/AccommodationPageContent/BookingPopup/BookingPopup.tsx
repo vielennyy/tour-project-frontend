@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import { useFormik, useField } from 'formik';
+import React, {useState} from "react";
+import { useFormik } from 'formik';
 import { useParams} from "react-router-dom";
 import DatePicker from "react-datepicker";
 
@@ -8,7 +8,8 @@ import {
   Dialog,
   DialogContent,
   Button,
-  Typography, TextField, Link
+  Typography,
+  TextField
 } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -75,14 +76,6 @@ export const BookingPopup = ({props}:RoomId):JSX.Element => {
       setError(true)
     }
   }
-
-  // const handleStartDay = (event:any) => {
-  //   const start = event['$d'].toISOString().slice(0, 10);
-  //   setStart(start)
-  // }
-  // const handleEndDay = (event:any) => {
-  //   const end = event['$d'].toISOString().slice(0, 10);
-  // }
 
   const formik = useFormik({
     initialValues: {

@@ -10,33 +10,16 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow, Typography
+  TableRow
 } from '@mui/material';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { PublishCommentModal } from "./PublishCommentModal";
 import { DeleteCommentModal } from "./DeleteCommentModal";
 
-function createData(
-  id: number,
-  name: string,
-  email: string,
-  text: string,
-  status: string,
-  createAt: string,
-) {
-  return { id, name, email, text, status, createAt};
-}
-
-const rows = [
-  createData(1, 'Кравченко Ілля Володимирович', 'ddallmour@gmail.com', 'Дуже смачна кухня', 'Очікує','18.03.2023')
-];
-
 export const CommentsTab = ():JSX.Element =>  {
-  const fetchUrl = 'https://cktour.club/api/v1/accommodations/5/comments/1'
   const [commentsList, setCommentsList] = useState<[]>([]);
 
   const [loading, isLoading] = useState(false);
@@ -58,7 +41,6 @@ export const CommentsTab = ():JSX.Element =>  {
     fetchingComments()
   }, [])
 
-  console.log(commentsList)
   return (
     <Box>
       {loading ?

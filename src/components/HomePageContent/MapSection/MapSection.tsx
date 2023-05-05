@@ -4,7 +4,6 @@ import {Box, Container, Typography, Button} from '@mui/material';
 import React from "react";
 import { Map } from '../../../components/Map'
 
-import map from '../../../assets/image/map.jpg';
 const containerStyle = {
   width: '600px',
   height: '400px',
@@ -44,7 +43,6 @@ export const MapSection = ():JSX.Element => {
       </Box>
       <Box>
         <Map props={containerStyle}></Map>
-        {/* <img src={map} alt={map} style={{width: '100%'}}/> */}
       </Box>
     </Container>
   )

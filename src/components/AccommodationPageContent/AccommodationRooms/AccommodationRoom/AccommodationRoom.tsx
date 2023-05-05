@@ -95,13 +95,3 @@ export const AccommodationRoom = ({room}:RoomProps):JSX.Element => {
     </Box>
   )
 }
-
-// <Box sx={{
-//   display: 'flex'
-// }}>
-//   <Typography variant='h6'>
-//     Деталі
-//   </Typography>
-//   <ArrowForwardIcon color={"primary"}/>
-//   <ShowDetailsModal/>
-// </Box>
