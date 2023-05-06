@@ -18,6 +18,10 @@ import { EditAccommodation } from "./components/UserPageContent/AdvertismentCard
 import { CreateRoom } from "./components/CreateRoom";
 import { EditPassword } from "./components/UserPageContent/EditPassword";
 import { NotFound } from "./pages/NotFound";
+import { ContactPage } from "./pages/ContactPage/ContactPage";
+import { AboutPage } from "./pages/AboutPage/";
+import { TermsAndConditions } from "./pages/TermsAndConditions/TermsAndConditions";
+
 
 const AppRoutes = [
   {
@@ -105,8 +109,20 @@ const AppRoutes = [
     element: <AccommodationRegistration/>
   },
   {
+    path: '/contacts',
+    element: <ContactPage/>
+  },
+  {
+    path: '/about',
+    element: <AboutPage/>
+  },
+  {
     path: '/not-found',
     element: <NotFound/>
+  },
+  {
+    path: '/terms-and-conditions',
+    element: <TermsAndConditions/>
   },
 ];
 
