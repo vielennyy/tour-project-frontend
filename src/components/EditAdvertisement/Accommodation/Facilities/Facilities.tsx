@@ -2,7 +2,7 @@ import { Accommodation, MainAccommodationInfoProps, AccommodationRoomInfo, Accom
 
 
 import { useState, useEffect } from 'react'
-import { Box, Typography, FormControl, TextField, Button, Input, Grid, Checkbox } from '@mui/material'
+import { Box, Typography, FormControl, Button, Input, Grid, Checkbox } from '@mui/material'
 import cardpayment from '../../../../assets/icons/accommodation/cardpayment.svg'
 import parking from '../../../../assets/icons/accommodation/parking.svg'
 import breakfast from '../../../../assets/icons/accommodation/breakfast.svg'
@@ -11,6 +11,8 @@ import pet from '../../../../assets/icons/accommodation/pet.svg'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+
 
 interface Facilities {
     id: number;
@@ -65,6 +67,8 @@ export const Facilities = (props:ComponentProps) => {
     const today = new Date();
 
     const [facilities, setFacilities] = useState<Facilities>();
+    const [error, setError] = useState<string|null>(null)
+
       
       useEffect(() => {
         fetch(`https://cktour.club/api/v1/accommodations/${props.accommodation.id}/facilities`)
@@ -100,7 +104,12 @@ export const Facilities = (props:ComponentProps) => {
             .then(response => {
                 if(response.ok) {
                     response.json()
-                    props.setShowFacilitiesInfo(false)
+                    console.log(response)
+                    props.setFinished(true)
+                    setError(null)
+                } else {
+                    props.setFinished(false)
+                    setError(response.statusText)
                 }
             })
             .then(json => console.log(json))
@@ -110,29 +119,29 @@ export const Facilities = (props:ComponentProps) => {
 
     return(
         <Box sx={{
-            width: '960px',
+            width: '550px',
             background: '#FAFAFA',
             boxShadow: '0px 4px 15px rgba(146, 146, 146, 0.25)',
             borderRadius: '15px',
             padding: '20px',
-            margin: '30px auto'
+            margin: '30px'
         }}
         >
             {props.showFacilitiesInfo ?
             <>
-                <Typography fontSize={24} fontWeight={500} margin={'20px'}>Додайте зручності вашого житла</Typography>
+                <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'20px 5px'}>Додайте зручності вашого житла</Typography>
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
                 <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
-                    <Box sx={{display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
+                    <Box sx={{width: '300px', display:'flex', justifyContent:'space-between', '& *': { cursor: 'pointer' }}}>
                         <Checkbox name={'credit_card'} onChange={(event) => {
                             setFormState(prevState => {
                                 return { ...prevState, credit_card: event.target.checked };
                             })
                             }}
-                            icon={<img width={'150px'} src={cardpayment}/>} 
+                            icon={<img width={'80px'} src={cardpayment}/>} 
                             checkedIcon={<Box
                                 sx={{
-                                    height: '105px',
+                                    height: '59px',
                                     border: `4px solid #EF5151`,
                                     borderRadius: '5px',
                                     cursor: 'pointer',
@@ -143,7 +152,7 @@ export const Facilities = (props:ComponentProps) => {
                                     }}
                                     >
                                     <img
-                                        width={'150px'}
+                                        width={'80px'}
                                         src={cardpayment}
                                         alt={`Your image`}
                                     />
@@ -154,9 +163,9 @@ export const Facilities = (props:ComponentProps) => {
                                     return { ...prevState, free_parking: event.target.checked };
                                 })
                             }}
-                            icon={<img width={'150px'} src={parking}/>} checkedIcon={<Box
+                            icon={<img width={'80px'} src={parking}/>} checkedIcon={<Box
                             sx={{
-                                height: '105px',
+                                height: '59px',
                                 border: `4px solid #EF5151`,
                                 borderRadius: '5px',
                                 cursor: 'pointer',
@@ -167,7 +176,7 @@ export const Facilities = (props:ComponentProps) => {
                             }}
                             >
                             <img
-                                width={'150px'}
+                                width={'80px'}
                                 src={parking}
                                 alt={`Your image`}
                             />
@@ -178,9 +187,9 @@ export const Facilities = (props:ComponentProps) => {
                                     return { ...prevState, wi_fi: event.target.checked };
                                 })
                            }}
-                            icon={<img width={'150px'} src={wifi}/>} checkedIcon={<Box
+                            icon={<img width={'80px'} src={wifi}/>} checkedIcon={<Box
                             sx={{
-                                height: '105px',
+                                height: '59px',
                                 border: `4px solid #EF5151`,
                                 borderRadius: '5px',
                                 cursor: 'pointer',
@@ -191,7 +200,7 @@ export const Facilities = (props:ComponentProps) => {
                             }}
                             >
                             <img
-                                width={'150px'}
+                                width={'80px'}
                                 src={wifi}
                                 alt={`Your image`}
                             />
@@ -202,9 +211,9 @@ export const Facilities = (props:ComponentProps) => {
                                     return { ...prevState, breakfast: event.target.checked };
                                 })
                             }}
-                            icon={<img width={'150px'} src={breakfast}/>} checkedIcon={<Box
+                            icon={<img width={'80px'} src={breakfast}/>} checkedIcon={<Box
                             sx={{
-                                height: '105px',
+                                height: '59px',
                                 border: `4px solid #EF5151`,
                                 borderRadius: '5px',
                                 cursor: 'pointer',
@@ -215,7 +224,7 @@ export const Facilities = (props:ComponentProps) => {
                             }}
                             >
                             <img
-                                width={'150px'}
+                                width={'80px'}
                                 src={breakfast}
                                 alt={`Your image`}
                             />
@@ -225,9 +234,9 @@ export const Facilities = (props:ComponentProps) => {
                                 setFormState(prevState => {
                                     return { ...prevState, pets: event.target.checked };
                                 })
-                            }}icon={<img width={'150px'} src={pet}/>} checkedIcon={<Box
+                            }}icon={<img width={'80px'} src={pet}/>} checkedIcon={<Box
                             sx={{
-                                height: '105px',
+                                height: '59px',
                                 border: `4px solid #EF5151`,
                                 borderRadius: '5px',
                                 cursor: 'pointer',
@@ -238,89 +247,109 @@ export const Facilities = (props:ComponentProps) => {
                             }}
                             >
                             <img
-                                width={'150px'}
+                                width={'80px'}
                                 src={pet}
                                 alt={`Your image`}
                             />
                             </Box>} />
                         </Box>
-                    <Typography fontSize={24} fontWeight={500} margin={'20px'}>Заселення та від’їзд</Typography>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'20px 5px'}>Заселення та від’їзд</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час заселення</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
-                        <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'column', width:'45%'}}>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
-                                    defaultValue={today}
-                                    label="Choose a date"
-                                    value={selectedDate}
-                                    onChange={(newValue)=>{
-                                        if(newValue)
+                            <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        console.log(time)
+                                        // console.log(!regex.test(time))
+                                        // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                        if (regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            
+                                            // console.log(time.toLocaleTimeString('uk-UA', { hour12: false }))
+                                            // setCheckinStart(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkin_start: newValue.toISOString() };
-                                        })
-                                    }}
-                                    />
+                                                return { ...prevState, checkin_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            console.log('invalid date')
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckinStart(false)
+                                        }
+                                    }
+                                    }/>
                             </LocalizationProvider>
                         </Box>
-                        <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'column', width:'45%'}}>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
-                                    defaultValue={today}
-                                    label="Choose a date"
-                                    value={selectedDate}
-                                    onChange={(newValue)=>{
-                                        if(newValue)
+                            <TimeField label="" format="HH:mm" required onChange={(newValue:any)=>{
+                                        const time = newValue['$d']
+                                        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                            // setCheckinEnd(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkin_end: newValue.toISOString() };
-                                        })
-                                    }}
-                                    />
+                                                return { ...prevState, checkin_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutStart(false)
+                                        }
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Typography fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
+                    <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Час від’їзду</Typography>
                     <Box sx={{display: 'flex', justifyContent:'space-between'}}>
-                        <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Початок</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'column', width:'45%'}}>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Початок</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
-                                defaultValue={today}
-                                label="Choose a date"
-                                value={selectedDate}
-                                onChange={(newValue)=>{
-                                    if(newValue)
+                            <TimeField label="" format="HH:mm" required name='checkout_start' onChange={(newValue: any)=>{
+                                    const time = newValue['$d']
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                    if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))) {
+                                        // setCheckoutStart(true)
+                                        setError(prevState => null)
                                         setFormState(prevState => {
-                                            return { ...prevState, checkout_start: newValue.toISOString() };
-                                    })
-                                }}
-                                />
+                                            return { ...prevState, checkout_start: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                        })
+                                    } else {
+                                        setError(prevState => 'Неправильно вказаний час')
+                                        // setCheckoutStart(false)
+                                    }
+                                }}/>
                             </LocalizationProvider>
                         </Box>
-                        <Box sx={{display: 'flex', flexDirection: 'column', width: '400px'}}>
-                            <Typography fontSize={18} marginBottom={'5px'}>Кінець</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'column', width:'45%'}}>
+                            <Typography fontFamily={'Gilroy'} fontSize={18} marginBottom={'5px'}>Кінець</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker 
-                                    defaultValue={today}
-                                    label="Choose a date"
-                                    value={selectedDate}
-                                    onChange={(newValue)=>{
-                                        if(newValue)
+                            <TimeField label="" format="HH:mm" required name='checkout_end' onChange={(newValue:any)=>{
+                                    const time = newValue['$d']
+                                    const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+                                        if(regex.test(time.toLocaleTimeString('uk-UA', { hour12: false }))){
+                                            // setCheckoutEnd(true)
+                                            setError(prevState => null)
                                             setFormState(prevState => {
-                                                return { ...prevState, checkout_end: newValue.toISOString() };
-                                        })
-                                    }}
-                                    />
+                                                return { ...prevState, checkout_end: time.toLocaleTimeString('uk-UA', { hour12: false }) };
+                                            })
+                                        } else {
+                                            console.log(time)
+                                            setError(prevState => 'Неправильно вказаний час')
+                                            // setCheckoutEnd(false)
+                                        }
+                                    }}/>
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
+                    <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', fontFamily:'Gilroy', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
                 </FormControl>
                 </form>
             </>
             :
-            <Typography fontSize={24} fontWeight={500}>Зручності. Заселення та від’їзд</Typography>
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'20px 5px'}>Зручності. Заселення та від’їзд</Typography>
             } 
         </Box>
     )

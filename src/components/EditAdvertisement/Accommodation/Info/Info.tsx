@@ -26,7 +26,7 @@ interface EditInfoFormData {
     phone: string,
     email: string,
     kind: string,
-    user_id: Number,
+    // user_id: Number,
     reg_code: string,
     person: string,
     status: string,
@@ -54,7 +54,7 @@ export const Info = ({accommodation, setMainInfo, showMainInfo, setShowMainInfo,
         phone: accommodation.phone,
         email: accommodation.email,
         kind: accommodation.kind,
-        user_id: Number(localStorage.getItem('id')),
+        // user_id: Number(localStorage.getItem('id')),
         reg_code: accommodation.reg_code,
         person: accommodation.person,
         status: accommodation.status,
@@ -115,7 +115,7 @@ export const Info = ({accommodation, setMainInfo, showMainInfo, setShowMainInfo,
     const handleMainInfoSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const { name, description, address_owner, phone, status, email, kind, reg_code, person, images, user_id} = infoForm;
+        const { name, description, address_owner, phone, status, email, kind, reg_code, person, images} = infoForm;
 
         console.log(images)
         const formData = new FormData();
@@ -128,7 +128,7 @@ export const Info = ({accommodation, setMainInfo, showMainInfo, setShowMainInfo,
         formData.append('status', status);
         formData.append('reg_code', reg_code);
         formData.append('person', person);
-        formData.append('user_id', user_id.toString())
+        // formData.append('user_id', user_id.toString())
         if (images !== undefined) {
             for (let i = 0; i < images.length; i++) {
                 formData.append('images[]', images[i]);
@@ -138,7 +138,6 @@ export const Info = ({accommodation, setMainInfo, showMainInfo, setShowMainInfo,
         fetch(`https://cktour.club/api/v1/accommodations/${accommodation.id}`, {
                 method: "PUT",
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     Authorization: "Bearer " + userToken
                 },
                 body: formData})

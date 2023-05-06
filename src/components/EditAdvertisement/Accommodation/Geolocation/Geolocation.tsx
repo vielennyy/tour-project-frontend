@@ -35,6 +35,8 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
     // console.log(mainInfo)
     
     const [geolocation, setGeolocation] = useState<Geolocations[]|undefined>()
+    const [error, setError] = useState<string|null>(null)
+    const [validZipcode, setValidZipcode] = useState(true)
 
     fetch(`https://cktour.club/api/v1/accommodations/49/geolocations`, {
               method: "GET",
@@ -47,6 +49,9 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
               .then(json => setGeolocation(json));
     // console.log(geolocation)
       const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === 'zip_code') {
+            setValidZipcode(/\d/.test(event.target.value) && event.target.value.length === 5)
+        }
         if(event.target.name === 'latitude' || event.target.name === 'longitude') {
             setGeolocationForm({
                 ...geolocationForm,
@@ -79,13 +84,16 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
               },
               body: JSON.stringify(data),
             })
-              .then(response => {
-                if(response.ok){
+            .then(response => {
+                if(response.ok) {
                     response.json()
-                    setShowGeolocationInfo(false)
+                    setError(null)
                     setShowFacilitiesInfo(true)
+                    setShowGeolocationInfo(false)
+                } else {
+                    setError(response.statusText)
                 }
-            })
+                })
               .then(json => console.log(json));
 
             }
@@ -103,7 +111,7 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
         >
         {showGeolocationInfo ?
         <>
-            <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
+            <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'20px 5px'}>Розташування</Typography>
             <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
             <FormControl sx={{display: 'flex', flexDirection: 'column'}}>
                 <Typography fontSize={18} marginBottom={'5px'}>Населений пункт</Typography>
@@ -113,22 +121,23 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
                 <Box sx={{display:'flex', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex', flexDirection:'column', width:'40%'}}>
                         <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Номер</Typography>
-                        <TextField name='suite' id="outlined-basic" onChange={handleFormChange}/>
+                        <TextField name='suite' id="outlined-basic" required onChange={handleFormChange}/>
                     </Box>
                     <Box sx={{display:'flex', flexDirection:'column', width:'45%'}}>
                         <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Поштовий індекс</Typography>
-                        <TextField name='zip_code' id="outlined-basic" onChange={handleFormChange}/>
+                        <TextField name='zip_code' id="outlined-basic" required helperText={validZipcode ? '':'Має містити 5 цифр'} 
+                                error={!validZipcode} onChange={handleFormChange}/>
                     </Box>
                 </Box>
                 <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Введіть координати вашого житла</Typography>
                 <Box sx={{display:'flex', justifyContent:'space-between'}}>
                     <Box sx={{display:'flex', flexDirection:'column', width:'45%'}}>
                         <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Широта</Typography>
-                        <TextField name='latitude' id="outlined-basic" onChange={handleFormChange}/>
+                        <TextField name='latitude' id="outlined-basic" required onChange={handleFormChange}/>
                     </Box>
                     <Box sx={{display:'flex', flexDirection:'column', width:'45%'}}>
                         <Typography fontSize={18} marginTop={'20px'} marginBottom={'5px'}>Довгота</Typography>
-                        <TextField name='longitude' id="outlined-basic" onChange={handleFormChange}/>
+                        <TextField name='longitude' id="outlined-basic" required onChange={handleFormChange}/>
                     </Box>
                 </Box>
                 <Button variant="contained" type='submit' sx={{width: '200px', margin: '20px 0px', textTransform:'none', fontSize:'20px', padding:'10px 30px'}}>Далі</Button>
@@ -136,7 +145,7 @@ export const Geolocation = ({showFacilitiesInfo, showGeolocationInfo, setShowGeo
             </form>
         </>
        :
-        <Typography fontSize={24} fontWeight={500}>Розташування</Typography>
+        <Typography fontFamily={'Gilroy'} fontSize={24} fontWeight={500} margin={'20px 5px'}>Розташування</Typography>
         }
     </Box>
     )
