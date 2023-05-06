@@ -37,8 +37,6 @@ export const AccommodationsTab = ():JSX.Element =>  {
     isLoading(false);
     return setAccommodations(json.data);
   }
-
-  console.log(accommodations)
   useEffect(() => {
     fetchData()
   }, [])

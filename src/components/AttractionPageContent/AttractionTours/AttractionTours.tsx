@@ -4,7 +4,27 @@ import { AttractionTour } from "./AttractionTour";
 import {Link} from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import first from '../../../assets/image/tours/tour.png';
+import second from '../../../assets/image/tours/gai.jpg';
+import uman from '../../../assets/image/admin/uman.jpg';
+
 export const AttractionTours = ():JSX.Element => {
+  const firstTour = {
+    name: 'Тур «Цікавинки Черкащини»',
+    image: first
+  }
+
+  const secondTour = {
+    name: 'Бузковий гай Диканьки',
+    image: second
+  }
+
+  const thirdTour = {
+    name: 'Казкова Умань',
+    image: uman
+  }
+
+
   return (
     <Box sx={{
       marginTop: 8
@@ -35,9 +55,9 @@ export const AttractionTours = ():JSX.Element => {
         marginTop: 4,
         gap: '30px'
       }}>
-        <AttractionTour/>
-        <AttractionTour/>
-        <AttractionTour/>
+        <AttractionTour props={firstTour}/>
+        <AttractionTour props={secondTour}/>
+        <AttractionTour props={thirdTour}/>
       </Box>
     </Box>
   )

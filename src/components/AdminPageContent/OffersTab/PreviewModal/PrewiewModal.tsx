@@ -1,25 +1,20 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+
 
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 import {Accommodation} from "../../../TypesAndInterfaces";
 import {Box, Typography} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import tv from "../../../../assets/icons/Room/tv.png";
-import conditioner from "../../../../assets/icons/Room/conditioner.png";
-import hair from "../../../../assets/icons/Room/heir.png";
+
 interface AccomodationProps {
   props: Accommodation
 }
 export const PreviewModal = ({props}:AccomodationProps):JSX.Element =>  {
   const [open, setOpen] = React.useState(false);
-  console.log(props)
   const handleClickOpen = () => {
     setOpen(true);
   };
