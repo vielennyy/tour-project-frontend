@@ -4,7 +4,7 @@ import React from "react";
 
 import luks from '../../../../assets/image/accommodations/first.png'
 
-export const AttractionHotel = ():JSX.Element => {
+export const AttractionHotel = ({props}:any):JSX.Element => {
   return(
     <Box sx={{
       boxShadow: '0px 4px 15px rgba(155, 155, 155, 0.25)',
@@ -14,14 +14,14 @@ export const AttractionHotel = ():JSX.Element => {
         padding: 2
       }}>
         <Box>
-          <img src={luks} alt='tour' style={{width: '100%'}}/>
+          <img src={props.image} alt='tour' style={{width: '100%', height: '134px'}}/>
         </Box>
         <Box sx={{
           display: 'flex',
           justifyContent: 'space-between'
         }}>
           <Typography variant='h5'>
-            «Телячі Ніжності»
+            {props.name}
           </Typography>
         </Box>
         <Box sx={{
@@ -31,7 +31,7 @@ export const AttractionHotel = ():JSX.Element => {
         }}>
           <img src={location_icon} alt='location_icon' style={{width: '24px', height: '28px'}}/>
           <Typography variant='h5' sx={{marginLeft: 2}}>
-            м. Умань
+            м. {props.location}
           </Typography>
         </Box>
         <Box sx={{

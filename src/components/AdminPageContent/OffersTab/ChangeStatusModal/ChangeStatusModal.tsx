@@ -17,18 +17,18 @@ export const ChangeStatusModal = ({props}: AccomodationProps):JSX.Element => {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  console.log(props)
   const onAttractionUpdate = async () => {
     const fetching = await fetch(`https://cktour.club/api/v1/accommodations/${props.id}`,
       {
         method: "PUT",
         headers: {
-          Authorization: 'Bearer ' +  localStorage.getItem('adminToken'),
-          'Content-Type': 'application/json'
+          Authorization: 'Bearer ' +  localStorage.getItem('adminToken')
         },
         body: JSON.stringify({...props, status: 'published'})
       });
-    setOpen(false);
+    // setOpen(false);
+    console.log(fetching)
   }
 
   return (
