@@ -21,6 +21,7 @@ import { NotFound } from "./pages/NotFound";
 import { ContactPage } from "./pages/ContactPage/ContactPage";
 import { AboutPage } from "./pages/AboutPage/";
 import { TermsAndConditions } from "./pages/TermsAndConditions/TermsAndConditions";
+import { SupportPage } from "./pages/SupportPage/SupportPage";
 
 
 const AppRoutes = [
@@ -123,6 +124,10 @@ const AppRoutes = [
   {
     path: '/terms-and-conditions',
     element: <TermsAndConditions/>
+  },
+  {
+    path: '/support',
+    element: <SupportPage/>
   },
 ];
 

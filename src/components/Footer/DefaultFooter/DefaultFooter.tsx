@@ -92,7 +92,7 @@ export const DefaultFooter = ():JSX.Element => {
                   Умови користування
                 </Typography>
               </Link>
-              <Link to={'/not-found'}>
+              <Link to={'/support'}>
                 <Typography sx={{color: '#FFFFFF', fontSize: 14, fontWeight: 400}}>
                   Допомога
                 </Typography>
