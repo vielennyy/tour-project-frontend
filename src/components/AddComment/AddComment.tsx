@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {useFormik} from "formik";
+import { useParams} from "react-router-dom";
 
 import {Box,
   Button,
@@ -18,6 +19,7 @@ export const AddComment = ():JSX.Element => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
+  const {id} = useParams();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,7 +30,7 @@ export const AddComment = ():JSX.Element => {
   };
 
   const onCommentAdd = async (body:CommentType) => {
-    const response = await fetch(`https://cktour.club/api/v1/accommodations/5/comments`,
+    const response = await fetch(`https://cktour.club/api/v1/accommodations/${id}/comments`,
       {
         method: "POST",
         headers: {
