@@ -1,35 +1,33 @@
 import { Marker, MarkerProps } from '@react-google-maps/api';
 import { PlaceCoordinates } from 'src/components/TypesAndInterfaces';
-import accommodationImg from '../MarkerImages/accommodation_img.svg';
+import tourImg from '../MarkerImages/tour_img.svg'
 import { Geolocations } from 'src/components/TypesAndInterfaces';
+
 import React from 'react'
 interface myComponentProps{
-    position: PlaceCoordinates,
+    tour: PlaceCoordinates,
     onClick: any,
 }
 
-interface AccommodationMarkerProps {
-    accommodation: Geolocations;
+interface TourMarkerProps {
+    tour: Geolocations;
     setZoom: React.Dispatch<React.SetStateAction<number>>;
-  }
+}
 
-export const AccommodationMarker: React.FC<AccommodationMarkerProps> = ({ accommodation, setZoom }: AccommodationMarkerProps) => {
+export const TourMarker: React.FC<TourMarkerProps> = ({ tour, setZoom }: TourMarkerProps) => {
     const handleMarkerClick = () => {
         console.log('zoom')
         setZoom(15); // set the zoom level to 15 when the marker is clicked
       };
-
       const position = {
-        lat: +accommodation.latitude,
-        lng: +accommodation.longitude,
+        lat: +tour.latitude,
+        lng: +tour.longitude,
       }
-
     return(
         <Marker
         position={position}
-        title={''}
-        onClick={()=> {window.open(`/accommodations/${accommodation.geolocationable_id}`, '_blank')}}
+        icon={tourImg}
         clickable={true}
-        icon={accommodationImg}/>
+        />
     )
 }

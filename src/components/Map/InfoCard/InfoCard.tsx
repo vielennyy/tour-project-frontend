@@ -3,9 +3,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { PlaceItem } from './PlaceItem';
+import { AttractionPlaceItem, AccommodationPlaceItem, CateringPlaceItem } from './PlaceItem';
 import { useState, useEffect } from 'react';
-import { Attraction } from "../../TypesAndInterfaces"
+import { Accommodation, Attraction, Catering } from "../../TypesAndInterfaces"
 
 
 interface TabPanelProps {
@@ -44,12 +44,20 @@ function a11yProps(index: number) {
 export const InfoCard = () => {
   const [value, setValue] = React.useState(0);
   const [attractionsData, setAttractionsData] = useState<Attraction[]>([]);
+  const [accommodationsData, setAccommodationsData] = useState<Accommodation[]>()
+  const [cateringsData, setCateringsData] = useState<Catering[]>()
 
-  useEffect(() => {
+  // useEffect(() => {
     fetch('https://cktour.club/api/v1/attractions')
       .then(response => response.json())
       .then(json => setAttractionsData(json));
-  }, []);
+    fetch('https://cktour.club/api/v1/accommodations')
+      .then(response => response.json())
+      .then(json => setAccommodationsData(json.data));
+    fetch('https://cktour.club/api/v1/caterings')
+      .then(response => response.json())
+      .then(json => setCateringsData(json.data));
+  // }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -79,19 +87,18 @@ export const InfoCard = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {attractionsData.map(attraction => <PlaceItem key={attraction.id} {...attraction}/>) }
+        {attractionsData.map(attraction => <AttractionPlaceItem key={attraction.id} {...attraction}/>) }
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      {accommodationsData !== undefined ? accommodationsData.map(accommodation => <AccommodationPlaceItem key={accommodation.id} {...accommodation}/>):<></> }
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+      {cateringsData !== undefined ? cateringsData.map(catering => <CateringPlaceItem key={catering.id} {...catering}/>) : <></>}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Item Five
+        {/* Item Five */}
       </TabPanel>
     </Box>
   );

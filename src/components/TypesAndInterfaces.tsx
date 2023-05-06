@@ -280,3 +280,21 @@ export interface CommentType {
     user_id: number;
   }
 }
+
+export interface Catering {
+  id: number;
+  kind: string;
+  name: string;
+  description: string;
+  address_owner: string;
+  phone: string;
+  email: string;
+  person: string;
+  reg_code: string;
+  status: string;
+  places: number;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+  images: string[];
+}

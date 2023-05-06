@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { AttractionMarker, AccommodationMarker } from './LocationMarker';
+import { AttractionMarker, AccommodationMarker, CateringMarker, TourMarker } from './LocationMarker';
 import { defaultTheme } from './Theme';
 import { Box } from '@mui/material'
 import { Accommodation, Attraction,  Geolocations,  MapWindowSize,  PlaceCoordinates} from '../TypesAndInterfaces';
@@ -125,24 +125,49 @@ export const Map = (props:myComponentProps) => {
       const accommodationsCoordinatesList: PlaceCoordinates[] = [];
       const cateringsCoordinatesList: PlaceCoordinates[] = [];
 
+      const accommodations: Geolocations[] = []
+      const attractions: Geolocations[] = []
+      const caterings: Geolocations[] = []
+      const tours: Geolocations[] = []
 
       geolocations.forEach((geolocation) => {
-          const latitude = +geolocation.latitude;
-          const longitude = +geolocation.longitude;
-          const type = geolocation.geolocationable_type;
-          switch(type) {
-            case 'Accommodation':
-              accommodationsCoordinatesList.push({ lat: latitude, lng: longitude });
-              break;
-            case 'Attraction':
-              attractionsCoordinatesList.push({ lat: latitude, lng: longitude });
-              break;
-            case 'Catering':
-              cateringsCoordinatesList.push({ lat: latitude, lng: longitude }); 
-              break;
-          }
+        const latitude = +geolocation.latitude;
+        const longitude = +geolocation.longitude;
+        const type = geolocation.geolocationable_type;
+        switch(type) {
+          case 'Accommodation':
+            accommodations.push(geolocation);
+            break;
+          case 'Attraction':
+            attractions.push(geolocation);
+            break;
+          case 'Catering':
+            caterings.push(geolocation); 
+            break;
+          case 'Place':
+            tours.push(geolocation); 
+            break;
         }
-      );
+      }
+    );
+
+      // geolocations.forEach((geolocation) => {
+      //     const latitude = +geolocation.latitude;
+      //     const longitude = +geolocation.longitude;
+      //     const type = geolocation.geolocationable_type;
+      //     switch(type) {
+      //       case 'Accommodation':
+      //         accommodationsCoordinatesList.push({ lat: latitude, lng: longitude });
+      //         break;
+      //       case 'Attraction':
+      //         attractionsCoordinatesList.push({ lat: latitude, lng: longitude });
+      //         break;
+      //       case 'Catering':
+      //         cateringsCoordinatesList.push({ lat: latitude, lng: longitude }); 
+      //         break;
+      //     }
+      //   }
+      // );
       // const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
 
       // useEffect(() => {
@@ -174,14 +199,24 @@ export const Map = (props:myComponentProps) => {
             onUnmount={onUnmount}
             options={defaultOptions}
           >
-            {attractionsCoordinatesList.map(attraction => <AttractionMarker
-            key={`${attraction.lat}-${attraction.lng}`}
-            position={attraction}
+            {attractions.map(attraction => <AttractionMarker
+            key={`${attraction.latitude}-${attraction.longitude}`}
+            attraction={attraction}
             setZoom={setZoom}
             />)}
-            {accommodationsCoordinatesList.map(accommodation => <AccommodationMarker
-            key={`${accommodation.lat}-${accommodation.lng}`}
-            position={accommodation}
+            {accommodations.map(accommodation => <AccommodationMarker
+            key={`${accommodation.latitude}-${accommodation.longitude}`}
+            accommodation={accommodation}
+            setZoom={setZoom}
+            />)}  
+            {caterings.map(catering => <CateringMarker
+            key={`${catering.latitude}-${catering.longitude}`}
+            catering={catering}
+            setZoom={setZoom}
+            />)}  
+            {tours.map(tour => <TourMarker
+            key={`${tour.latitude}-${tour.longitude}`}
+            tour={tour}
             setZoom={setZoom}
             />)}  
             { /* Child components, such as markers, info windows, etc. */ }
